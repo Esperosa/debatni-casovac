@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="cs" data-theme="dark">
 <head>
-  <!-- Debatní časovač v3.1 — © 2024–2026 Jiří Pelikán. Licence viz soubor LICENSE. -->
+  <!-- Debatní časovač v3.1 — © 2024–2026 Jiří Pelikán. Licensed under Apache-2.0, see LICENSE + NOTICE. -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="author" content="Jiří Pelikán" />
-  <meta name="copyright" content="© 2024–2026 Jiří Pelikán. Všechna práva vyhrazena." />
-  <meta name="license" content="Proprietary – viz LICENSE" />
+  <meta name="copyright" content="© 2024–2026 Jiří Pelikán." />
+  <meta name="license" content="Apache-2.0 (see LICENSE and NOTICE)" />
   <title>Debatní časovač</title>
   <script>
     (function() {
@@ -149,6 +149,37 @@
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
+    }
+    .lang-toggle{
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.03);
+    }
+    .lang-btn{
+      min-width: 44px;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 900;
+      letter-spacing: .08em;
+      font-size: 11px;
+      padding: 5px 9px;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease;
+    }
+    .lang-btn:hover{ color: var(--text); }
+    .lang-btn.active{
+      background: rgba(0,230,118,.18);
+      color: var(--text);
+    }
+    .lang-btn:focus-visible{
+      outline: none;
+      box-shadow: var(--focus);
     }
     .badge{
       font-size: 12px;
@@ -3290,7 +3321,11 @@
     <div class="setup-wrap" role="application">
       <div class="setup-main">
         <h1>
-          Debatní časovač
+          <span id="appTitleText">Debatní časovač</span>
+          <div class="lang-toggle" id="langToggle" role="group" aria-label="Přepínač jazyka">
+            <button class="lang-btn active" id="langCs" type="button" data-lang="cs" aria-pressed="true">CZ</button>
+            <button class="lang-btn" id="langEn" type="button" data-lang="en" aria-pressed="false">EN</button>
+          </div>
           <div class="theme-toggle" id="themeTrack" data-pos="0" role="radiogroup" aria-label="Přepínač motivu" tabindex="0">
             <svg class="tgl-stars" viewBox="0 0 100 34" aria-hidden="true">
               <circle cx="14" cy="9" r="1" fill="#fff" opacity=".8"/>
@@ -4004,6 +4039,402 @@ SCHMIDT Lena (19)
     const FONT_FIT_MIN      = 10;
     const FONT_FIT_MAX      = 500;
     const RESIZE_DEBOUNCE   = 120;                    // ms
+
+    /**********************
+     * I18N (CZ / EN)
+     **********************/
+    const I18N_LANG_KEY = "debateTimerLang";
+    const I18N_ATTRS = ["title", "aria-label", "placeholder"];
+    const I18N_EXACT_EN = {
+      "Debatní časovač": "Debate Timer",
+      "Průvodce": "Guide",
+      "Téma": "Topic",
+      "Debatéři": "Debaters",
+      "Režim": "Mode",
+      "Časy": "Timing",
+      "Presety tříd": "Class presets",
+      "Import ze souboru": "Import from file",
+      "Kontrola": "Validation",
+      "Náhodné": "Random",
+      "Vymazat": "Clear",
+      "Vyhledávání": "Search",
+      "Sekce témat": "Topic section",
+      "Obtížnost:": "Difficulty:",
+      "Odstranit duplicity": "Remove duplicates",
+      "Vymazat seznam": "Clear list",
+      "Ve dvojících": "Pairs mode",
+      "Ve skupinách": "Groups mode",
+      "Pauza na začátku": "Initial prep",
+      "Pauza mezi koly": "Break between rounds",
+      "Čas na debatu (kolo)": "Round time",
+      "Hlasitost signálů": "Signal volume",
+      "Hlasitost hudby": "Music volume",
+      "Start": "Start",
+      "Pravidla debaty": "Debate rules",
+      "Celá obrazovka": "Fullscreen",
+      "Vybrat vše": "Select all",
+      "Nic": "None",
+      "Nahradit seznam": "Replace list",
+      "Přidat do seznamu": "Append to list",
+      "Klikni nebo pretahni soubor": "Click or drag a file",
+      "Import ze souboru": "Import from file",
+      "Vše": "All",
+      "Neúplné": "Incomplete",
+      "chybi": "missing",
+      "prazdne": "empty",
+      "bez jmena": "missing first name",
+      "bez prijmeni": "missing last name",
+      "Ano, restart": "Yes, restart",
+      "Zrušit": "Cancel",
+      "Pauza": "Pause",
+      "Pokračovat": "Resume",
+      "Další": "Next",
+      "Restart": "Restart",
+      "Příprava": "Preparation",
+      "Vysvětlení tématu": "Topic explanation",
+      "Přejít na debatu": "Go to debate",
+      "Přeskočit intro": "Skip intro",
+      "Zpět": "Back",
+      "Hotovo": "Done",
+      "Debata dokončena!": "Debate completed!",
+      "Debata dokoncena!": "Debate completed!",
+      "Kopírovat výsledky": "Copy results",
+      "Nová debáta": "New debate",
+      "Nova debata": "New debate",
+      "Oceneni": "Awards",
+      "Naučný režim": "Learning mode",
+      "Průvodce aplikací": "App guide",
+      "Resetovat průchody": "Reset tours",
+      "Doporučeno": "Recommended",
+      "Hotovo": "Done",
+      "Ukončit": "Exit"
+    };
+
+    const I18N_REGEX_EN = [
+      [/^Debatéři:\s*(\d+)$/, "Debaters: $1"],
+      [/^Odhad:\s*([0-9]{2}:[0-9]{2})$/, "Estimate: $1"],
+      [/^Kolo\s*(\d+)\s*[\/\u202f]\s*(\d+)$/, "Round $1 / $2"],
+      [/^Import:\s*(\d+)\s*osob\s*nalezeno$/, "Import: $1 people found"],
+      [/^Nacitam:\s*(.+)\.\.\.$/, "Loading: $1..."],
+      [/^Importovano\s*(\d+)\s*debateru\.$/, "Imported $1 debaters."],
+      [/^Debata:\s*(.+)$/, "Debate: $1"],
+      [/^(\d+)\s*kroků$/, "$1 steps"]
+    ];
+
+    const I18N_FRAGMENT_EN = [
+      ["Ovládání během běhu", "Controls during runtime"],
+      ["Mezerník", "Space"],
+      ["další fáze", "next phase"],
+      ["Nastavení debaty", "Debate setup"],
+      ["Přepínač jazyka", "Language switcher"],
+      ["Přepínač motivu", "Theme switcher"],
+      ["Náhodné téma každé kolo", "Random topic each round"],
+      ["Každé kolo dostane jiné náhodné téma z knihovny (s intrem + vysvětlením).", "Each round gets a different random topic from the library (with intro + explanation)."],
+      ["Zcela náhodné", "Fully random"],
+      ["Vybrané sekce", "Selected sections"],
+      ["Filtr obtížnosti", "Difficulty filter"],
+      ["Vybrané téma (lze upravit ručně)", "Selected topic (editable)"],
+      ["Tip: Níže můžeš vybrat téma z knihovny (sekce + vyhledávání) a jedním kliknutím ho vložit.", "Tip: Pick a topic from the library below (section + search) and insert it with one click."],
+      ["Hledej podle klíčových slov…", "Search by keywords..."],
+      ["Knihovna témat", "Topic library"],
+      ["Aktuální seznam (každé jméno na nový řádek)", "Current list (one name per line)"],
+      ["Doporučení: nech jména včetně diakritiky. Dlouhá jména se v párech automaticky přizpůsobí, aby se nic neořezávalo.", "Tip: keep names with diacritics. Long names auto-fit in pairs so nothing gets cut off."],
+      ["Klasická debata 1 vs 1", "Classic 1 vs 1 debate"],
+      ["Skupinová debata s bodováním", "Group debate with scoring"],
+      ["Velikost skupiny", "Group size"],
+      ["Velikosti, které dají sudý počet stejných skupin.", "Sizes that create an even number of balanced groups."],
+      ["Vlastní velikost (skupiny nemusí mít stejný počet)", "Custom size (groups may differ in member count)"],
+      ["Počet kol", "Number of rounds"],
+      ["Skupiny se každé kolo přerozdělí.", "Groups are reshuffled every round."],
+      ["Příprava před 1. kolem.", "Preparation before round 1."],
+      ["Běží během samotné debaty.", "Runs during the live debate."],
+      ["Příprava mezi jednotlivými koly.", "Preparation between rounds."],
+      ["Naučný režim", "Learning mode"],
+      ["Před debatou se zobrazí krátký průvodce: co je debata, pravidla, jak argumentovat. Ideální pro začátečníky.", "A short guide appears before the debate: what debate is, rules, and argument basics. Ideal for beginners."],
+      ["Zvuk", "Sound"],
+      ["Pípnutí při odpočtu, upozornění 10/5/3/2/1.", "Countdown beeps and 10/5/3/2/1 alerts."],
+      ["Hudba v pauzách", "Music in breaks"],
+      ["Lehký ambient při přípravě/pauze.", "Light ambient music during prep/break phases."],
+      ["Ukázka signálu", "Signal preview"],
+      ["Přehrát ukázku signálu", "Play signal preview"],
+      ["Ukázka hudby", "Music preview"],
+      ["Přehrát ukázku hudby", "Play music preview"],
+      ["Přepni do režimu celé obrazovky během debaty", "Switch to fullscreen during the debate"],
+      ["Zaškrtni, koho chceš použít. Pak „Nahradit“ nebo „Přidat“ do seznamu.", "Select who you want to use, then choose Replace or Append."],
+      ["Seznam žáků (preset)", "Preset student list"],
+      ["Můžeš také dopisovat ručně do seznamu vlevo.", "You can also type additional names manually in the left panel."],
+      ["Nahrej soubor", "Upload a file"],
+      ["Excel (.xlsx .xls), CSV, TSV, TXT, PDF", "Excel (.xlsx .xls), CSV, TSV, TXT, PDF"],
+      ["Zatím nic.", "Nothing yet."],
+      ["Naučný režim – jak debatovat", "Learning mode - how to debate"],
+      ["Co je debata?", "What is a debate?"],
+      ["Pravidla", "Rules"],
+      ["Argument: metoda SEXI", "Argument structure: SEXI method"],
+      ["Jak vyvrátit soupeře", "How to refute the opponent"],
+      ["Na co si dát pozor", "What to watch out for"],
+      ["Jsi připraven/a?", "Are you ready?"],
+      ["← Zpět", "<- Back"],
+      ["Další →", "Next ->"],
+      ["Začít debatu ▶", "Start debate ▶"],
+      ["Je ti něco nejasné? Zeptej se teď!", "Anything unclear? Ask now!"],
+      ["Něčemu nerozumíš? Řekni teď — potom už debatujeme!", "Something unclear? Ask now - then we start debating!"],
+      ["Úvodní obrazovka", "Intro screen"],
+      ["(zelená)", "(green)"],
+      ["(červená)", "(red)"],
+      ["Vysvětlení tématu", "Topic explanation"],
+      ["Argument PRO", "PRO argument"],
+      ["Argument PROTI", "CON argument"],
+      ["Rozmyslete argumenty — pro obě strany", "Prepare arguments for both sides"],
+      ["Běh debaty", "Debate runtime"],
+      ["Pauza / Pokračovat", "Pause / Resume"],
+      ["Další fáze", "Next phase"],
+      ["Páry pro aktuální kolo", "Pairs for current round"],
+      ["Výsledky debaty", "Debate results"],
+      ["Klikněte na stranu, která vyhrála", "Click the side that won"],
+      ["Pokračovat", "Continue"],
+      ["Potvrzení restartu", "Restart confirmation"],
+      ["Restartovat debatu?", "Restart debate?"],
+      ["Vrátí tě to na úvodní obrazovku a vynuluje běžící fázi.", "This returns you to setup and resets the running phase."],
+      ["Pravidla akademické debaty", "Academic debate rules"],
+      ["Co je akademická debata?", "What is an academic debate?"],
+      ["Struktura kola", "Round structure"],
+      ["Co je dobrý argument?", "What makes a strong argument?"],
+      ["Co je zakázáno", "What is not allowed"],
+      ["Tipy pro začátečníky", "Tips for beginners"],
+      ["Role v debatě", "Roles in debate"],
+      ["Klíč k úspěchu:", "Key to success:"],
+      ["Rozumím, jdeme debatovat!", "Understood, let's debate!"],
+      ["Import: ", "Import: "],
+      ["osob nalezeno", "people found"],
+      ["uplnych", "complete"],
+      ["neuplnych", "incomplete"],
+      ["trid", "classes"],
+      ["Vse", "All"],
+      ["Neuplne", "Incomplete"],
+      ["Odebrat neuplne", "Remove incomplete"],
+      ["Pridat do seznamu", "Append to list"],
+      ["Zrusit", "Cancel"],
+      ["Nepodarilo se nacist SheetJS", "Failed to load SheetJS"],
+      ["Nepodarilo se nacist PDF.js", "Failed to load PDF.js"],
+      ["Zadne platne osoby k importu.", "No valid people to import."],
+      ["Ze souboru se nepodarilo nacist zadne osoby. Zkus jiny format.", "No people could be read from the file. Try another format."],
+      ["Chyba pri cteni souboru:", "File read error:"],
+      ["Nacitam:", "Loading:"],
+      ["Páry", "Pairs"],
+      ["Vyberte vítěze každého souboje", "Select the winner of each matchup"],
+      ["Souboje skupin pro aktuální kolo", "Group matchups for this round"],
+      ["Páry pro aktuální kolo", "Pairs for this round"],
+      ["Nastavení", "Setup"],
+      ["Připravte debatu", "Prepare the debate"],
+      ["Téma", "Topic"],
+      ["Úvodní obrazovka", "Intro screen"],
+      ["Přečtěte si argumenty pro obě strany", "Read arguments for both sides"],
+      ["Příprava na první kolo", "Preparation for round one"],
+      ["Čtěte téma · Připravte argumenty", "Read the topic · Prepare arguments"],
+      ["Pauza (příprava)", "Break (prep)"],
+      ["Promyslete protiargumenty", "Think through counterarguments"],
+      ["Hlasování – Kolo", "Voting - Round"],
+      ["Hotovo", "Done"],
+      ["Všechna kola dokončena", "All rounds completed"],
+      ["Debata běží", "Debate in progress"],
+      ["Nová debata", "New debate"],
+      ["Zkopírováno ✓", "Copied ✓"],
+      ["Jmeno", "First name"],
+      ["Prijmeni", "Last name"],
+      ["Trida", "Class"],
+      ["Stav", "Status"],
+      ["Vyhry", "Wins"],
+      ["Importovano", "Imported"],
+      ["Potřebuješ alespoň 2 debatéry.", "You need at least 2 debaters."],
+      ["V presetu není nikdo vybraný. Zaškrtni alespoň 2 debatéry.", "No one is selected in the preset. Select at least 2 debaters."],
+      ["V presetu není nikdo vybraný. Není co přidat.", "No one is selected in the preset. Nothing to append."],
+      ["Není dostupná žádná vyvážená velikost. Zapněte vlastní velikost.", "No balanced group size is available. Enable custom size."],
+      ["Průvodce aplikací", "App guide"],
+      ["Vyber si část, kterou chceš prozkoumat:", "Choose the part you want to explore:"],
+      ["Resetovat průchody", "Reset tours"],
+      ["zavřít", "close"],
+      ["Rychlý start", "Quick start"],
+      ["Témata a knihovna", "Topics and library"],
+      ["Debatéři a import", "Debaters and import"],
+      ["Režim a nastavení", "Mode and settings"],
+      ["Doporučeno", "Recommended"],
+      ["krok", "step"],
+      ["kroků", "steps"],
+      ["Krok", "Step"],
+      ["Splněno", "Completed"],
+      ["Přeskočit", "Skip"],
+      ["Ukončit", "Exit"],
+      ["navigace", "navigation"],
+      ["konec", "end"],
+      ["Inicializace UI selhala:", "UI initialization failed:"],
+      ["Chyba při načtení UI. Obnov stránku (Ctrl+F5).", "UI failed to load. Refresh the page (Ctrl+F5)."]
+    ].sort(function(a, b) { return b[0].length - a[0].length; });
+
+    let currentLang = "cs";
+    let i18nBusy = false;
+    let i18nObserver = null;
+    const i18nAttrBase = new WeakMap();
+
+    function getI18nAttrStore(el) {
+      if (!i18nAttrBase.has(el)) i18nAttrBase.set(el, {});
+      return i18nAttrBase.get(el);
+    }
+
+    function translateCoreTextCsToEn(core) {
+      if (!core) return core;
+      if (I18N_EXACT_EN[core]) return I18N_EXACT_EN[core];
+      for (let i = 0; i < I18N_REGEX_EN.length; i++) {
+        const rgx = I18N_REGEX_EN[i][0];
+        const repl = I18N_REGEX_EN[i][1];
+        if (rgx.test(core)) return core.replace(rgx, repl);
+      }
+      let out = core;
+      for (let i = 0; i < I18N_FRAGMENT_EN.length; i++) {
+        const from = I18N_FRAGMENT_EN[i][0];
+        const to = I18N_FRAGMENT_EN[i][1];
+        if (out.indexOf(from) >= 0) out = out.split(from).join(to);
+      }
+      return out;
+    }
+
+    function translateTextValue(value) {
+      if (currentLang !== "en") return value;
+      const text = String(value == null ? "" : value);
+      if (!text.trim()) return text;
+      const lead = (text.match(/^\s*/) || [""])[0];
+      const trail = (text.match(/\s*$/) || [""])[0];
+      const core = text.trim();
+      return lead + translateCoreTextCsToEn(core) + trail;
+    }
+
+    function translateElementAttrs(el) {
+      if (!el || !el.getAttribute || el.closest("script, style, noscript")) return;
+      const store = getI18nAttrStore(el);
+      for (let i = 0; i < I18N_ATTRS.length; i++) {
+        const attr = I18N_ATTRS[i];
+        if (!el.hasAttribute(attr)) continue;
+        if (typeof store[attr] !== "string") store[attr] = el.getAttribute(attr) || "";
+        const base = store[attr];
+        const next = currentLang === "en" ? translateTextValue(base) : base;
+        if (el.getAttribute(attr) !== next) el.setAttribute(attr, next);
+      }
+    }
+
+    function translateTextNode(node) {
+      if (!node || !node.parentElement) return;
+      if (node.parentElement.closest("script, style, noscript")) return;
+      const raw = node.nodeValue;
+      if (!raw || !raw.trim()) return;
+      if (typeof node.__i18nCsBase !== "string") node.__i18nCsBase = raw;
+      const base = node.__i18nCsBase;
+      const next = currentLang === "en" ? translateTextValue(base) : base;
+      if (node.nodeValue !== next) node.nodeValue = next;
+    }
+
+    function translateSubtree(root) {
+      if (!root) return;
+      i18nBusy = true;
+      try {
+        if (root.nodeType === Node.TEXT_NODE) {
+          translateTextNode(root);
+          return;
+        }
+        if (root.nodeType !== Node.ELEMENT_NODE) return;
+        translateElementAttrs(root);
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+        let cur;
+        while ((cur = walker.nextNode())) {
+          if (cur.nodeType === Node.TEXT_NODE) translateTextNode(cur);
+          else translateElementAttrs(cur);
+        }
+      } finally {
+        i18nBusy = false;
+      }
+    }
+
+    function refreshLanguageToggle() {
+      const cs = document.getElementById("langCs");
+      const en = document.getElementById("langEn");
+      if (!cs || !en) return;
+      const isCs = currentLang === "cs";
+      cs.classList.toggle("active", isCs);
+      en.classList.toggle("active", !isCs);
+      cs.setAttribute("aria-pressed", isCs ? "true" : "false");
+      en.setAttribute("aria-pressed", isCs ? "false" : "true");
+    }
+
+    function loadLanguage() {
+      try {
+        const saved = localStorage.getItem(I18N_LANG_KEY);
+        if (saved === "cs" || saved === "en") return saved;
+      } catch (_) {}
+      return "cs";
+    }
+
+    function saveLanguage(lang) {
+      try { localStorage.setItem(I18N_LANG_KEY, lang); } catch (_) {}
+    }
+
+    function applyLanguage(lang) {
+      currentLang = (lang === "en") ? "en" : "cs";
+      document.documentElement.lang = currentLang;
+      document.documentElement.setAttribute("data-lang", currentLang);
+      document.title = currentLang === "en" ? "Debate Timer" : "Debatní časovač";
+      refreshLanguageToggle();
+      if (document.body) translateSubtree(document.body);
+      saveLanguage(currentLang);
+
+      // Force rerenders so freshly generated UI also passes through i18n.
+      try {
+        if (typeof renderTopics === "function") renderTopics();
+        if (typeof renderPresetList === "function") renderPresetList();
+        if (typeof updateTotalAndValidation === "function") updateTotalAndValidation();
+        if (typeof setPhaseUI === "function") setPhaseUI();
+        if (typeof setTimerDisplays === "function") setTimerDisplays();
+        if (typeof renderCurrentView === "function" && document.getElementById("screen-run") && document.getElementById("screen-run").classList.contains("active")) renderCurrentView();
+        if (typeof state !== "undefined" && state.phase === "done" && typeof renderDoneScreen === "function") renderDoneScreen();
+      } catch (_) {}
+
+      if (document.body) translateSubtree(document.body);
+    }
+
+    function wireLanguageSwitcher() {
+      const wrap = document.getElementById("langToggle");
+      if (!wrap) return;
+      wrap.querySelectorAll(".lang-btn").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          applyLanguage(btn.dataset.lang || "cs");
+        });
+      });
+    }
+
+    function startI18nObserver() {
+      if (i18nObserver || !document.body) return;
+      i18nObserver = new MutationObserver(function(mutations) {
+        if (i18nBusy || currentLang !== "en") return;
+        const roots = new Set();
+        for (let i = 0; i < mutations.length; i++) {
+          const m = mutations[i];
+          if (m.type === "characterData" || m.type === "attributes") {
+            roots.add(m.target);
+          } else if (m.type === "childList") {
+            m.addedNodes.forEach(function(n) { roots.add(n); });
+          }
+        }
+        if (!roots.size) return;
+        requestAnimationFrame(function() {
+          roots.forEach(function(node) { translateSubtree(node); });
+        });
+      });
+
+      i18nObserver.observe(document.body, {
+        subtree: true,
+        childList: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: I18N_ATTRS
+      });
+    }
 
     /**********************
      * FILE IMPORT ENGINE
@@ -7786,8 +8217,10 @@ SCHMIDT Lena (19)
 
     // Apply theme ASAP (before full wire)
     applyTheme(loadTheme());
+    currentLang = loadLanguage();
 
     function wire() {
+      wireLanguageSwitcher();
       wireThemeSwitcher();
       wireTopicUI();
       wireRandomTopic();
@@ -7822,6 +8255,8 @@ SCHMIDT Lena (19)
       renderTopics();
       updateTotalAndValidation();
       syncSwitches();
+      startI18nObserver();
+      applyLanguage(currentLang);
     }
 
     try {
@@ -7835,6 +8270,8 @@ SCHMIDT Lena (19)
         renderPresetList();
         renderTopics();
         updateTotalAndValidation();
+        startI18nObserver();
+        applyLanguage(currentLang);
       } catch (_) {}
     }
   </script>
