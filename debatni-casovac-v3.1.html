@@ -3603,8 +3603,8 @@ SCHMIDT Lena (19)
           <div class="section-title">
             <h2>Import ze souboru</h2>
           </div>
-          <div class="import-drop-zone" id="importDropZone" tabindex="0" role="button" aria-label="Nahrej soubor">
-            <div class="import-drop-zone-text">Klikni nebo pretahni soubor</div>
+          <div class="import-drop-zone" id="importDropZone" tabindex="0" role="button" aria-label="Nahrát soubor">
+            <div class="import-drop-zone-text">Klikni nebo přetáhni soubor</div>
             <div class="import-drop-zone-hint">Excel (.xlsx .xls), CSV, TSV, TXT, PDF</div>
           </div>
           <input type="file" id="importFileInput" accept=".xlsx,.xls,.csv,.tsv,.txt,.pdf" hidden />
@@ -3948,15 +3948,15 @@ SCHMIDT Lena (19)
       <div class="import-tabs" id="importTabs"></div>
       <div class="import-table-wrap">
         <table class="import-table">
-          <thead><tr><th><input type="checkbox" class="import-chk" id="importChkAll" checked></th><th>#</th><th>Jmeno</th><th>Prijmeni</th><th>Trida</th><th>Stav</th></tr></thead>
+          <thead><tr><th><input type="checkbox" class="import-chk" id="importChkAll" checked></th><th>#</th><th>Jméno</th><th>Příjmení</th><th>Třída</th><th>Stav</th></tr></thead>
           <tbody id="importTbody"></tbody>
         </table>
       </div>
       <div class="import-actions">
         <button class="btn primary" id="importBtnApply" type="button">Nahradit seznam</button>
-        <button class="btn" id="importBtnAppend" type="button">Pridat do seznamu</button>
-        <button class="btn small" id="importBtnDelInvalid" type="button">Odebrat neuplne</button>
-        <button class="btn small danger" id="importBtnCancel" type="button">Zrusit</button>
+        <button class="btn" id="importBtnAppend" type="button">Přidat do seznamu</button>
+        <button class="btn small" id="importBtnDelInvalid" type="button">Odebrat neúplné</button>
+        <button class="btn small danger" id="importBtnCancel" type="button">Zrušit</button>
       </div>
     </div>
   </div>
@@ -4077,13 +4077,19 @@ SCHMIDT Lena (19)
       "Nahradit seznam": "Replace list",
       "Přidat do seznamu": "Append to list",
       "Klikni nebo pretahni soubor": "Click or drag a file",
+      "Klikni nebo přetáhni soubor": "Click or drag a file",
+      "Nahrát soubor": "Upload a file",
       "Import ze souboru": "Import from file",
       "Vše": "All",
       "Neúplné": "Incomplete",
       "chybi": "missing",
+      "chybí": "missing",
       "prazdne": "empty",
+      "prázdné": "empty",
       "bez jmena": "missing first name",
+      "bez jména": "missing first name",
       "bez prijmeni": "missing last name",
+      "bez příjmení": "missing last name",
       "Ano, restart": "Yes, restart",
       "Zrušit": "Cancel",
       "Pauza": "Pause",
@@ -4099,9 +4105,27 @@ SCHMIDT Lena (19)
       "Debata dokončena!": "Debate completed!",
       "Debata dokoncena!": "Debate completed!",
       "Kopírovat výsledky": "Copy results",
+      "(bez tématu)": "(no topic)",
+      "(bez tematu)": "(no topic)",
       "Nová debáta": "New debate",
+      "Nová debata": "New debate",
       "Nova debata": "New debate",
+      "Ocenění": "Awards",
       "Oceneni": "Awards",
+      "Jméno": "First name",
+      "Příjmení": "Last name",
+      "Třída": "Class",
+      "Výhry": "Wins",
+      "Kola": "Rounds",
+      "Neporazitelný": "Unbeaten",
+      "Ani jedna prohra": "No losses",
+      "Prohra na startu, výhry na konci": "Loss at the start, wins at the end",
+      "Porazil(a) pozdějšího vítěze": "Defeated the eventual winner",
+      "Smolař turnaje": "Tournament hard luck",
+      "Žádné platné osoby k importu.": "No valid people to import.",
+      "Ze souboru se nepodařilo načíst žádné osoby. Zkus jiný formát.": "No people could be read from the file. Try another format.",
+      "Chyba při čtení souboru:": "File read error:",
+      "(bez třídy)": "(no class)",
       "Naučný režim": "Learning mode",
       "Průvodce aplikací": "App guide",
       "Resetovat průchody": "Reset tours",
@@ -4116,8 +4140,13 @@ SCHMIDT Lena (19)
       [/^Kolo\s*(\d+)\s*[\/\u202f]\s*(\d+)$/, "Round $1 / $2"],
       [/^Import:\s*(\d+)\s*osob\s*nalezeno$/, "Import: $1 people found"],
       [/^Nacitam:\s*(.+)\.\.\.$/, "Loading: $1..."],
+      [/^Načítám:\s*(.+)\.\.\.$/, "Loading: $1..."],
       [/^Importovano\s*(\d+)\s*debateru\.$/, "Imported $1 debaters."],
+      [/^Importováno\s*(\d+)\s*debatérů\.$/, "Imported $1 debaters."],
       [/^Debata:\s*(.+)$/, "Debate: $1"],
+      [/^Série\s*(\d+)x$/, "Streak $1x"],
+      [/^(\d+)\s*výher\s*v\s*řadě$/, "$1 wins in a row"],
+      [/^(\d+)\s*proher\s*z\s*(\d+)\s*kol$/, "$1 losses out of $2 rounds"],
       [/^(\d+)\s*kroků$/, "$1 steps"]
     ];
 
@@ -4164,6 +4193,7 @@ SCHMIDT Lena (19)
       ["Seznam žáků (preset)", "Preset student list"],
       ["Můžeš také dopisovat ručně do seznamu vlevo.", "You can also type additional names manually in the left panel."],
       ["Nahrej soubor", "Upload a file"],
+      ["Nahrát soubor", "Upload a file"],
       ["Excel (.xlsx .xls), CSV, TSV, TXT, PDF", "Excel (.xlsx .xls), CSV, TSV, TXT, PDF"],
       ["Zatím nic.", "Nothing yet."],
       ["Naučný režim – jak debatovat", "Learning mode - how to debate"],
@@ -4206,6 +4236,9 @@ SCHMIDT Lena (19)
       ["Rozumím, jdeme debatovat!", "Understood, let's debate!"],
       ["Import: ", "Import: "],
       ["osob nalezeno", "people found"],
+      ["úplných", "complete"],
+      ["neúplných", "incomplete"],
+      ["tříd", "classes"],
       ["uplnych", "complete"],
       ["neuplnych", "incomplete"],
       ["trid", "classes"],
@@ -4215,11 +4248,17 @@ SCHMIDT Lena (19)
       ["Pridat do seznamu", "Append to list"],
       ["Zrusit", "Cancel"],
       ["Nepodarilo se nacist SheetJS", "Failed to load SheetJS"],
+      ["Nepodařilo se načíst SheetJS", "Failed to load SheetJS"],
       ["Nepodarilo se nacist PDF.js", "Failed to load PDF.js"],
+      ["Nepodařilo se načíst PDF.js", "Failed to load PDF.js"],
       ["Zadne platne osoby k importu.", "No valid people to import."],
+      ["Žádné platné osoby k importu.", "No valid people to import."],
       ["Ze souboru se nepodarilo nacist zadne osoby. Zkus jiny format.", "No people could be read from the file. Try another format."],
+      ["Ze souboru se nepodařilo načíst žádné osoby. Zkus jiný formát.", "No people could be read from the file. Try another format."],
       ["Chyba pri cteni souboru:", "File read error:"],
+      ["Chyba při čtení souboru:", "File read error:"],
       ["Nacitam:", "Loading:"],
+      ["Načítám:", "Loading:"],
       ["Páry", "Pairs"],
       ["Vyberte vítěze každého souboje", "Select the winner of each matchup"],
       ["Souboje skupin pro aktuální kolo", "Group matchups for this round"],
@@ -4240,11 +4279,18 @@ SCHMIDT Lena (19)
       ["Nová debata", "New debate"],
       ["Zkopírováno ✓", "Copied ✓"],
       ["Jmeno", "First name"],
+      ["Jméno", "First name"],
       ["Prijmeni", "Last name"],
+      ["Příjmení", "Last name"],
       ["Trida", "Class"],
+      ["Třída", "Class"],
       ["Stav", "Status"],
       ["Vyhry", "Wins"],
+      ["Výhry", "Wins"],
+      ["Kola", "Rounds"],
+      ["Tiebreak (Buchholz) — síla soupeřů", "Tiebreak (Buchholz) - strength of opponents"],
       ["Importovano", "Imported"],
+      ["Importováno", "Imported"],
       ["Potřebuješ alespoň 2 debatéry.", "You need at least 2 debaters."],
       ["V presetu není nikdo vybraný. Zaškrtni alespoň 2 debatéry.", "No one is selected in the preset. Select at least 2 debaters."],
       ["V presetu není nikdo vybraný. Není co přidat.", "No one is selected in the preset. Nothing to append."],
@@ -4866,7 +4912,7 @@ SCHMIDT Lena (19)
     function getImportClasses() {
       const classes = {};
       _importData.forEach(function(p) {
-        const c = p.class_ || "(bez tridy)";
+        const c = p.class_ || "(bez třídy)";
         if (!classes[c]) classes[c] = 0;
         classes[c]++;
       });
@@ -4895,19 +4941,19 @@ SCHMIDT Lena (19)
       const incomplete = _importData.filter(function(p) { return !p.first || !p.last; }).length;
 
       $("importModalTitle").textContent = "Import: " + _importData.length + " osob nalezeno";
-      $("importSummary").innerHTML = "<b>" + valid + "</b> uplnych, <b>" + incomplete + "</b> neuplnych, <b>" + Object.keys(classes).length + "</b> trid";
+      $("importSummary").innerHTML = "<b>" + valid + "</b> úplných, <b>" + incomplete + "</b> neúplných, <b>" + Object.keys(classes).length + "</b> tříd";
       const tabs = $("importTabs");
       tabs.textContent = "";
       const allTab = document.createElement("button");
       allTab.className = "import-tab" + (_importFilter === "all" ? " active" : "");
-      allTab.innerHTML = "Vse <span class='tab-count'>(" + _importData.length + ")</span>";
+      allTab.innerHTML = "Vše <span class='tab-count'>(" + _importData.length + ")</span>";
       allTab.addEventListener("click", function() { _importFilter = "all"; renderImportModal(); });
       tabs.appendChild(allTab);
 
       if (incomplete > 0) {
         const warnTab = document.createElement("button");
         warnTab.className = "import-tab" + (_importFilter === "incomplete" ? " active" : "");
-        warnTab.innerHTML = "Neuplne <span class='tab-count'>(" + incomplete + ")</span>";
+        warnTab.innerHTML = "Neúplné <span class='tab-count'>(" + incomplete + ")</span>";
         warnTab.addEventListener("click", function() { _importFilter = "incomplete"; renderImportModal(); });
         tabs.appendChild(warnTab);
       }
@@ -4925,7 +4971,7 @@ SCHMIDT Lena (19)
       _importData.forEach(function(p, pi) {
         const matchFilter = _importFilter === "all" ||
           (_importFilter === "incomplete" && (!p.first || !p.last)) ||
-          (p.class_ || "(bez tridy)") === _importFilter;
+          (p.class_ || "(bez třídy)") === _importFilter;
         if (!matchFilter) return;
         idx++;
         const isIncomplete = !p.first || !p.last;
@@ -4944,7 +4990,7 @@ SCHMIDT Lena (19)
           inpF.addEventListener("input", (function(i) { return function() { _importData[i].first = this.value.trim(); }; })(pi));
           tdFirst.appendChild(inpF);
         } else {
-          const inpF2 = document.createElement("input"); inpF2.type = "text"; inpF2.value = ""; inpF2.placeholder = "chybi"; inpF2.className = "cell-missing";
+          const inpF2 = document.createElement("input"); inpF2.type = "text"; inpF2.value = ""; inpF2.placeholder = "chybí"; inpF2.className = "cell-missing";
           inpF2.addEventListener("input", (function(i) { return function() { _importData[i].first = this.value.trim(); }; })(pi));
           tdFirst.appendChild(inpF2);
         }
@@ -4955,7 +5001,7 @@ SCHMIDT Lena (19)
           inpL.addEventListener("input", (function(i) { return function() { _importData[i].last = this.value.trim(); }; })(pi));
           tdLast.appendChild(inpL);
         } else {
-          const inpL2 = document.createElement("input"); inpL2.type = "text"; inpL2.value = ""; inpL2.placeholder = "chybi"; inpL2.className = "cell-missing";
+          const inpL2 = document.createElement("input"); inpL2.type = "text"; inpL2.value = ""; inpL2.placeholder = "chybí"; inpL2.className = "cell-missing";
           inpL2.addEventListener("input", (function(i) { return function() { _importData[i].last = this.value.trim(); }; })(pi));
           tdLast.appendChild(inpL2);
         }
@@ -4975,9 +5021,9 @@ SCHMIDT Lena (19)
         tdClass.appendChild(inpC);
         tr.appendChild(tdClass);
         const tdStatus = document.createElement("td");
-        if (!p.first && !p.last) tdStatus.textContent = "prazdne";
-        else if (!p.first) tdStatus.textContent = "bez jmena";
-        else if (!p.last) tdStatus.textContent = "bez prijmeni";
+        if (!p.first && !p.last) tdStatus.textContent = "prázdné";
+        else if (!p.first) tdStatus.textContent = "bez jména";
+        else if (!p.last) tdStatus.textContent = "bez příjmení";
         else tdStatus.textContent = "OK";
         tdStatus.style.color = isIncomplete ? "var(--yellow)" : "var(--green)";
         tdStatus.style.fontWeight = "800";
@@ -5011,7 +5057,7 @@ SCHMIDT Lena (19)
     function applyImport(appendMode) {
       const names = getImportResults("flat");
       if (names.length === 0) {
-        showValidation("Zadne platne osoby k importu.", false);
+        showValidation("Žádné platné osoby k importu.", false);
         return;
       }
       if (appendMode) {
@@ -5030,7 +5076,7 @@ SCHMIDT Lena (19)
       persistSetup();
       updateTotalAndValidation();
       closeImportModal();
-      showValidation("Importovano " + names.length + " debateru.", true);
+      showValidation("Importováno " + names.length + " debatérů.", true);
     }
 
     function refreshPresetSelect() {
@@ -5087,17 +5133,17 @@ SCHMIDT Lena (19)
     }
 
     function handleImportFile(file) {
-      $("importDropZone").querySelector(".import-drop-zone-text").textContent = "Nacitam: " + file.name + "...";
+      $("importDropZone").querySelector(".import-drop-zone-text").textContent = "Načítám: " + file.name + "...";
       parseImportFile(file).then(function(data) {
-        $("importDropZone").querySelector(".import-drop-zone-text").textContent = "Klikni nebo pretahni soubor";
+        $("importDropZone").querySelector(".import-drop-zone-text").textContent = "Klikni nebo přetáhni soubor";
         if (data.length === 0) {
-          showValidation("Ze souboru se nepodarilo nacist zadne osoby. Zkus jiny format.", false);
+          showValidation("Ze souboru se nepodařilo načíst žádné osoby. Zkus jiný formát.", false);
           return;
         }
         openImportModal(data);
       }).catch(function(err) {
-        $("importDropZone").querySelector(".import-drop-zone-text").textContent = "Klikni nebo pretahni soubor";
-        showValidation("Chyba pri cteni souboru: " + err.message, false);
+        $("importDropZone").querySelector(".import-drop-zone-text").textContent = "Klikni nebo přetáhni soubor";
+        showValidation("Chyba při čtení souboru: " + err.message, false);
       });
     }
 
@@ -7077,13 +7123,13 @@ SCHMIDT Lena (19)
       const awards = [];
       sorted.forEach(function(s) {
         if (s.played > 0 && s.losses === 0)
-          awards.push({ name: s.name, title: "Neporazitelny", desc: "Ani jedna prohra" });
+          awards.push({ name: s.name, title: "Neporazitelný", desc: "Ani jedna prohra" });
       });
       sorted.forEach(function(s) {
         if (s.wlSeq.length >= 3 && s.wlSeq[0] === "L") {
           const tail = s.wlSeq.slice(-2);
           if (tail[0] === "W" && tail[1] === "W")
-            awards.push({ name: s.name, title: "Comeback King", desc: "Prohra na startu, vyhry na konci" });
+            awards.push({ name: s.name, title: "Comeback King", desc: "Prohra na startu, výhry na konci" });
         }
       });
       if (sorted.length >= 2) {
@@ -7093,7 +7139,7 @@ SCHMIDT Lena (19)
           (s.history || []).forEach(function(r) {
             if (r.won && r.opponents.indexOf(topName) >= 0) {
               if (!awards.some(function(a) { return a.name === s.name && a.title === "Giant Killer"; }))
-                awards.push({ name: s.name, title: "Giant Killer", desc: "Porazil(a) pozdejsiho viteze" });
+                awards.push({ name: s.name, title: "Giant Killer", desc: "Porazil(a) pozdějšího vítěze" });
             }
           });
         });
@@ -7101,14 +7147,14 @@ SCHMIDT Lena (19)
       let bestStrk = 0, bestStrkName = "";
       sorted.forEach(function(s) { if (s.maxStreak > bestStrk) { bestStrk = s.maxStreak; bestStrkName = s.name; } });
       if (bestStrk >= 3) {
-        awards.push({ name: bestStrkName, title: "Serie " + bestStrk + "x", desc: bestStrk + " vyher v rade" });
+        awards.push({ name: bestStrkName, title: "Série " + bestStrk + "x", desc: bestStrk + " výher v řadě" });
       }
       let maxL = 0;
       sorted.forEach(function(s) { if (s.losses > maxL) maxL = s.losses; });
       if (maxL > 0 && totalRounds >= 3 && maxL >= Math.ceil(totalRounds * 0.7)) {
         sorted.forEach(function(s) {
           if (s.losses === maxL)
-            awards.push({ name: s.name, title: "Smolar turnaje", desc: maxL + " proher z " + totalRounds + " kol" });
+            awards.push({ name: s.name, title: "Smolař turnaje", desc: maxL + " proher z " + totalRounds + " kol" });
         });
       }
       return { sorted: sorted, awards: awards, totalRounds: totalRounds };
@@ -7211,7 +7257,7 @@ SCHMIDT Lena (19)
       actDiv.className = "done-actions";
       const btnNew = document.createElement("button");
       btnNew.className = "btn primary";
-      btnNew.textContent = "Nová debáta";
+      btnNew.textContent = "Nová debata";
       btnNew.addEventListener("click", () => {
         showDoneWrap(false);
         stopChillMusic();
@@ -7225,10 +7271,10 @@ SCHMIDT Lena (19)
       btnExport.textContent = "Kopírovat výsledky";
       btnExport.addEventListener("click", () => {
         const lines = [];
-        lines.push("Debata: " + (state.topic || "(bez tématu)"));
+        lines.push(translateTextValue("Debata: " + (state.topic || "(bez tématu)")));
         lines.push("");
         state.rounds.forEach((pairs, ri) => {
-          lines.push("Kolo " + (ri + 1) + " / " + state.rounds.length);
+          lines.push(translateTextValue("Kolo " + (ri + 1) + " / " + state.rounds.length));
           const scores = state.roundScores[ri] || [];
           pairs.forEach((m, pi) => {
             const w = scores[pi];
@@ -7239,8 +7285,8 @@ SCHMIDT Lena (19)
           lines.push("");
         });
         navigator.clipboard.writeText(lines.join("\n")).then(() => {
-          btnExport.textContent = "Zkopírováno ✓";
-          setTimeout(() => { btnExport.textContent = "Kopírovat výsledky"; }, 2000);
+          btnExport.textContent = translateTextValue("Zkopírováno ✓");
+          setTimeout(() => { btnExport.textContent = translateTextValue("Kopírovat výsledky"); }, 2000);
         }).catch(() => {});
       });
       actDiv.appendChild(btnExport);
@@ -7255,7 +7301,7 @@ SCHMIDT Lena (19)
       const awards = scoring.awards;
       const totalRounds = scoring.totalRounds;
       const hdr = document.createElement("div"); hdr.className = "done-header";
-      hdr.textContent = "Debata dokoncena!"; dw.appendChild(hdr);
+      hdr.textContent = "Debata dokončena!"; dw.appendChild(hdr);
 
       if (state.topic) {
         const tp = document.createElement("div"); tp.className = "done-topic";
@@ -7266,9 +7312,9 @@ SCHMIDT Lena (19)
       if (sorted.length > 0) {
         const table = document.createElement("table"); table.className = "score-table";
         const thead = document.createElement("thead"); const hr = document.createElement("tr");
-        ["#", "Jmeno", "Kola", "Vyhry", "TB"].forEach(function(t) {
+        ["#", "Jméno", "Kola", "Výhry", "TB"].forEach(function(t) {
           const th = document.createElement("th"); th.textContent = t;
-          if (t === "TB") th.title = "Tiebreak (Buchholz) \u2014 sila souper\u016F";
+          if (t === "TB") th.title = "Tiebreak (Buchholz) — síla soupeřů";
           hr.appendChild(th);
         });
         thead.appendChild(hr); table.appendChild(thead);
@@ -7297,7 +7343,7 @@ SCHMIDT Lena (19)
       if (awards.length > 0) {
         const awSection = document.createElement("div"); awSection.className = "awards-section";
         const awTitle = document.createElement("div"); awTitle.className = "awards-title";
-        awTitle.textContent = "Oceneni"; awSection.appendChild(awTitle);
+        awTitle.textContent = "Ocenění"; awSection.appendChild(awTitle);
         const awGrid = document.createElement("div"); awGrid.className = "awards-grid";
         awards.forEach(function(a) {
           const card = document.createElement("div"); card.className = "award-card";
@@ -7338,7 +7384,7 @@ SCHMIDT Lena (19)
       // ── New debate button ──
       const actDiv = document.createElement("div"); actDiv.className = "done-actions";
       const btnNew = document.createElement("button"); btnNew.className = "btn primary";
-      btnNew.textContent = "Nova debata";
+      btnNew.textContent = "Nová debata";
       btnNew.addEventListener("click", function() {
         showDoneWrap(false); stopChillMusic(); resetGameState(); setScreen("setup");
       });
@@ -7347,17 +7393,17 @@ SCHMIDT Lena (19)
       btnExport.textContent = "Kopírovat výsledky";
       btnExport.addEventListener("click", function() {
         const lines = [];
-        lines.push("Debata: " + (state.topic || "(bez tématu)"));
+        lines.push(translateTextValue("Debata: " + (state.topic || "(bez tématu)")));
         lines.push("");
         // Scoreboard
-        lines.push("# | Jméno | Výhry | TB");
+        lines.push(currentLang === "en" ? "# | Name | Wins | TB" : "# | Jméno | Výhry | TB");
         scoring.sorted.forEach(function(s) {
           lines.push(s.rank + ". | " + s.name + " | " + s.wins + " | " + s.buchholz);
         });
         lines.push("");
         // Round details
         state.groupMatchups.forEach(function(matchups, ri) {
-          lines.push("Kolo " + (ri + 1) + " / " + state.groupMatchups.length);
+          lines.push(translateTextValue("Kolo " + (ri + 1) + " / " + state.groupMatchups.length));
           const votes = state.groupRoundScores[ri] || [];
           matchups.forEach(function(m, mi) {
             const w = votes[mi];
@@ -7366,8 +7412,8 @@ SCHMIDT Lena (19)
           lines.push("");
         });
         navigator.clipboard.writeText(lines.join("\n")).then(function() {
-          btnExport.textContent = "Zkopírováno ✓";
-          setTimeout(function() { btnExport.textContent = "Kopírovat výsledky"; }, 2000);
+          btnExport.textContent = translateTextValue("Zkopírováno ✓");
+          setTimeout(function() { btnExport.textContent = translateTextValue("Kopírovat výsledky"); }, 2000);
         }).catch(function() {});
       });
       actDiv.appendChild(btnExport);
