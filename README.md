@@ -1,234 +1,239 @@
-<h1 align="center">Debatní časovač v3.1</h1>
+<h1 align="center">Debatni casovac v3.1</h1>
 
 <p align="center">
-  Jednosouborová webová aplikace pro školní debaty, argumentační trénink a turnajové vedení kol.
+  One-file web app pro skolni debaty, argumentacni trening a turnajove rizeni kol.
 </p>
 
 <p align="center">
   <img alt="Version" src="https://img.shields.io/badge/version-3.1-0b8f3d" />
-  <img alt="Type" src="https://img.shields.io/badge/app-single--file%20HTML-1f6feb" />
-  <img alt="Languages" src="https://img.shields.io/badge/language-CZ%20%2F%20EN-0a7ea4" />
+  <img alt="Format" src="https://img.shields.io/badge/format-single--file%20HTML-1f6feb" />
+  <img alt="Locales" src="https://img.shields.io/badge/locales-CZ%20%2F%20EN-0a7ea4" />
+  <img alt="Offline" src="https://img.shields.io/badge/offline-ready-7a3fb0" />
   <img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-111111" />
 </p>
 
-## Proč je tenhle projekt praktický
+<p align="center">
+  <a href="#quick-launch">Quick Launch</a> •
+  <a href="#feature-deck">Feature Deck</a> •
+  <a href="#learning-and-guides">Learning and Guides</a> •
+  <a href="#audio-console">Audio Console</a> •
+  <a href="#localization-czen">Localization</a>
+</p>
 
-- Funguje offline přímo v prohlížeči.
-- Nepotřebuje backend, databázi ani instalaci.
-- Vše je v jednom souboru HTML.
-- Přepínání CZ/EN je okamžité a deterministické.
-- Obsahuje výuku argumentace, průvodce aplikací i turnajové režimy.
+---
+
+## Stage Intro
+
+Debatni casovac je navrzeny jako "open and run" aplikace. Zadna instalace, zadny backend, zadne zavislosti.
+
+1. Otevretes [debatni-casovac-v3.1.html](debatni-casovac-v3.1.html) v prohlizeci.
+2. Nastavite tema, debatery, mod a casy.
+3. Spustite debatu a aplikace ridi cely flow az do vysledku.
 
 > [!TIP]
-> Aplikaci stačí otevřít jako běžný HTML soubor. To je celé.
+> Pokud chcete demo do 30 sekund, zapnete Learning mode a pak Start debaty.
 
-## Rychlý start
+## Quick Launch
 
-1. Otevři soubor `debatni-casovac-v3.1.html` v prohlížeči.
-2. Vyplň téma, debatéry a režim.
-3. Klikni na Start debaty.
+| Step | Co udelat | Vysledek |
+|---|---|---|
+| 1 | Otevri [debatni-casovac-v3.1.html](debatni-casovac-v3.1.html) | App bezi lokalne a offline |
+| 2 | Vypln tema + debatery | Setup validace pripravi beh |
+| 3 | Nastav mod, kola, casy, audio | Cely run je predkonfigurovany |
+| 4 | Klikni `Start debaty` | Intro/Tutorial -> debata -> vysledky |
 
-## Co všechno aplikace obsahuje
+## Feature Deck
 
-| Oblast | Co dostaneš |
+| Modul | Co umi |
 |---|---|
-| Kompletní flow | Setup → Intro → Vysvětlení tématu → Příprava → Kolo → Pauza → Výsledky |
-| Režimy | 1v1 páry i skupinová varianta s hlasováním vítězů |
-| Témata | Ruční zadání, knihovna témat, filtry, fulltext, random témata po kolech |
-| Výuka | Naučný režim (prezentace) + modal pravidel akademické debaty |
-| Průvodci | App guide picker + 4 specializované walkthrough tour |
-| Import | XLSX/XLS/CSV/TSV/TXT/PDF + validační modal s editací |
-| Zvuk a hudba | Signály, start/end cue, hudba mezi koly, samostatné hlasitosti + preview |
-| Výsledky | Přehled kol, export do schránky, ranking, tiebreak a ocenění |
-| UX | Fullscreen, klávesové zkratky, motivy, validace vstupů |
-| Lokalizace | CZ/EN napříč setupem, během debaty, výsledky, tutoriály i průvodci |
+| Debate Flow Engine | Setup -> Intro -> Topic Explain -> Prepare -> Round -> Break -> Results |
+| Modes | 1v1 pairings + group mode s hlasovanim vitezu |
+| Topic System | Manual entry, knihovna, filtry, fulltext, random topic per round |
+| Learning Layer | 6-slide presentation + modal pravidel akademicke debaty |
+| App Guide | Tour picker + 4 specializovane walkthroughs |
+| Import Pipeline | XLSX/XLS/CSV/TSV/TXT/PDF + editable validation modal |
+| Audio Layer | Signals, cues, music, separate volumes, preview buttons |
+| Tournament Results | Round history, export, ranking, tiebreaks, awards |
+| UX & Accessibility | Fullscreen, hotkeys, progress UI, aria labels, clear controls |
+| Localization | CZ/EN na setupu, run screenech, guides, tutorialu i vysledcich |
 
-## Tok debaty
+## Debate Flow Map
 
 ```mermaid
 flowchart LR
-  A[Nastavení] -->|Start| B{Naučný režim?}
-  B -->|Ano| C[Tutorial 6 slidů]
-  B -->|Ne| D{Téma vyplněno / random mód}
+  A[Setup] --> B{Learning mode?}
+  B -->|Yes| C[Tutorial slides]
+  B -->|No| D{Topic source}
   C --> D
-  D -->|Ano| E[Intro]
-  D -->|Ne| F[Příprava]
-  E --> G[Vysvětlení tématu]
-  G --> F
-  F --> H[Kolo]
-  H --> I{Skupinový režim?}
-  I -->|Ano| J[Hlasování vítěze]
-  J --> K{Poslední kolo?}
-  I -->|Ne| K
-  K -->|Ne| L[Pauza]
+  D --> E[Intro]
+  E --> F[Topic explain]
+  F --> G[Preparation]
+  G --> H[Round]
+  H --> I{Group mode?}
+  I -->|Yes| J[Vote winner]
+  I -->|No| K{Last round?}
+  J --> K
+  K -->|No| L[Break]
   L --> H
-  K -->|Ano| M[Výsledky + export]
+  K -->|Yes| M[Results + Export]
 ```
 
-## Obrazovky
+## Runtime Control Panel
 
-| Obrazovka | Co řeší |
-|---|---|
-| Setup | Kompletní příprava debaty (téma, lidi, režim, časování, audio) |
-| Tutorial | Naučný režim: argumentace krok za krokem |
-| Intro | Úvod před debatou: téma, strany, struktura, odpočet |
-| Topic Explain | Kontext tématu + argument PRO/CON |
-| Run | Hlavní běh debaty s fázemi, časovačem a hlasováním |
-| Done | Finální výsledky, ranking, ocenění, export |
-
-## Ovládání během debaty
-
-| Kontext | Klávesa | Akce |
+| Context | Shortcut | Akce |
 |---|---|---|
-| Intro / Run | Space | Pauza / pokračování |
-| Run | N | Další fáze |
-| Intro / Run | R | Potvrzení restartu |
-| Globálně | Escape | Zavřít modal / ukončit průvodce |
-| Walkthrough | ArrowLeft / ArrowRight | Předchozí / další krok |
+| Intro / Run | `Space` | Pauza / pokracovat |
+| Run | `N` | Dalsi faze |
+| Intro / Run | `R` | Potvrzeny restart |
+| Global | `Escape` | Zavrit modal / ukoncit guide |
+| Walkthrough | `ArrowLeft` / `ArrowRight` | Predchozi / dalsi krok |
 
-Runtime hint se překládá jako celá věta:
+Runtime hint (pevna veta podle jazyka):
 
-- CZ: Ovládání během běhu: Mezerník pauza/pokračovat, N další fáze, R restart.
+- CZ: Ovladani behem behu: Mezernik pauza/pokracovat, N dalsi faze, R restart.
 - EN: Controls during runtime: Space pause/resume, N next phase, R restart.
 
-## Naučný režim (prezentace)
+## Learning And Guides
 
-Naučný režim je volitelný onboarding před debatou. Má 6 slidů:
+### Learning mode (presentation)
 
-1. Co je debata?
-2. Pravidla akademické debaty
+Learning mode je onboarding pred ostrou debatou. Obsahuje 6 slidu:
+
+1. Co je debata
+2. Pravidla akademicke debaty
 3. Model argumentace SEXI
-4. Jak vyvracet soupeře
-5. Nejčastější argumentační chyby
-6. Shrnutí a plynulý start debaty
+4. Jak vyvracet soupere
+5. Nejcastejsi argumentacni chyby
+6. Shrnuti a plynuly start
 
-Prezentační obsah má pevné CZ/EN mapy a při přepnutí jazyka se překreslí okamžitě.
+Slide deck ma pevne CZ/EN mapy a pri prepnuti jazyka se okamzite prekresli.
 
-## App guide (walkthrough)
+### App guide modules
 
-Tlačítko Průvodce otevře picker s tour moduly:
+Guide picker obsahuje sekce a texty jako:
 
 - App guide
-- Choose the part you want to explore:
+- Choose the part you want to explore
 - Recommended
 - Reset tours
 
-### Dostupné tour
-
-| Tour | Kroky | Co pokrývá |
+| Tour | Steps | Scope |
 |---|---:|---|
-| Quick start | 5 | téma, debatéři, start, základní flow |
-| Topics and library | 6 | ruční téma, filtry, knihovna, random témata |
-| Debaters and import | 6 | seznam, presety tříd, import, validace |
-| Mode and settings | 8 | motiv, režim, časování, signály, hudba, learning mode |
+| Quick start | 5 | tema, debateri, start, basic flow |
+| Topics and library | 6 | manual topic, filters, library, random topic mode |
+| Debaters and import | 6 | list management, class presets, file import, validation |
+| Mode and settings | 8 | theme, mode, timing, signals, music, learning mode, hotkeys |
 
-Každá tour má progress, zvýraznění cílového prvku, klávesové ovládání a možnost resetu.
+Kazdy guide krok ma progress, focused highlight, keyboard navigation a reset stavu.
 
-## Režimy debaty a bodování
+## Topics And Library
 
-### Režim párů (1v1)
-
-- Round-robin párování.
-- Automatické BYE při lichém počtu debatérů.
-- Ruční volba vítěze každého duelu.
-
-### Režim skupin
-
-- Dynamické skupiny po kolech.
-- Auto velikost i vlastní velikost skupiny.
-- Hlasování vítěze v každé skupině.
-- Ranking: výhry → Buchholz → progressive score.
-
-### Ocenění
-
-Výsledkovka umí tematická ocenění podle průběhu turnaje (streak, comeback, unbeaten a další).
-
-## Témata, knihovna a random režim
-
-- Knihovna je členěná do sekcí.
-- Témata mají metadata, obtížnost a argumentační hinty.
-- Fulltext hledá v názvu, popisu i argumentech.
-- Random režim umí losovat nové téma každé kolo.
-
-## Import debatérů
-
-### Podporované formáty
-
-- `.xlsx`, `.xls`
-- `.csv`, `.tsv`
-- `.txt`
-- `.pdf`
-
-### Co umí validační modal
-
-- Filtry vše / neúplné / třída.
-- Hromadný výběr řádků.
-- Inline editace jméno / příjmení / třída.
-- Stavy řádku: OK, chybí, bez jména, bez příjmení, prázdné.
-
-## Zvuky, signály, hudba
-
-| Funkce | Popis |
+| Funkce | Detaily |
 |---|---|
-| Signály | Upozornění na časové milníky a přechody fází |
-| Alert times | 10 / 5 / 3 / 2 / 1 sekund před koncem |
-| Start/End cue | Zvuky začátku a konce kola |
-| Skip cue | Zvuk při ručním přeskočení fáze |
-| Hlasování cue | Zvuk při vstupu do hlasování |
-| Finální akord | Závěr debaty |
-| Hudba | Běží v přípravě a mezi koly |
-| Hlasitosti | Signály a hudba mají oddělené ovládání |
-| Preview | Tlačítka testu signálu i hudby přímo v setupu |
+| Sectioned library | Temy jsou rozdelene do tematickych sekci |
+| Topic metadata | obtiznost, blurb, argumentacni hints |
+| Fulltext search | hleda v nazvu, popisu i argumentech |
+| Random topic mode | umi losovat nove tema na kazde kolo |
+| Bilingual topic text | CZ/EN mapy pro title, blurb, PRO/CON |
 
-## Lokalizace CZ/EN
+## Debaters, Pairing, Scoring
 
-- Přepínač jazyka je v hlavičce (CZ / EN).
-- Volba jazyka se ukládá do localStorage (`debateTimerLang`).
-- Lokalizace je lokální, deterministická, bez externího překládacího API.
+### Pair mode (1v1)
 
-Pokrytí lokalizace:
+1. Round-robin parovani.
+2. Automaticke BYE pri lichych poctech.
+3. Manual winner selection per duel.
 
-- Setup UI
-- Runtime fáze a status texty
-- Intro a explain obrazovky
-- Tutorial prezentace (6 slidů)
-- Walkthrough picker + kroky + smart texty
-- Výsledkový panel a export
-- Texty témat včetně blurb/PRO/CON hintů
+### Group mode
 
-## Ukládání dat
+1. Dynamicke skupiny po kolech.
+2. Auto/group size podle nastaveni.
+3. Vitez se voli v kazde skupine.
+4. Ranking: vyhry -> Buchholz -> progressive score.
 
-| Klíč | Co ukládá |
+### Results and awards
+
+Results panel obsahuje round history, export do schranky, final ranking a tematicka oceneni.
+
+## Import Console
+
+### Supported files
+
+1. `.xlsx`, `.xls`
+2. `.csv`, `.tsv`
+3. `.txt`
+4. `.pdf`
+
+### Validation modal capabilities
+
+1. Filtry `vse / neuplne / trida`.
+2. Hromadny vyber radku.
+3. Inline editace `jmeno / prijmeni / trida`.
+4. Stavove tagy: OK, chybi, bez jmena, bez prijmeni, prazdne.
+
+## Audio Console
+
+| Audio block | Chovani |
 |---|---|
-| `debateTimerV2` | setup, časy, režim, audio, filtry, random volby, tutorial, presety |
-| `debateTimerTheme` | aktivní motiv |
-| `debateTimerLang` | aktivní jazyk (`cs` / `en`) |
-| `wt_completed_tours` | dokončené průvodce |
+| Time alerts | upozorneni pri 10 / 5 / 3 / 2 / 1 sekundach |
+| Start cue | signal startu faze/kola |
+| End cue | signal konce faze/kola |
+| Skip cue | signal pri rucnim preskoceni |
+| Voting cue | signal pri vstupu do hlasovani |
+| Final chord | zaverecny audio marker |
+| Background music | priprava + pauzy mezi koly |
+| Volume model | oddelene hlasitosti pro signaly a hudbu |
+| Preview buttons | rychly test signalu i hudby v setupu |
 
-## One-file architektura
+## Localization CZ/EN
 
-Aplikace je plně v jednom souboru `debatni-casovac-v3.1.html`.
+Lokalizace je lokalni, okamzita a deterministicka. Nepouziva externi API.
 
-| Modul | Role |
+| Coverage zone | Status |
 |---|---|
-| DATA: PRESETS | výchozí seznamy debatérů |
-| DATA: TOPIC_LIBRARY | knihovna témat a metadata |
-| I18N | CZ/EN engine a statické mapy textů |
-| FILE IMPORT ENGINE | import a validace dat ze souboru |
-| AUDIO | signály, hudba, preview, fade |
-| MATCHING / SCORING | párování kol, ranking, tiebreak |
-| RENDER | intro / explain / run / done |
-| WALKTHROUGH | app guide, tour kroky, progress, reset |
+| Setup UI | mapped |
+| Intro + Topic explain | mapped |
+| Runtime phases + hints | mapped |
+| Tutorial slides | mapped |
+| App guide picker + steps | mapped |
+| Topic library text pack | mapped |
+| Results + export | mapped |
 
-## Struktura repozitáře
+Persistence klice:
 
-- `debatni-casovac-v3.1.html` - celá aplikace
-- `README.md` - dokumentace
-- `LICENSE` - Apache License 2.0
-- `NOTICE` - atribuční informace dle licence
+| Key | Purpose |
+|---|---|
+| `debateTimerV2` | setup, casy, mode, audio, filtry, random, tutorial, presets |
+| `debateTimerTheme` | aktivni theme |
+| `debateTimerLang` | aktivni jazyk (`cs` / `en`) |
+| `wt_completed_tours` | dokonceny progress guide tour |
 
-## Autor a licence
+## One-file Architecture
 
-Autor projektu: Jiří Pelikán.
+Aplikace je runtime kompletne v [debatni-casovac-v3.1.html](debatni-casovac-v3.1.html).
 
-Projekt je licencovaný pod Apache License 2.0.
+| Layer | Role |
+|---|---|
+| DATA: PRESETS | vychozi debater lists |
+| DATA: TOPIC_LIBRARY | tematicka knihovna |
+| I18N | CZ/EN mapy + runtime prepinac |
+| FILE IMPORT ENGINE | parser + validator + modal editing |
+| AUDIO ENGINE | cues, music, fade, preview |
+| MATCHING / SCORING | pairings, standings, tiebreaks |
+| RENDER ENGINE | intro, explain, run, done |
+| WALKTHROUGH ENGINE | app guide modules, steps, progress, reset |
+
+## Repository Layout
+
+| File | Purpose |
+|---|---|
+| [debatni-casovac-v3.1.html](debatni-casovac-v3.1.html) | cela aplikace |
+| [README.md](README.md) | dokumentace |
+| [LICENSE](LICENSE) | Apache License 2.0 |
+| [NOTICE](NOTICE) | atributacni informace |
+
+## Author And License
+
+Author: Jiri Pelikan.
+
+Licensed under Apache License 2.0.
