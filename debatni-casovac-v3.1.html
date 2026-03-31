@@ -3512,8 +3512,8 @@ SCHMIDT Lena (19)
           <div class="row" style="margin-top: 10px;">
             <div class="tog tutorial-tog" role="group" aria-label="Naučný režim">
               <div class="left">
-                <div class="name">Naučný režim <span class="tutorial-badge">Prezentace</span></div>
-                <div class="desc">Před debatou se zobrazí krátký průvodce: co je debata, pravidla, jak argumentovat. Ideální pro začátečníky.</div>
+                <div class="name" id="tutorialModeName">Naučný režim <span class="tutorial-badge" id="tutorialModeBadge">Prezentace</span></div>
+                <div class="desc" id="tutorialModeDesc">Před debatou se zobrazí krátký průvodce: co je debata, pravidla, jak argumentovat. Ideální pro začátečníky.</div>
               </div>
               <div class="switch" id="swTutorial" role="switch" aria-checked="false" tabindex="0"></div>
             </div>
@@ -3561,7 +3561,7 @@ SCHMIDT Lena (19)
           <button class="btn" id="btnFullscreenHint" type="button" title="Přepni do režimu celé obrazovky během debaty">Celá obrazovka</button>
         </div>
 
-        <div class="hint">
+        <div class="hint" id="runtimeControlsHint">
           Ovládání během běhu: <b>Mezerník</b> pauza/pokračovat, <b>N</b> další fáze, <b>R</b> restart.
         </div>
       </div>
@@ -5505,6 +5505,182 @@ SCHMIDT Lena (19)
       en.setAttribute("aria-pressed", isCs ? "false" : "true");
     }
 
+    const TUTORIAL_EN_SLIDES = [
+      {
+        title: "What is a debate?",
+        body: `<div class="tut-two-cols">
+            <div class="tut-col tut-pro"><span class="tut-dot g"></span><strong>PRO</strong> - I agree</div>
+            <div class="tut-col tut-con"><span class="tut-dot r"></span><strong>CON</strong> - I disagree</div>
+          </div>
+          <p class="tut-text">Two sides / teams / people draw a side and try to <strong>persuade listeners / the class / the audience / undecided people</strong>.</p>
+          <div class="tut-highlight">
+            <svg class="tut-ico"><use href="#ico-bulb"></use></svg>
+            <span>Debate = <strong>reasons + responses</strong>, not a quarrel. You do not have to agree with what you are saying!</span>
+          </div>`
+      },
+      {
+        title: "Rules",
+        body: `<div class="tut-rules">
+            <div class="tut-rule"><svg class="tut-ico"><use href="#ico-silence"></use></svg><div><strong>Be respectful</strong> - no insults or personal attacks</div></div>
+            <div class="tut-rule"><svg class="tut-ico"><use href="#ico-pause"></use></svg><div><strong>Do not interrupt</strong> - only one person speaks at a time</div></div>
+            <div class="tut-rule"><svg class="tut-ico"><use href="#ico-target"></use></svg><div><strong>Stay on topic</strong> - do not go off-topic</div></div>
+            <div class="tut-rule"><svg class="tut-ico"><use href="#ico-proof"></use></svg><div><strong>Back it up</strong> - explain why + give an example</div></div>
+          </div>
+          <div class="tut-highlight">
+            <svg class="tut-ico"><use href="#ico-clock"></use></svg>
+            <span>Your time is limited - focus on what matters most.</span>
+          </div>`
+      },
+      {
+        title: "Argument structure: SEXI",
+        body: `<div class="tut-sexi-grid">
+            <div class="tut-sexi-card s"><div class="tut-sexi-letter">S</div><div class="tut-sexi-en">Statement</div><div class="tut-sexi-cz">Statement</div><div class="tut-sexi-hint">"I claim that..."</div></div>
+            <div class="tut-sexi-card e"><div class="tut-sexi-letter">E</div><div class="tut-sexi-en">Explanation</div><div class="tut-sexi-cz">Explanation</div><div class="tut-sexi-hint">"Because..."</div></div>
+            <div class="tut-sexi-card x"><div class="tut-sexi-letter">X</div><div class="tut-sexi-en">eXample</div><div class="tut-sexi-cz">Example</div><div class="tut-sexi-hint">"For example..."</div></div>
+            <div class="tut-sexi-card i"><div class="tut-sexi-letter">I</div><div class="tut-sexi-en">Impact</div><div class="tut-sexi-cz">Impact</div><div class="tut-sexi-hint">"Therefore..."</div></div>
+          </div>
+          <div class="tut-example">
+            <div class="tut-example-label">Example:</div>
+            <p>"<strong>Phones should stay off desks</strong> because <strong>they hurt concentration</strong>; for example, <strong>notifications break attention</strong>, therefore <strong>we learn less effectively</strong>."</p>
+          </div>
+          <div class="tut-highlight">
+            <svg class="tut-ico"><use href="#ico-key"></use></svg>
+            <span><strong>S - E - X - I</strong> = Claim - Why - Example - Impact</span>
+          </div>`
+      },
+      {
+        title: "How to refute the opponent",
+        body: `<div class="tut-steps">
+            <div class="tut-step"><span class="tut-step-num">1</span><div>"<strong>The opponent says that...</strong>" - restate fairly</div></div>
+            <div class="tut-step"><span class="tut-step-num">2</span><div>"<strong>But... because...</strong>" - show the flaw</div></div>
+            <div class="tut-step"><span class="tut-step-num">3</span><div>"<strong>A better approach is...</strong>" - offer a stronger alternative</div></div>
+          </div>
+          <div class="tut-attacks">
+            <div class="tut-attack"><svg class="tut-ico"><use href="#ico-search"></use></svg><div><strong>Missing reason</strong> - "Why is that true?"</div></div>
+            <div class="tut-attack"><svg class="tut-ico"><use href="#ico-search"></use></svg><div><strong>Weak example</strong> - "That is just an exception."</div></div>
+            <div class="tut-attack"><svg class="tut-ico"><use href="#ico-search"></use></svg><div><strong>Low impact</strong> - "That impact is minor."</div></div>
+          </div>
+          <div class="tut-highlight">
+            <svg class="tut-ico"><use href="#ico-bulb"></use></svg>
+            <span>Find <strong>one key weakness</strong> and propose a better solution.</span>
+          </div>`
+      },
+      {
+        title: "What to avoid",
+        body: `<div class="tut-mistakes">
+            <div class="tut-mistake">
+              <svg class="tut-ico"><use href="#ico-ban"></use></svg>
+              <div>
+                <strong>Personal attack</strong>
+                <div class="tut-mistake-bad">"You are stupid..." <svg class="tut-ico"><use href="#ico-x"></use></svg></div>
+                <div class="tut-mistake-good">-&gt; Attack the idea, not the person <svg class="tut-ico"><use href="#ico-check"></use></svg></div>
+              </div>
+            </div>
+            <div class="tut-mistake">
+              <svg class="tut-ico"><use href="#ico-ban"></use></svg>
+              <div>
+                <strong>Misrepresenting the opponent</strong>
+                <div class="tut-mistake-bad">"They said..." (but they did not) <svg class="tut-ico"><use href="#ico-x"></use></svg></div>
+                <div class="tut-mistake-good">-&gt; Restate their point accurately <svg class="tut-ico"><use href="#ico-check"></use></svg></div>
+              </div>
+            </div>
+            <div class="tut-mistake">
+              <svg class="tut-ico"><use href="#ico-ban"></use></svg>
+              <div>
+                <strong>False either-or</strong>
+                <div class="tut-mistake-bad">"There are only 2 options!" <svg class="tut-ico"><use href="#ico-x"></use></svg></div>
+                <div class="tut-mistake-good">-&gt; Look for a practical middle ground <svg class="tut-ico"><use href="#ico-check"></use></svg></div>
+              </div>
+            </div>
+          </div>
+          <div class="tut-highlight">
+            <svg class="tut-ico"><use href="#ico-trophy"></use></svg>
+            <span><strong>Winning line:</strong> "My impact is larger because..."</span>
+          </div>`
+      },
+      {
+        title: "Ready to start?",
+        body: `<div class="tut-recap">
+            <div class="tut-recap-item"><span class="tut-step-num">1</span> Debate = reasons + responses, not a quarrel</div>
+            <div class="tut-recap-item"><span class="tut-step-num">2</span> Be respectful, do not interrupt, stay on topic</div>
+            <div class="tut-recap-item"><span class="tut-step-num">3</span> Argument = <strong>SEXI</strong> (S - E - X - I)</div>
+            <div class="tut-recap-item"><span class="tut-step-num">4</span> Refutation: "They say... But... A better approach is..."</div>
+            <div class="tut-recap-item"><span class="tut-step-num">5</span> Debate ideas, not people</div>
+          </div>
+          <div class="tut-highlight tut-ready-box">
+            <svg class="tut-ico"><use href="#ico-zap"></use></svg>
+            <span>Speak up confidently. Mistakes are normal - that is how you improve.</span>
+          </div>`
+      }
+    ];
+
+    let tutorialCsSlides = null;
+
+    function captureTutorialCsSlides() {
+      if (tutorialCsSlides) return;
+      const slides = document.querySelectorAll("#screen-tutorial .tut-slide");
+      tutorialCsSlides = Array.from(slides).map(function(slide) {
+        const titleEl = slide.querySelector(".tut-title");
+        const bodyEl = slide.querySelector(".tut-body");
+        return {
+          title: titleEl ? titleEl.textContent : "",
+          body: bodyEl ? bodyEl.innerHTML : ""
+        };
+      });
+    }
+
+    function applyTutorialLanguageContent() {
+      captureTutorialCsSlides();
+      const slides = document.querySelectorAll("#screen-tutorial .tut-slide");
+      if (!slides.length) return;
+      slides.forEach(function(slide, idx) {
+        const titleEl = slide.querySelector(".tut-title");
+        const bodyEl = slide.querySelector(".tut-body");
+        if (!titleEl || !bodyEl) return;
+        if (currentLang === "en") {
+          const enSlide = TUTORIAL_EN_SLIDES[idx];
+          if (!enSlide) return;
+          titleEl.textContent = enSlide.title;
+          bodyEl.innerHTML = enSlide.body;
+        } else {
+          const csSlide = tutorialCsSlides && tutorialCsSlides[idx];
+          if (!csSlide) return;
+          titleEl.textContent = csSlide.title;
+          bodyEl.innerHTML = csSlide.body;
+        }
+      });
+    }
+
+    function applyFixedLocalizedStrings() {
+      const en = currentLang === "en";
+
+      const tutorialName = document.getElementById("tutorialModeName");
+      if (tutorialName) {
+        const badgeText = en ? "Presentation" : "Prezentace";
+        tutorialName.innerHTML = (en ? "Learning mode " : "Naučný režim ") +
+          '<span class="tutorial-badge" id="tutorialModeBadge">' + badgeText + "</span>";
+      }
+
+      const tutorialDesc = document.getElementById("tutorialModeDesc");
+      if (tutorialDesc) {
+        tutorialDesc.textContent = en
+          ? "A short pre-debate guide appears: what debate is, rules, and argument structure. Ideal for beginners."
+          : "Před debatou se zobrazí krátký průvodce: co je debata, pravidla, jak argumentovat. Ideální pro začátečníky.";
+      }
+
+      const runtimeHint = document.getElementById("runtimeControlsHint");
+      if (runtimeHint) {
+        runtimeHint.innerHTML = en
+          ? 'Controls during runtime: <b>Space</b> pause/resume, <b>N</b> next phase, <b>R</b> restart.'
+          : 'Ovládání během běhu: <b>Mezerník</b> pauza/pokračovat, <b>N</b> další fáze, <b>R</b> restart.';
+      }
+
+      const tutorialScreen = document.getElementById("screen-tutorial");
+      if (tutorialScreen) {
+        tutorialScreen.setAttribute("aria-label", en ? "Learning mode - how to debate" : "Naučný režim – jak debatovat");
+      }
+    }
+
     function loadLanguage() {
       try {
         const saved = localStorage.getItem(I18N_LANG_KEY);
@@ -5528,6 +5704,8 @@ SCHMIDT Lena (19)
       }
       refreshLanguageToggle();
       if (document.body) translateSubtree(document.body);
+      applyTutorialLanguageContent();
+      applyFixedLocalizedStrings();
       saveLanguage(currentLang);
 
       // Force rerenders so freshly generated UI also passes through i18n.
@@ -5543,9 +5721,22 @@ SCHMIDT Lena (19)
         if (typeof setTimerDisplays === "function") setTimerDisplays();
         if (typeof renderCurrentView === "function" && document.getElementById("screen-run") && document.getElementById("screen-run").classList.contains("active")) renderCurrentView();
         if (typeof state !== "undefined" && state.phase === "done" && typeof renderDoneScreen === "function") renderDoneScreen();
+        if (typeof renderPicker === "function") {
+          const pickerOverlay = document.getElementById("wtPickerOverlay");
+          if (pickerOverlay && pickerOverlay.classList.contains("active")) renderPicker();
+        }
+        if (typeof active !== "undefined" && active && typeof showStep === "function" && typeof currentStep === "number" && currentStep >= 0) {
+          showStep(currentStep);
+        }
+        if (typeof updateTutSlide === "function") {
+          const tutorialScreen = document.getElementById("screen-tutorial");
+          if (tutorialScreen && tutorialScreen.classList.contains("active")) updateTutSlide("fwd");
+        }
       } catch (_) {}
 
       if (document.body) translateSubtree(document.body);
+      applyTutorialLanguageContent();
+      applyFixedLocalizedStrings();
     }
 
     function wireLanguageSwitcher() {
