@@ -30,7 +30,8 @@ Projekt je navržený tak, aby fungoval:
 12. [Interní architektura (one-file)](#interní-architektura-one-file)
 13. [Interaktivní prvky (ID map)](#interaktivní-prvky-id-map)
 14. [Struktura repozitáře](#struktura-repozitáře)
-15. [Autorství a licence](#autorství-a-licence)
+15. [Vestavěná metadata (v HTML)](#vestavěná-metadata-v-html)
+16. [Autorství a licence](#autorství-a-licence)
 
 ## Co aplikace obsahuje
 
@@ -43,7 +44,7 @@ Projekt je navržený tak, aby fungoval:
 | Import osob | XLSX/XLS/CSV/TSV/TXT/PDF + kontrolní modal s editací |
 | Výsledky | Přehled kol, export do schránky, ve skupinách i tiebreak ranking a ocenění |
 | UX nástroje | Walkthrough (4 tour), fullscreen, validace vstupů, motivy UI |
-| Lokalizace | Přepínač jazyka CZ/EN s okamžitým, deterministickým přepnutím bez síťového překladu |
+| Lokalizace | Přepínač jazyka CZ/EN s okamžitým, deterministickým přepnutím (exact/regex/fragment + statické EN packy témat i tutorial slidů) |
 
 ## Tok debaty
 
@@ -148,13 +149,20 @@ Výsledkový panel umí přidělovat tematická ocenění podle průběhu turnaj
 
 - Přepínač jazyka je přímo v hlavičce (`CZ` / `EN`).
 - Volba se ukládá do `localStorage` (`debateTimerLang`).
+- Překlad je plně lokální a statický: bez runtime volání externích překladových API.
 - Lokalizace pokrývá:
   - statické UI texty,
   - dynamické texty generované během běhu,
   - výsledkový panel,
-  - export textových výsledků.
+  - export textových výsledků,
+  - tutorial prezentaci (6 slidů),
+  - walkthrough průvodce (picker + kroky + smart texty),
+  - fixní runtime texty (např. hint ovládání během běhu, validační řádky, intro struktura kol).
 - Překlad je navržený nad celými významovými bloky (exact/regex/fragment), ne jako word-by-word převod.
-- Překlad je řešen staticky v aplikaci (exact/regex/fragment + statický EN pack pro témata), bez runtime volání překladových API.
+- Nad základní mapou běží i statické EN packy:
+  - `I18N_TOPIC_STATIC_EN` pro témata (názvy, blurby, argumenty, tagy),
+  - `TUTORIAL_EN_SLIDES` pro celý obsah 6 slidů.
+- Přepnutí jazyka okamžitě přerenderuje aktivní obrazovky (topic list, tutorial, run phase, done, otevřený walkthrough picker/krok), takže texty „nedoskakují“ později.
 - Jazyk lze změnit i během běžící debaty bez reloadu stránky.
 
 ## Verifikace lokalizace
@@ -167,9 +175,11 @@ Lokalizace je kontrolovaná dvěma auditními průchody nad zdrojovým kódem:
 Aktuální stav:
 
 - Statické texty: pokryté přes exact/regex/fragment překladovou vrstvu.
+- Témata: pokrytá přes statický EN topic pack přímo v aplikaci.
+- Tutorial prezentace: pokrytá přes dedikovaný EN slide pack (`TUTORIAL_EN_SLIDES`).
 - Runtime texty: pokryté synchronně při renderu + i18n observer pro nově vložené uzly.
 
-Poznámka: témata i průvodce se překládají deterministicky ze statického slovníku v aplikaci, takže přepnutí jazyka je okamžité a bez doskakování textu.
+Poznámka: témata, tutorial i průvodce se překládají deterministicky ze statických map v aplikaci, takže přepnutí jazyka je okamžité a bez doskakování textu.
 
 ## Časování, zvuky, hudba
 
@@ -195,7 +205,7 @@ Vše je v jednom souboru `debatni-casovac-v3.1.html`, ale kód je modulárně ro
 |---|---|
 | `DATA: PRESETS` | výchozí seznamy debatérů (9.A/9.B) |
 | `DATA: TOPIC_LIBRARY` | knihovna témat včetně metadata sekcí, obtížnosti, tagů a argumentačních nápověd |
-| `I18N (CZ / EN)` | jazykový engine (exact/regex/fragment + statický EN topic pack), observer pro dynamický obsah |
+| `I18N (CZ / EN)` | jazykový engine (exact/regex/fragment), statický EN topic pack, statický EN tutorial pack, fixní lokalizované runtime texty, observer pro dynamický obsah |
 | `FILE IMPORT ENGINE` | import z XLSX/XLS/CSV/TSV/TXT/PDF + normalizace + kontrolní modal |
 | `UTIL` | parse/normalizace času, sanitizace vstupů, pomocné funkce |
 | `AUDIO` | signalizační zvuky, preview, hudba v pauzách, fade-in/fade-out |
@@ -214,7 +224,7 @@ Vše je v jednom souboru `debatni-casovac-v3.1.html`, ale kód je modulárně ro
 ## Interaktivní prvky (ID map)
 
 <details>
-<summary><strong>Rozbalit kompletní inventory (150/150 ID)</strong></summary>
+<summary><strong>Rozbalit kompletní inventory ID (v3.1)</strong></summary>
 
 ### SVG tutorial icon sprite
 
@@ -295,6 +305,7 @@ Vše je v jednom souboru `debatni-casovac-v3.1.html`, ale kód je modulárně ro
 - `btnStart`
 - `btnPravidla`
 - `btnFullscreenHint`
+- `runtimeControlsHint`
 
 ### Presety, import panel a validace
 
@@ -395,6 +406,16 @@ Vše je v jednom souboru `debatni-casovac-v3.1.html`, ale kód je modulárně ro
 - `README.md` — dokumentace projektu
 - `LICENSE` — Apache License 2.0
 - `NOTICE` — povinné atribuční informace
+
+## Vestavěná metadata (v HTML)
+
+Soubor `debatni-casovac-v3.1.html` obsahuje v `<head>` i právní metadata, aby byla identifikace původu přítomná i při samostatném sdílení one-file aplikace:
+
+- `meta name="spdx:license"` (`Apache-2.0`)
+- `meta name="license"` a `meta name="notice"`
+- `meta name="author"`, `meta name="copyright"`, `meta name="rights"`
+- odkazy `link rel="license"` (`LICENSE`) a `link rel="copyright"` (`NOTICE`)
+- JSON-LD blok (`SoftwareApplication`) s autorem, licencí a usage info
 
 ## Autorství a licence
 
