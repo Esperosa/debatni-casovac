@@ -4059,6 +4059,9 @@ SCHMIDT Lena (19)
       "Vymazat": "Clear",
       "Vyhledávání": "Search",
       "Sekce témat": "Topic section",
+      "Režim náhodného tématu": "Random topic mode",
+      "Režim debaty": "Debate mode",
+      "Čas na kolo": "Round time",
       "Obtížnost:": "Difficulty:",
       "Odstranit duplicity": "Remove duplicates",
       "Vymazat seznam": "Clear list",
@@ -4210,6 +4213,7 @@ SCHMIDT Lena (19)
       [/^Odhad:\s*([0-9]{2}:[0-9]{2})$/, "Estimate: $1"],
       [/^Kolo\s*(\d+)\s*[\/\u202f]\s*(\d+)$/, "Round $1 / $2"],
       [/^(\d+)\s+kol\s+·\s+([0-9]{2}:[0-9]{2})\s+debata\s+·\s+([0-9]{2}:[0-9]{2})\s+příprava$/, "$1 rounds · $2 debate · $3 prep"],
+      [/^Označit\s+(.+)\s+jako\s+vítěze\s+\((.+)\)$/, "Mark $1 as winner ($2)"],
       [/^Import:\s*(\d+)\s*osob\s*nalezeno$/, "Import: $1 people found"],
       [/^Nacitam:\s*(.+)\.\.\.$/, "Loading: $1..."],
       [/^Načítám:\s*(.+)\.\.\.$/, "Loading: $1..."],
@@ -7832,12 +7836,22 @@ SCHMIDT Lena (19)
         if (state.phase === "round") {
           const scores = state.roundScores[state.roundIndex] || [];
           const winner = (scores[i] !== undefined) ? scores[i] : null;
+          const proRoleRaw = state.topicProLabel || "PRO";
+          const conRoleRaw = state.topicConLabel || "PROTI";
+          const proRole = currentLang === "en" ? translateTextValue(proRoleRaw) : proRoleRaw;
+          const conRole = currentLang === "en" ? translateTextValue(conRoleRaw) : conRoleRaw;
+          const proWinnerAria = currentLang === "en"
+            ? "Mark " + m.pro + " as winner (" + proRole + ")"
+            : "Označit " + m.pro + " jako vítěze (" + proRole + ")";
+          const conWinnerAria = currentLang === "en"
+            ? "Mark " + m.con + " as winner (" + conRole + ")"
+            : "Označit " + m.con + " jako vítěze (" + conRole + ")";
           left.classList.add("round-active");
           right.classList.add("round-active");
           left.setAttribute("role", "button");
-          left.setAttribute("aria-label", "Označit " + m.pro + " jako vítěze (" + (state.topicProLabel || "PRO") + ")");
+          left.setAttribute("aria-label", proWinnerAria);
           right.setAttribute("role", "button");
-          right.setAttribute("aria-label", "Označit " + m.con + " jako vítěze (" + (state.topicConLabel || "PROTI") + ")");
+          right.setAttribute("aria-label", conWinnerAria);
           left.tabIndex = 0;
           right.tabIndex = 0;
           if (winner === "pro") {
