@@ -20,18 +20,19 @@ Projekt je navržený tak, aby fungoval:
 2. [Tok debaty](#tok-debaty)
 3. [Obrazovky a funkcionality](#obrazovky-a-funkcionality)
 4. [Ovládání a klávesové zkratky](#ovládání-a-klávesové-zkratky)
-5. [Režimy debaty a bodování](#režimy-debaty-a-bodování)
-6. [Témata, filtry a náhodné losování](#témata-filtry-a-náhodné-losování)
-7. [Import debatérů ze souboru](#import-debatérů-ze-souboru)
-8. [Jazyková lokalizace CZ/EN](#jazyková-lokalizace-czen)
-9. [Verifikace lokalizace](#verifikace-lokalizace)
-10. [Časování, zvuky, hudba](#časování-zvuky-hudba)
-11. [Ukládání dat](#ukládání-dat)
-12. [Interní architektura (one-file)](#interní-architektura-one-file)
-13. [Interaktivní prvky (ID map)](#interaktivní-prvky-id-map)
-14. [Struktura repozitáře](#struktura-repozitáře)
-15. [Vestavěná metadata (v HTML)](#vestavěná-metadata-v-html)
-16. [Autorství a licence](#autorství-a-licence)
+5. [Naučný režim (prezentace)](#naučný-režim-prezentace)
+6. [App guide (walkthrough)](#app-guide-walkthrough)
+7. [Režimy debaty a bodování](#režimy-debaty-a-bodování)
+8. [Témata, filtry a náhodné losování](#témata-filtry-a-náhodné-losování)
+9. [Import debatérů ze souboru](#import-debatérů-ze-souboru)
+10. [Jazyková lokalizace CZ/EN](#jazyková-lokalizace-czen)
+11. [Verifikace lokalizace](#verifikace-lokalizace)
+12. [Časování, zvuky, hudba](#časování-zvuky-hudba)
+13. [Ukládání dat](#ukládání-dat)
+14. [Interní architektura (one-file)](#interní-architektura-one-file)
+15. [Interaktivní prvky (ID map)](#interaktivní-prvky-id-map)
+16. [Struktura repozitáře](#struktura-repozitáře)
+17. [Autorství a licence](#autorství-a-licence)
 
 ## Co aplikace obsahuje
 
@@ -41,9 +42,11 @@ Projekt je navržený tak, aby fungoval:
 | Režimy | 1v1 páry i skupinová varianta s hlasováním vítězů |
 | Knihovna témat | Sekce, obtížnost (1–5), fulltext, random volba témat po kolech |
 | Edukační vrstva | 6slidový naučný režim + samostatný modal „Pravidla akademické debaty“ |
+| Průvodci | App guide picker + 4 specializované walkthrough tour s progress a resetem |
 | Import osob | XLSX/XLS/CSV/TSV/TXT/PDF + kontrolní modal s editací |
 | Výsledky | Přehled kol, export do schránky, ve skupinách i tiebreak ranking a ocenění |
-| UX nástroje | Walkthrough (4 tour), fullscreen, validace vstupů, motivy UI |
+| Audio | Signalizační pípnutí, start/end zvuky, hudba v pauzách, oddělené hlasitosti + preview |
+| UX nástroje | Fullscreen, validace vstupů, motivy UI, klávesové ovládání |
 | Lokalizace | Přepínač jazyka CZ/EN s okamžitým, deterministickým přepnutím (exact/regex/fragment + statické EN packy témat i tutorial slidů) |
 
 ## Tok debaty
@@ -90,6 +93,60 @@ flowchart LR
 | Přepínač motivu | Enter / Space | Přepnout motiv |
 | Přepínač motivu | Šipky | Posun mezi motivy |
 | Walkthrough | ArrowLeft / ArrowRight | Předchozí / další krok |
+
+Runtime nápověda v aplikaci se lokalizuje jako celá věta:
+
+- CZ: Ovládání během běhu: Mezerník pauza/pokračovat, N další fáze, R restart.
+- EN: Controls during runtime: Space pause/resume, N next phase, R restart.
+
+## Naučný režim (prezentace)
+
+Naučný režim je volitelný 6slidový pre-debate onboarding určený pro začátečníky. Zapíná se přepínačem `swTutorial`.
+
+| Slide | Obsah |
+|---|---|
+| 1. Co je debata? | role PRO/PROTI, jak funguje přesvědčování, co je debata vs. hádka |
+| 2. Pravidla | slušnost, nepřerušování, držení tématu, argument podložený důvodem/příkladem |
+| 3. Argumentace SEXI | Statement, Explanation, eXample, Impact + praktický příklad |
+| 4. Vyvracení soupeře | postup „Soupeř říká... / Ale... protože... / Lepší je...“ |
+| 5. Čemu se vyhnout | osobní útok, strawman, falešné dilema |
+| 6. Shrnutí a start | rychlá rekapitulace a přechod do debaty |
+
+Implementace lokalizace prezentace:
+
+- český originál je v HTML slidech,
+- anglická verze je staticky definovaná v `TUTORIAL_EN_SLIDES`,
+- při přepnutí jazyka se obsah slide okamžitě překreslí bez reloadu.
+
+## App guide (walkthrough)
+
+Tlačítko Průvodce (`btnWalkthrough`) otevírá picker, kde si uživatel vybere část aplikace k procvičení.
+
+### Picker texty a stavy
+
+- App guide
+- Choose the part you want to explore:
+- Recommended
+- Reset tours
+- Done / Hotovo badge
+- steps / kroků badge
+
+### 4 dostupné tour
+
+| Tour | Kroky | Co pokrývá |
+|---|---:|---|
+| Quick start | 5 | téma, debatéři, start, základní flow |
+| Topics and library | 6 | ruční téma, random, kategorie, fulltext, výběr z knihovny |
+| Debaters and import | 6 | seznam, dedupe, presety tříd, import souboru, validační panel |
+| Mode and settings | 8 | motiv, režim, časy, signály, hudba, learning mode |
+
+Každá tour má:
+
+- krokový progress,
+- `Esc` pro ukončení,
+- zvýraznění cílového prvku,
+- kontextové try-it kroky,
+- ukládání dokončení do `wt_completed_tours`.
 
 ## Režimy debaty a bodování
 
@@ -185,8 +242,24 @@ Poznámka: témata, tutorial i průvodce se překládají deterministicky ze sta
 
 - Odpočty a fáze: příprava, kolo, pauza mezi koly.
 - Kritické zvukové upozornění: `10 / 5 / 3 / 2 / 1` sekund.
-- Zvuky: start kola, konec kola, skip fáze, vstup do hlasování, finální akord.
-- Hudba v pauzách má samostatnou hlasitost oddělenou od signálů.
+- Signalizační audio události:
+  - odpočet (`ALERT_TIMES`),
+  - start kola,
+  - konec kola,
+  - skip fáze,
+  - vstup do hlasování,
+  - finální akord.
+- Hudba v pauzách:
+  - běží v přípravě a mezi koly,
+  - má vlastní gain a fade-in/fade-out,
+  - hlasitost je oddělená od signálů.
+- Setup obsahuje náhledová tlačítka:
+  - `prevSignal` pro ukázku signálu,
+  - `prevMusic` pro ukázku hudby.
+- Přepínače:
+  - `swSound` pro signály,
+  - `swMusic` pro hudbu,
+  - posuvníky `volSignal` a `volMusic` pro jemné doladění.
 
 ## Ukládání dat
 
@@ -406,16 +479,6 @@ Vše je v jednom souboru `debatni-casovac-v3.1.html`, ale kód je modulárně ro
 - `README.md` — dokumentace projektu
 - `LICENSE` — Apache License 2.0
 - `NOTICE` — povinné atribuční informace
-
-## Vestavěná metadata (v HTML)
-
-Soubor `debatni-casovac-v3.1.html` obsahuje v `<head>` i právní metadata, aby byla identifikace původu přítomná i při samostatném sdílení one-file aplikace:
-
-- `meta name="spdx:license"` (`Apache-2.0`)
-- `meta name="license"` a `meta name="notice"`
-- `meta name="author"`, `meta name="copyright"`, `meta name="rights"`
-- odkazy `link rel="license"` (`LICENSE`) a `link rel="copyright"` (`NOTICE`)
-- JSON-LD blok (`SoftwareApplication`) s autorem, licencí a usage info
 
 ## Autorství a licence
 
