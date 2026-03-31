@@ -1,0 +1,7 @@
+# OS artifacts
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Logs
+*.log
