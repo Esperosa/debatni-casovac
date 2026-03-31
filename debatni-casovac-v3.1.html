@@ -4469,16 +4469,24 @@ SCHMIDT Lena (19)
     }
 
     function applyLanguage(lang) {
+      const prevLang = currentLang;
       currentLang = (lang === "en") ? "en" : "cs";
       document.documentElement.lang = currentLang;
       document.documentElement.setAttribute("data-lang", currentLang);
       document.title = currentLang === "en" ? "Debate Timer" : "Debatní časovač";
+      if (typeof syncTopicTextareaLanguage === "function") {
+        syncTopicTextareaLanguage(prevLang);
+      }
       refreshLanguageToggle();
       if (document.body) translateSubtree(document.body);
       saveLanguage(currentLang);
 
       // Force rerenders so freshly generated UI also passes through i18n.
       try {
+        if (typeof buildTopicCategoryOptions === "function") buildTopicCategoryOptions();
+        if (typeof buildRndCatPicker === "function") buildRndCatPicker();
+        if (typeof buildRndDiffPicker === "function") buildRndDiffPicker();
+        if (typeof buildDiffFilter === "function") buildDiffFilter();
         if (typeof renderTopics === "function") renderTopics();
         if (typeof renderPresetList === "function") renderPresetList();
         if (typeof updateTotalAndValidation === "function") updateTotalAndValidation();
@@ -5649,11 +5657,11 @@ SCHMIDT Lena (19)
     // Weights: K=0.25, A=0.25, N=0.20, E=0.15, V=0.15
     const DIFF_WEIGHTS = [0.25, 0.25, 0.20, 0.15, 0.15];
     const DIFF_LABELS = [
-      { max: 1.9, label: "Začátečník", emoji: "🟢", age: "12–13 let" },
-      { max: 2.9, label: "Snadné",     emoji: "🟡", age: "13–15 let" },
-      { max: 3.9, label: "Střední",     emoji: "🟠", age: "15–17 let" },
-      { max: 4.5, label: "Pokročilé",   emoji: "🔴", age: "16–18 let" },
-      { max: 5.0, label: "Expert",      emoji: "⚫", age: "18–20 let" }
+      { max: 1.9, label: "Začátečník", labelEn: "Beginner",     emoji: "🟢", age: "12–13 let", ageEn: "ages 12–13" },
+      { max: 2.9, label: "Snadné",     labelEn: "Easy",         emoji: "🟡", age: "13–15 let", ageEn: "ages 13–15" },
+      { max: 3.9, label: "Střední",    labelEn: "Intermediate", emoji: "🟠", age: "15–17 let", ageEn: "ages 15–17" },
+      { max: 4.5, label: "Pokročilé",  labelEn: "Advanced",     emoji: "🔴", age: "16–18 let", ageEn: "ages 16–18" },
+      { max: 5.0, label: "Expert",     labelEn: "Expert",       emoji: "⚫", age: "18–20 let", ageEn: "ages 18–20" }
     ];
     function calcDifficulty(raw) {
       if (!raw) return null;
@@ -5883,11 +5891,150 @@ SCHMIDT Lena (19)
       if (l) { t.proLabel = l[0]; t.conLabel = l[1]; }
     }));
 
+    const TOPIC_SECTION_TITLE_EN = {
+      school: "School and Education",
+      tech: "Technology and AI",
+      social: "Social Media and Culture",
+      rights: "Rights, Freedom, and Justice",
+      identity: "Identity, Relationships, and Society",
+      philosophy: "Philosophical Dilemmas",
+      environment: "Nature and Environment",
+      everyday: "Everyday Decisions",
+      sport: "Sport, Entertainment, and Leisure",
+      future: "Future and Big Questions",
+      evergreen: "Evergreen Topics",
+      media: "Media and Information",
+      money: "Money and Economics",
+      health: "Health and Body",
+      history: "History and Lessons",
+      digital: "Digital Life",
+      ethics: "Ethical Puzzles",
+      culture: "Culture and Art",
+      relationships: "Relationships and Growing Up",
+      advanced: "Advanced Topics",
+      expert: "Expert Topics"
+    };
+
+    function buildEnglishTopicPack() {
+      TOPIC_LIBRARY.forEach(function(sec) {
+        const secEn = TOPIC_SECTION_TITLE_EN[sec.id] || translateCoreTextCsToEn(sec.title);
+        sec.titleEn = secEn;
+        I18N_EXACT_EN[sec.title] = secEn;
+
+        sec.topics.forEach(function(t) {
+          t.titleEn = translateCoreTextCsToEn(t.title || "");
+          t.blurbEn = translateCoreTextCsToEn(t.blurb || "");
+          t.proEn = translateCoreTextCsToEn(t.pro || "");
+          t.conEn = translateCoreTextCsToEn(t.con || "");
+          t.proLabelEn = translateCoreTextCsToEn(t.proLabel || "PRO");
+          t.conLabelEn = translateCoreTextCsToEn(t.conLabel || "PROTI");
+
+          I18N_EXACT_EN[t.title] = t.titleEn;
+          if (t.blurb) I18N_EXACT_EN[t.blurb] = t.blurbEn;
+          if (t.pro) I18N_EXACT_EN[t.pro] = t.proEn;
+          if (t.con) I18N_EXACT_EN[t.con] = t.conEn;
+          if (t.proLabel) I18N_EXACT_EN[t.proLabel] = t.proLabelEn;
+          if (t.conLabel) I18N_EXACT_EN[t.conLabel] = t.conLabelEn;
+
+          if (Array.isArray(t.tags)) {
+            t.tagsEn = t.tags.map(function(tag) { return translateCoreTextCsToEn(tag); });
+            t.tags.forEach(function(tag, idx) {
+              I18N_EXACT_EN[tag] = t.tagsEn[idx];
+            });
+          } else {
+            t.tagsEn = [];
+          }
+        });
+      });
+    }
+
+    buildEnglishTopicPack();
+
     /**********************
      * UTIL
      **********************/
     const $ = (id) => document.getElementById(id);
     const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+
+    function diffLabelText(lbl) {
+      return currentLang === "en" ? (lbl.labelEn || lbl.label) : lbl.label;
+    }
+
+    function diffAgeText(lbl) {
+      return currentLang === "en" ? (lbl.ageEn || lbl.age) : lbl.age;
+    }
+
+    function sectionTitleText(sec) {
+      return currentLang === "en" ? (sec.titleEn || sec.title) : sec.title;
+    }
+
+    function topicFieldText(topic, field) {
+      if (!topic) return "";
+      if (currentLang === "en") {
+        const enKey = field + "En";
+        if (typeof topic[enKey] === "string" && topic[enKey]) return topic[enKey];
+      }
+      return topic[field] || "";
+    }
+
+    function topicTagsText(topic) {
+      if (!topic) return [];
+      if (currentLang === "en" && Array.isArray(topic.tagsEn) && topic.tagsEn.length) return topic.tagsEn;
+      return Array.isArray(topic.tags) ? topic.tags : [];
+    }
+
+    function getTopicByKey(key) {
+      if (!key || typeof key !== "string") return null;
+      const parts = key.split("::");
+      if (parts.length !== 2) return null;
+      const secId = parts[0];
+      const idx = Number(parts[1]);
+      if (!Number.isInteger(idx) || idx < 0) return null;
+      const sec = TOPIC_LIBRARY.find(function(s) { return s.id === secId; });
+      if (!sec || !Array.isArray(sec.topics) || !sec.topics[idx]) return null;
+      return { sec: sec, idx: idx, t: sec.topics[idx] };
+    }
+
+    function findTopicByTypedText(rawText) {
+      const text = String(rawText || "").trim();
+      if (!text) return null;
+
+      if (selectedTopicKey) {
+        const hitByKey = getTopicByKey(selectedTopicKey);
+        if (hitByKey) {
+          const csTitle = hitByKey.t.title || "";
+          const enTitle = hitByKey.t.titleEn || translateCoreTextCsToEn(csTitle);
+          if (text === csTitle || text === enTitle) return hitByKey;
+        }
+      }
+
+      for (const sec of TOPIC_LIBRARY) {
+        for (let i = 0; i < sec.topics.length; i++) {
+          const t = sec.topics[i];
+          const csTitle = t.title || "";
+          const enTitle = t.titleEn || translateCoreTextCsToEn(csTitle);
+          if (text === csTitle || text === enTitle) {
+            return { sec: sec, idx: i, t: t };
+          }
+        }
+      }
+      return null;
+    }
+
+    function syncTopicTextareaLanguage(prevLang) {
+      const ta = $("topicTextarea");
+      if (!ta) return;
+      const info = findTopicByTypedText(ta.value);
+      if (!info) return;
+      const csTitle = info.t.title || "";
+      const enTitle = info.t.titleEn || translateCoreTextCsToEn(csTitle);
+      const currentValue = String(ta.value || "").trim();
+      const prevTitle = prevLang === "en" ? enTitle : csTitle;
+      if (currentValue === prevTitle || currentValue === csTitle || currentValue === enTitle) {
+        ta.value = currentLang === "en" ? enTitle : csTitle;
+      }
+      selectedTopicKey = info.sec.id + "::" + info.idx;
+    }
 
     function parseLines(text) {
       return text
@@ -6088,18 +6235,23 @@ SCHMIDT Lena (19)
      **********************/
     function buildTopicCategoryOptions() {
       const sel = $("topicCategory");
+      const prevValue = sel.value || "all";
       sel.textContent = "";
       const optAll = document.createElement("option");
       optAll.value = "all";
-      optAll.textContent = "Vše";
+      optAll.textContent = currentLang === "en" ? "All" : "Vše";
       sel.appendChild(optAll);
 
       const sections = Array.isArray(TOPIC_LIBRARY) ? TOPIC_LIBRARY : [];
       for (const sec of sections) {
         const o = document.createElement("option");
         o.value = sec.id;
-        o.textContent = sec.title;
+        o.textContent = sectionTitleText(sec);
         sel.appendChild(o);
+      }
+
+      if (["all"].concat(sections.map(function(s) { return s.id; })).includes(prevValue)) {
+        sel.value = prevValue;
       }
     }
 
@@ -6118,7 +6270,19 @@ SCHMIDT Lena (19)
         if (cat !== "all" && sec.id !== cat) return;
 
         sec.topics.forEach((t, idx) => {
-          const hay = (sec.title + " " + t.title + " " + t.blurb + " " + (t.tags||[]).join(" ")).toLowerCase();
+          const secTitleCs = sec.title || "";
+          const secTitleEn = sec.titleEn || "";
+          const titleCs = t.title || "";
+          const titleEn = t.titleEn || "";
+          const blurbCs = t.blurb || "";
+          const blurbEn = t.blurbEn || "";
+          const tagsCs = Array.isArray(t.tags) ? t.tags : [];
+          const tagsEn = Array.isArray(t.tagsEn) ? t.tagsEn : [];
+          const hay = [secTitleCs, secTitleEn, titleCs, titleEn, blurbCs, blurbEn]
+            .concat(tagsCs)
+            .concat(tagsEn)
+            .join(" ")
+            .toLowerCase();
           if (q && !hay.includes(q)) return;
           // difficulty filter
           if (diffFilterLevels.length) {
@@ -6133,7 +6297,7 @@ SCHMIDT Lena (19)
           card.className = "topic-card" + (selectedTopicKey === key ? " selected" : "");
           card.tabIndex = 0;
           card.setAttribute("role", "button");
-          card.setAttribute("aria-label", `Vybrat téma: ${t.title}`);
+          card.setAttribute("aria-label", currentLang === "en" ? `Select topic: ${topicFieldText(t, "title")}` : `Vybrat téma: ${t.title}`);
 
           card.addEventListener("click", () => selectTopic(sec, idx));
           card.addEventListener("keydown", (e) => {
@@ -6142,15 +6306,15 @@ SCHMIDT Lena (19)
 
           const title = document.createElement("div");
           title.className = "topic-title";
-          title.textContent = t.title;
+          title.textContent = topicFieldText(t, "title");
 
           const meta = document.createElement("div");
           meta.className = "topic-meta";
           const tag = document.createElement("span");
           tag.className = "tag";
-          tag.textContent = sec.title;
+          tag.textContent = sectionTitleText(sec);
           meta.appendChild(tag);
-          (t.tags || []).slice(0, 3).forEach(x => {
+          topicTagsText(t).slice(0, 3).forEach(x => {
             const tg = document.createElement("span");
             tg.className = "tag";
             tg.textContent = x;
@@ -6159,18 +6323,21 @@ SCHMIDT Lena (19)
 
           // difficulty badge
           if (t.diff != null) {
-            const dl = DIFF_LABELS.findIndex(l => t.diff <= l.max) + 1;
+            const lbl = diffLabel(t.diff);
+            const dl = DIFF_LABELS.findIndex(l => l === lbl) + 1;
             const badge = document.createElement("span");
             badge.className = "diff-badge";
             badge.setAttribute("data-diff", dl);
-            badge.textContent = `${t.diffEmoji} ${t.diffLabel} ${t.diff}`;
-            badge.title = `Obtížnost ${t.diff}/5 — ${t.diffAge}`;
+            badge.textContent = `${t.diffEmoji} ${diffLabelText(lbl)} ${t.diff}`;
+            badge.title = currentLang === "en"
+              ? `Difficulty ${t.diff}/5 - ${diffAgeText(lbl)}`
+              : `Obtížnost ${t.diff}/5 - ${diffAgeText(lbl)}`;
             meta.appendChild(badge);
           }
 
           const blurb = document.createElement("div");
           blurb.className = "topic-blurb";
-          blurb.textContent = t.blurb;
+          blurb.textContent = topicFieldText(t, "blurb");
 
           card.appendChild(title);
           card.appendChild(meta);
@@ -6184,7 +6351,9 @@ SCHMIDT Lena (19)
         empty.style.padding = "14px 10px";
         empty.style.color = "rgba(255,255,255,.55)";
         empty.style.fontSize = "13px";
-        empty.textContent = "Nic nenalezeno. Zkus jiné klíčové slovo nebo sekci.";
+        empty.textContent = currentLang === "en"
+          ? "No results found. Try a different keyword or section."
+          : "Nic nenalezeno. Zkus jiné klíčové slovo nebo sekci.";
         list.appendChild(empty);
       }
     }
@@ -6192,7 +6361,7 @@ SCHMIDT Lena (19)
     function selectTopic(section, idx) {
       const t = section.topics[idx];
       selectedTopicKey = `${section.id}::${idx}`;
-      $("topicTextarea").value = t.title;
+      $("topicTextarea").value = topicFieldText(t, "title");
       renderTopics();
       persistSetup();
       updateTotalAndValidation();
@@ -7680,6 +7849,7 @@ SCHMIDT Lena (19)
     function persistSetup() {
       const payload = {
         topic: $("topicTextarea").value,
+        selectedTopicKey,
         players: $("playersTextarea").value,
         initTime: normalizeMMSS($("initTime").value),
         roundTime: normalizeMMSS($("roundTimeInput").value),
@@ -7711,6 +7881,9 @@ SCHMIDT Lena (19)
         if (!raw) return;
         const p = JSON.parse(raw);
         if (typeof p.topic === "string") $("topicTextarea").value = p.topic;
+        if (typeof p.selectedTopicKey === "string" && getTopicByKey(p.selectedTopicKey)) {
+          selectedTopicKey = p.selectedTopicKey;
+        }
         if (typeof p.players === "string") $("playersTextarea").value = p.players;
 
         if (typeof p.initTime === "string") $("initTime").value = normalizeMMSS(p.initTime);
@@ -7813,7 +7986,7 @@ SCHMIDT Lena (19)
         const chip = document.createElement("span");
         chip.className = "cat-chip" + (randomTopicCats.includes(sec.id) ? " active" : "");
         chip.dataset.cat = sec.id;
-        chip.textContent = sec.title;
+        chip.textContent = sectionTitleText(sec);
         chip.addEventListener("click", () => {
           const idx = randomTopicCats.indexOf(sec.id);
           if (idx >= 0) randomTopicCats.splice(idx, 1); else randomTopicCats.push(sec.id);
@@ -7832,8 +8005,8 @@ SCHMIDT Lena (19)
         const lvl = i + 1;
         const chip = document.createElement("span");
         chip.className = "cat-chip" + (rndDiffFilter.includes(lvl) ? " active" : "");
-        chip.textContent = lbl.emoji + " " + lbl.label;
-        chip.title = lbl.age;
+        chip.textContent = lbl.emoji + " " + diffLabelText(lbl);
+        chip.title = diffAgeText(lbl);
         chip.addEventListener("click", () => {
           const idx = rndDiffFilter.indexOf(lvl);
           if (idx >= 0) rndDiffFilter.splice(idx, 1); else rndDiffFilter.push(lvl);
@@ -7914,13 +8087,14 @@ SCHMIDT Lena (19)
     }
 
     /** Apply a topic to state (sets blurb, pro, con). */
-    function applyTopicToState(topicObj) {
-      state.topic = topicObj.title;
-      state.topicBlurb = topicObj.blurb || "";
-      state.topicPro = topicObj.pro || "";
-      state.topicCon = topicObj.con || "";
-      state.topicProLabel = topicObj.proLabel || "PRO";
-      state.topicConLabel = topicObj.conLabel || "PROTI";
+    function applyTopicToState(topicObj, topicKey) {
+      state.topic = topicFieldText(topicObj, "title");
+      state.topicBlurb = topicFieldText(topicObj, "blurb");
+      state.topicPro = topicFieldText(topicObj, "pro");
+      state.topicCon = topicFieldText(topicObj, "con");
+      state.topicProLabel = topicFieldText(topicObj, "proLabel") || "PRO";
+      state.topicConLabel = topicFieldText(topicObj, "conLabel") || (currentLang === "en" ? "CON" : "PROTI");
+      state.topicKey = topicKey || null;
     }
 
     /**********************
@@ -7939,21 +8113,25 @@ SCHMIDT Lena (19)
       // save normalized list back (dedupe)
       $("playersTextarea").value = players.join("\n");
 
-      state.topic = $("topicTextarea").value.trim();
+      const typedTopic = $("topicTextarea").value.trim();
+      state.topic = typedTopic;
       state.topicBlurb = "";
       state.topicPro = "";
       state.topicCon = "";
       state.topicProLabel = "PRO";
-      state.topicConLabel = "PROTI";
+      state.topicConLabel = currentLang === "en" ? "CON" : "PROTI";
+      state.topicKey = null;
 
       // Random topic mode: pick first topic now
       if (randomTopicMode) {
         state._usedTopicKeys = new Set(); // reset per game
-        applyTopicToState(pickRandomTopicForRound());
+        const picked = pickRandomTopicForRound();
+        applyTopicToState(picked, null);
       } else {
-        for (const sec of TOPIC_LIBRARY) {
-          const hit = sec.topics.find(t => t.title === state.topic);
-          if (hit) { state.topicBlurb = hit.blurb || ""; state.topicPro = hit.pro || ""; state.topicCon = hit.con || ""; state.topicProLabel = hit.proLabel || "PRO"; state.topicConLabel = hit.conLabel || "PROTI"; break; }
+        const hitInfo = findTopicByTypedText(typedTopic);
+        if (hitInfo) {
+          selectedTopicKey = hitInfo.sec.id + "::" + hitInfo.idx;
+          applyTopicToState(hitInfo.t, selectedTopicKey);
         }
       }
       state.initPause = mmssToSec($("initTime").value);
@@ -7999,20 +8177,27 @@ SCHMIDT Lena (19)
       $('topicSearch').addEventListener('input', () => { renderTopics(); persistSetup(); });
       $('btnRandomTopic').addEventListener('click', () => { pickRandomTopic(); });
       $('btnClearTopic').addEventListener('click', () => { selectedTopicKey = null; $('topicTextarea').value = ''; renderTopics(); persistSetup(); updateTotalAndValidation(); });
-      $('topicTextarea').addEventListener('input', () => { persistSetup(); updateTotalAndValidation(); });
+      $('topicTextarea').addEventListener('input', () => {
+        const hit = findTopicByTypedText($('topicTextarea').value);
+        selectedTopicKey = hit ? (hit.sec.id + '::' + hit.idx) : null;
+        renderTopics();
+        persistSetup();
+        updateTotalAndValidation();
+      });
       buildDiffFilter();
     }
 
     function buildDiffFilter() {
       const wrap = $('diffFilter');
       if (!wrap) return;
+      wrap.textContent = '';
       DIFF_LABELS.forEach((lbl, i) => {
         const lvl = i + 1;
         const chip = document.createElement('button');
         chip.type = 'button';
         chip.className = 'diff-chip' + (diffFilterLevels.includes(lvl) ? ' active' : '');
-        chip.textContent = lbl.emoji + ' ' + lbl.label;
-        chip.title = lbl.age;
+        chip.textContent = lbl.emoji + ' ' + diffLabelText(lbl);
+        chip.title = diffAgeText(lbl);
         chip.addEventListener('click', () => {
           const idx = diffFilterLevels.indexOf(lvl);
           if (idx >= 0) diffFilterLevels.splice(idx, 1);
