@@ -4136,9 +4136,12 @@ SCHMIDT Lena (19)
       "Napr.: Měly by být sociální sítě zakázány pro děti do 15 let?": "Example: Should social media be banned for children under 15?",
       "Debata =": "Debate =",
       "Dvě strany / týmy / lidi si losují stranu a snaží se": "Two sides / teams / people draw a side and try to",
+      "Dvě strany / týmy / lidi si losují stranu a snaží se přesvědčit posluchače / třídu / publikum / nerozhodnuté.": "Two sides / teams / people draw a side and try to persuade listeners / the class / the audience / undecided people.",
       "přesvědčit posluchače / třídu / publikum / nerozhodnuté": "persuade listeners / the class / the audience / undecided people",
       ", ne hádka. Nemusíš souhlasit s\u00A0tím, co říkáš!": ", not a quarrel. You do not have to agree with what you are saying!",
       ", ne hádka. Nemusíš souhlasit s tím, co říkáš!": ", not a quarrel. You do not have to agree with what you are saying!",
+      "Debata = důvody + reakce, ne hádka. Nemusíš souhlasit s tím, co říkáš!": "Debate = reasons + responses, not a quarrel. You do not have to agree with what you are saying!",
+      "Debata = důvody + reakce, ne hádka. Nemusíš souhlasit s\u00A0tím, co říkáš!": "Debate = reasons + responses, not a quarrel. You do not have to agree with what you are saying!",
       "Rozmyslete argumenty — pro obě strany": "Prepare arguments for both sides",
       "Připravte si co nejsilnější argumenty pro obě strany.": "Prepare the strongest arguments you can for both sides.",
       "Soustředění, komunikace, bezpečnost. Kdy telefon pomáhá, a kdy škodí?": "Focus, communication, and safety. When do phones help, and when do they hurt?",
@@ -9744,15 +9747,31 @@ SCHMIDT Lena (19)
     /* ── Smart body text generators (context-aware) ── */
     var SMART_BODIES = {
       "quickstart:1": function(s) {
+        if (currentLang === "en") {
+          if (s.topicFilled) return "Your topic is already filled in - <b>great!</b> You can edit it or continue.<br><br>The highlighted <b>\"Random\"</b> button can generate another topic anytime.";
+          return "Type your debate topic in this field. If you are not sure, the highlighted <b>\"Random\"</b> button next to it will draw one for you.";
+        }
         if (s.topicFilled) return "T\u00E9ma u\u017E m\u00E1\u0161 vypln\u011Bn\u00E9 \u2014 <b>skv\u011Ble!</b> M\u016F\u017Ee\u0161 ho zm\u011Bnit, nebo pokra\u010Duj d\u00E1l.<br><br>Zv\u00FDrazn\u011Bn\u00E9 tla\u010D\u00EDtko <b>\u201EN\u00E1hodn\u00E9\u201C</b> ti kdykoliv vygeneruje jin\u00E9 t\u00E9ma.";
         return "Napi\u0161 t\u00E9ma debaty p\u0159\u00EDmo do tohoto pole. Pokud nev\u00ED\u0161, zv\u00FDrazn\u011Bn\u00E9 tla\u010D\u00EDtko <b>\u201EN\u00E1hodn\u00E9\u201C</b> vedle vylosuje n\u00E1hodn\u00E9 t\u00E9ma.";
       },
       "quickstart:2": function(s) {
+        if (currentLang === "en") {
+          if (s.playersFilled) return "Debaters are ready (<b>" + s.playerCount + " names</b>). You can edit the list or continue.<br><br><em>More options are available in the \"Debaters and import\" guide.</em>";
+          var baseEn = s.topicFilled ? "Your topic is set - now add debaters. " : "";
+          return baseEn + "Enter <b>one name per line</b> - at least 2 debaters.<br><br><em>More options (presets, import) are in the \"Debaters and import\" guide.</em>";
+        }
         if (s.playersFilled) return "Debat\u00E9\u0159i jsou p\u0159ipraveni (<b>" + s.playerCount + " jmen</b>). M\u016F\u017Ee\u0161 seznam upravit, nebo pokra\u010Duj.<br><br><em>V\u00EDce mo\u017Enost\u00ED najde\u0161 v pr\u016Fvodci \u201EDebat\u00E9\u0159i a import\u201C.</em>";
         var base = s.topicFilled ? "T\u00E9ma m\u00E1\u0161 \u2014 te\u010F p\u0159idej debat\u00E9ry. " : "";
         return base + "Napi\u0161 <b>jm\u00E9no na ka\u017Ed\u00FD \u0159\u00E1dek</b> \u2014 minim\u00E1ln\u011B 2 debat\u00E9\u0159i.<br><br><em>V\u00EDce mo\u017Enost\u00ED (presety, import) najde\u0161 v pr\u016Fvodci \u201EDebat\u00E9\u0159i a import\u201C.</em>";
       },
       "quickstart:3": function(s) {
+        if (currentLang === "en") {
+          var keysEn = "<br><br>Hotkeys during debate: <b>Space</b> = pause, <b>N</b> = next, <b>R</b> = restart.";
+          if (s.topicFilled && s.playersFilled) return "Everything is ready! Click <b>Start</b> to begin the debate." + keysEn;
+          if (!s.topicFilled && !s.playersFilled) return "You still need to enter a <b>topic</b> and <b>debaters</b>. Fill both in and the green button will activate." + keysEn;
+          if (!s.topicFilled) return "You still need to enter a <b>topic</b>. Fill it in and the green button will activate." + keysEn;
+          return "You still do not have enough <b>debaters</b> (min. 2). Add them and the green button will activate." + keysEn;
+        }
         var keys = "<br><br>Kl\u00E1vesy b\u011Bhem debaty: <b>Mezern\u00EDk</b> = pauza, <b>N</b> = dal\u0161\u00ED, <b>R</b> = restart.";
         if (s.topicFilled && s.playersFilled) return "V\u0161e je p\u0159ipraven\u00E9! Klikni <b>Start</b> a debata za\u010Dne." + keys;
         if (!s.topicFilled && !s.playersFilled) return "Je\u0161t\u011B nem\u00E1\u0161 zadan\u00E9 <b>t\u00E9ma</b> ani <b>debat\u00E9ry</b>. Dopl\u0148 je a zelen\u00E9 tla\u010D\u00EDtko se aktivuje." + keys;
@@ -9760,6 +9779,10 @@ SCHMIDT Lena (19)
         return "Je\u0161t\u011B nem\u00E1\u0161 dost <b>debat\u00E9r\u016F</b> (min. 2). Dopl\u0148 je a zelen\u00E9 tla\u010D\u00EDtko se aktivuje." + keys;
       },
       "topics:0": function(s) {
+        if (currentLang === "en") {
+          if (s.topicFilled) return "Your topic is filled in: \u201C<b>" + s.topicShort + "</b>\u201D. You can edit it or enter a new one.<br><br>In the next steps, you will see the topic library and additional ways to choose a topic.";
+          return "Type your own debate topic here. In the next steps, you will learn about the topic library and other selection methods.";
+        }
         if (s.topicFilled) return "M\u00E1\u0161 vypln\u011Bn\u00E9 t\u00E9ma: \u201E<b>" + s.topicShort + "</b>\u201C. M\u016F\u017Ee\u0161 ho upravit nebo zadat nov\u00E9.<br><br>V dal\u0161\u00EDch kroc\u00EDch se dozv\u00ED\u0161 o knihovn\u011B t\u00E9mat a dal\u0161\u00EDch zp\u016Fsobech v\u00FDb\u011Bru.";
         return "Sem napi\u0161 vlastn\u00ED t\u00E9ma debaty. V dal\u0161\u00EDch kroc\u00EDch se dozv\u00ED\u0161 o knihovn\u011B a dal\u0161\u00EDch zp\u016Fsobech v\u00FDb\u011Bru.";
       },
@@ -9828,6 +9851,16 @@ SCHMIDT Lena (19)
         var kwBit = pick.length >= 2
           ? "Zkus napsat nap\u0159. \u201E<b>" + pick[0] + "</b>\u201C nebo \u201E<b>" + pick[1] + "</b>\u201C"
           : "Zkus napsat nap\u0159. \u201E<b>" + pick[0] + "</b>\u201C";
+        if (currentLang === "en") {
+          var countBitEn = count > 0
+            ? "Currently <b>" + count + " topics</b> in the library<span class=\"wt-topic-count\"></span>."
+            : "<b style=\"color:#ff5252\">The library is empty</b> - try changing section or filter.<span class=\"wt-topic-count\"></span>";
+          var catBitEn = catVal !== "all" ? " (section " + catText + ")" : "";
+          var kwBitEn = pick.length >= 2
+            ? "Try typing, for example, \u201C<b>" + pick[0] + "</b>\u201D or \u201C<b>" + pick[1] + "</b>\u201D"
+            : "Try typing, for example, \u201C<b>" + pick[0] + "</b>\u201D";
+          return countBitEn + "<br>" + kwBitEn + catBitEn + " and watch the library filter in real time.";
+        }
         return countBit + "<br>" + kwBit + catBit + " a sleduj, jak se knihovna filtruje.";
       },
       "topics:2": function() {
@@ -9836,6 +9869,12 @@ SCHMIDT Lena (19)
         var catText = (catEl && catEl.selectedIndex >= 0) ? catEl.options[catEl.selectedIndex].text : "V\u0161e";
         var cards = document.querySelectorAll("#topicList .topic-card");
         var count = cards.length;
+        if (currentLang === "en") {
+          if (catVal !== "all") {
+            return "Selected section: <b>" + catText + "</b> (" + count + " topics). Change the section and watch the library below update.<br><br>In the next step, you will try search within this section.";
+          }
+          return "Choose a <b>category</b> and the library will be filtered - for example Politics, Technology, or Society. You are currently seeing all <b>" + count + " topics</b>.<br><br>In the next step, you will try quick search.";
+        }
         if (catVal !== "all") {
           return "Vybran\u00E1 sekce: <b>" + catText + "</b> (" + count + " t\u00E9mat). Zm\u011B\u0148 sekci a sleduj, jak se knihovna pod t\u00EDmto polem m\u011Bn\u00ED.<br><br>V dal\u0161\u00EDm kroku si zkus\u00ED\u0161 vyhled\u00E1v\u00E1n\u00ED v t\u00E9to sekci.";
         }
@@ -9844,12 +9883,22 @@ SCHMIDT Lena (19)
       "topics:4": function() {
         var cards = document.querySelectorAll("#topicList .topic-card");
         var count = cards.length;
+        if (currentLang === "en") {
+          if (count === 0) return "The library is empty - try changing the section or filter above.<br>Click any topic and it will be inserted into the field.";
+          return "There are <b>" + count + " topics</b> in the library. Click any topic to insert it into the field above.<br><br>Each topic has a difficulty tag: green (Beginner), yellow (Easy), orange (Intermediate), red (Advanced), black (Expert), with score 1-5.";
+        }
         if (count === 0) return "Knihovna je pr\u00E1zdn\u00E1 \u2014 zkus zm\u011Bnit sekci nebo filtr naho\u0159e.<br>Klikni na libovoln\u00E9 t\u00E9ma a vlo\u017E\u00ED se do pole.";
         return "V knihovn\u011B je <b>" + count + " t\u00E9mat</b>. Klikni na libovoln\u00E9 a vlo\u017E\u00ED se do pole naho\u0159e.<br><br>Ka\u017Ed\u00E9 t\u00E9ma m\u00E1 barevn\u00FD \u0161t\u00EDtek obt\u00ED\u017Enosti: zelen\u00FD (Za\u010D\u00E1te\u010Dn\u00EDk), \u017Elut\u00FD (Snadn\u00E9), oran\u017Eov\u00FD (St\u0159edn\u00ED), \u010Derven\u00FD (Pokro\u010Dil\u00E9), \u010Dern\u00FD (Expert) se sk\u00F3re 1\u20135.";
       },
       "settings:2": function() {
         var iEl = document.getElementById("initTime");
         var iv = iEl ? (iEl.value || "").trim() : "0:15";
+        if (currentLang === "en") {
+          if (/^\d{1,2}:\d{2}$/.test(iv) && iv !== "0:15" && iv !== "00:15") {
+            return "Initial prep is <b>" + iv + "</b>. You can edit it or continue.<br><br>The yellow pill shows the <b>total estimated duration</b>.";
+          }
+          return "Set preparation time before round one. Default is <b>" + iv + "</b>; for example, enter <b>0:30</b>.<br><br>The yellow pill on the right shows the <b>total estimated duration</b>.";
+        }
         if (/^\d{1,2}:\d{2}$/.test(iv) && iv !== "0:15" && iv !== "00:15") {
           return "Pauza na za\u010D\u00E1tku je <b>" + iv + "</b>. M\u016F\u017Ee\u0161 ji upravit, nebo pokra\u010Duj.<br><br>\u017Dlut\u00FD \u0161t\u00EDtek ukazuje <b>celkov\u00FD odhad</b> d\u00E9lky.";
         }
@@ -9858,6 +9907,12 @@ SCHMIDT Lena (19)
       "settings:3": function() {
         var rEl = document.getElementById("roundTimeInput");
         var rv = rEl ? (rEl.value || "").trim() : "3:30";
+        if (currentLang === "en") {
+          if (/^\d{1,2}:\d{2}$/.test(rv) && rv !== "3:30" && rv !== "03:30" && rv !== "0:00" && rv !== "00:00") {
+            return "Round time is <b>" + rv + "</b>. You can edit it or continue.";
+          }
+          return "Set main speaking time - for example, <b>5:00</b> (5 minutes). Current default is <b>" + rv + "</b>.";
+        }
         if (/^\d{1,2}:\d{2}$/.test(rv) && rv !== "3:30" && rv !== "03:30" && rv !== "0:00" && rv !== "00:00") {
           return "\u010Cas na kolo je <b>" + rv + "</b>. M\u016F\u017Ee\u0161 ho upravit, nebo pokra\u010Duj d\u00E1l.";
         }
@@ -9866,6 +9921,12 @@ SCHMIDT Lena (19)
       "settings:4": function() {
         var pEl = document.getElementById("pauseTimeInput");
         var pv = pEl ? (pEl.value || "").trim() : "00:15";
+        if (currentLang === "en") {
+          if (/^\d{1,2}:\d{2}$/.test(pv) && pv !== "00:15" && pv !== "0:15") {
+            return "Break between rounds is <b>" + pv + "</b>. You can edit it or continue.";
+          }
+          return "Set break time between rounds - for example, <b>0:30</b>. Default is <b>" + pv + "</b>.";
+        }
         if (/^\d{1,2}:\d{2}$/.test(pv) && pv !== "00:15" && pv !== "0:15") {
           return "Pauza mezi koly je <b>" + pv + "</b>. M\u016F\u017Ee\u0161 ji upravit, nebo pokra\u010Duj d\u00E1l.";
         }
@@ -9874,12 +9935,21 @@ SCHMIDT Lena (19)
       "topics:5": function() {
         var sw = document.getElementById("swRandomTopic");
         var isOn = sw && (sw.classList.contains("on") || sw.getAttribute("aria-checked") === "true");
+        if (currentLang === "en") {
+          if (isOn) return "Random draw is <b>enabled</b> - each round gets a different topic from the library. Toggle it <b>off</b> and all rounds will use the same topic.<br><br><em>Ideal when you want to surprise students with unknown topics.</em>";
+          return "Random draw is <b>disabled</b> - all rounds use the same topic. Toggle it <b>on</b> and each round gets a different drawn topic from the library.<br><br><em>Ideal when you want to surprise students with unknown topics.</em>";
+        }
         if (isOn) return "N\u00E1hodn\u00E9 losov\u00E1n\u00ED je <b>zapnut\u00E9</b> \u2014 ka\u017Ed\u00E9 kolo dostane jin\u00E9 t\u00E9ma z knihovny. P\u0159epnut\u00EDm ho <b>vypne\u0161</b> a v\u0161echna kola budou m\u00EDt stejn\u00E9 t\u00E9ma.<br><br><em>Ide\u00E1ln\u00ED, kdy\u017E chce\u0161 \u017E\u00E1ky p\u0159ekvapit nezn\u00E1m\u00FDm t\u00E9matem.</em>";
         return "N\u00E1hodn\u00E9 losov\u00E1n\u00ED je <b>vypnut\u00E9</b> \u2014 v\u0161echna kola maj\u00ED stejn\u00E9 t\u00E9ma. <b>Zapnut\u00EDm</b> dostane ka\u017Ed\u00E9 kolo jin\u00E9 losovan\u00E9 t\u00E9ma z knihovny.<br><br><em>Ide\u00E1ln\u00ED, kdy\u017E chce\u0161 \u017E\u00E1ky p\u0159ekvapit nezn\u00E1m\u00FDm t\u00E9matem.</em>";
       },
       "settings:0": function() {
         var track = document.getElementById("themeTrack");
         var pos = track ? (track.getAttribute("data-pos") || "0") : "0";
+        if (currentLang === "en") {
+          var namesEn = {"0": "dark", "1": "light", "2": "high-contrast"};
+          var currentEn = namesEn[pos] || "dark";
+          return "Current theme: <b>" + currentEn + "</b>. Click to cycle through <b>dark</b> (eye-friendly), <b>light</b> (bright classroom), and <b>high-contrast</b> (projector in bright rooms).";
+        }
         var names = {"0": "tmav\u00FD", "1": "sv\u011Btl\u00FD", "2": "kontrastn\u00ED"};
         var current = names[pos] || "tmav\u00FD";
         return "Aktu\u00E1ln\u011B je nastaven\u00FD <b>" + current + " motiv</b>. Kliknut\u00EDm p\u0159epne\u0161 mezi: <b>tmav\u00FD</b> (\u0161etrn\u00FD na o\u010Di), <b>sv\u011Btl\u00FD</b> (jasn\u011Bj\u0161\u00ED prost\u0159ed\u00ED), <b>kontrastn\u00ED</b> (projektor v jasn\u00E9 t\u0159\u00EDd\u011B).";
@@ -9887,24 +9957,40 @@ SCHMIDT Lena (19)
       "settings:1": function() {
         var pairs = document.getElementById("modePairs");
         var isPairs = pairs && pairs.classList.contains("selected");
+        if (currentLang === "en") {
+          if (isPairs) return "Current mode: <b>Pairs</b> - classic 1 vs 1 debate. Switch to <b>Groups</b> to reveal group size and round settings.";
+          return "Current mode: <b>Groups</b> - group debate with scoring. Switch to <b>Pairs</b> to return to classic 1 vs 1.";
+        }
         if (isPairs) return "Aktu\u00E1ln\u011B: <b>Ve dvojic\u00EDch</b> \u2014 klasick\u00E1 debata 1 vs 1. P\u0159epnut\u00EDm na <b>Ve skupin\u00E1ch</b> se zobraz\u00ED nastaven\u00ED velikosti skupin a po\u010Dtu kol.";
         return "Aktu\u00E1ln\u011B: <b>Ve skupin\u00E1ch</b> \u2014 skupinov\u00E1 debata s bodov\u00E1n\u00EDm. P\u0159epnut\u00EDm na <b>Ve dvojic\u00EDch</b> se vr\u00E1t\u00ED\u0161 ke klasick\u00E9 debat\u011B 1 vs 1.";
       },
       "settings:5": function() {
         var sw = document.getElementById("swSound");
         var isOn = sw && (sw.classList.contains("on") || sw.getAttribute("aria-checked") === "true");
+        if (currentLang === "en") {
+          if (isOn) return "Sound alerts are <b>enabled</b> - beeps play at 10/5/3/2/1 seconds. Toggle to <b>disable</b>.";
+          return "Sound alerts are <b>disabled</b>. Toggle to <b>enable</b> countdown beeps (10/5/3/2/1) and show the signal volume slider.";
+        }
         if (isOn) return "Zvukov\u00E9 sign\u00E1ly jsou <b>zapnut\u00E9</b> \u2014 p\u00EDp\u00E1n\u00ED p\u0159i odpo\u010Dtu 10/5/3/2/1 s. P\u0159epnut\u00EDm je <b>vypne\u0161</b>.";
         return "Zvukov\u00E9 sign\u00E1ly jsou <b>vypnut\u00E9</b>. <b>Zapnut\u00EDm</b> se p\u0159i odpo\u010Dtu ozve p\u00EDp\u00E1n\u00ED (10/5/3/2/1 s) a zobraz\u00ED se posuvn\u00EDk hlasitosti.";
       },
       "settings:6": function() {
         var sw = document.getElementById("swMusic");
         var isOn = sw && (sw.classList.contains("on") || sw.getAttribute("aria-checked") === "true");
+        if (currentLang === "en") {
+          if (isOn) return "Break music is <b>enabled</b> - light ambient sound plays during prep and breaks. Toggle to <b>disable</b>.<br>Music volume is independent from signal volume.";
+          return "Break music is <b>disabled</b>. Toggle to <b>enable</b> light ambient sound during prep and breaks.<br>Music volume is independent from signal volume.";
+        }
         if (isOn) return "Hudba v pauz\u00E1ch je <b>zapnut\u00E1</b> \u2014 lehk\u00FD ambient b\u011Bhem p\u0159\u00EDpravy a p\u0159est\u00E1vek. P\u0159epnut\u00EDm ji <b>vypne\u0161</b>.<br>Hlasitost je nez\u00E1visl\u00E1 na zvukov\u00FDch sign\u00E1lech.";
         return "Hudba v pauz\u00E1ch je <b>vypnut\u00E1</b>. <b>Zapnut\u00EDm</b> bude b\u011Bhem p\u0159\u00EDpravy a p\u0159est\u00E1vek hr\u00E1t lehk\u00FD ambient.<br>Hlasitost je nez\u00E1visl\u00E1 na zvukov\u00FDch sign\u00E1lech.";
       },
       "settings:7": function() {
         var sw = document.getElementById("swTutorial");
         var isOn = sw && (sw.classList.contains("on") || sw.getAttribute("aria-checked") === "true");
+        if (currentLang === "en") {
+          if (isOn) return "Learning mode is <b>enabled</b> - students will see a 6-step pre-debate guide (what debate is, rules, SEXI). Toggle to <b>disable</b> and start debate immediately.";
+          return "Learning mode is <b>disabled</b> - debate starts immediately. Toggle to <b>enable</b> a 6-step student guide before debate: what debate is, rules, SEXI method, and refutation basics.<br><br><em>Ideal for classes that are just getting started with debating.</em>";
+        }
         if (isOn) return "Nau\u010Dn\u00FD re\u017Eim je <b>zapnut\u00FD</b> \u2014 p\u0159ed debatou se \u017E\u00E1k\u016Fm zobraz\u00ED 6-krokov\u00FD pr\u016Fvodce (co je debata, pravidla, SEXI). P\u0159epnut\u00EDm ho <b>vypne\u0161</b> a debata za\u010Dne rovnou.";
         return "Nau\u010Dn\u00FD re\u017Eim je <b>vypnut\u00FD</b> \u2014 debata za\u010Dne rovnou. <b>Zapnut\u00EDm</b> se p\u0159ed debatou zobraz\u00ED 6-krokov\u00FD pr\u016Fvodce pro \u017E\u00E1ky: co je debata, pravidla, metoda SEXI, jak vyvr\u00E1tit soupe\u0159e.<br><br><em>Ide\u00E1ln\u00ED pro t\u0159\u00EDdu, kter\u00E1 s debatou teprve za\u010D\u00EDn\u00E1.</em>";
       }
@@ -10199,6 +10285,15 @@ SCHMIDT Lena (19)
       var completed = getCompleted();
       var recIdx = getRecommendedIdx();
       pickerGrid.innerHTML = "";
+      var pickerTitleEl = document.querySelector(".wt-picker-title");
+      var pickerDescEl = document.querySelector(".wt-picker-desc");
+      var pickerHintEl = document.querySelector(".wt-picker-hint");
+      if (pickerTitleEl) pickerTitleEl.textContent = currentLang === "en" ? "App guide" : "Průvodce aplikací";
+      if (pickerDescEl) pickerDescEl.textContent = currentLang === "en" ? "Choose the part you want to explore:" : "Vyber si část, kterou chceš prozkoumat:";
+      if (pickerReset) pickerReset.textContent = currentLang === "en" ? "Reset tours" : "Resetovat průchody";
+      if (pickerHintEl) pickerHintEl.innerHTML = "<kbd>Esc</kbd> " + (currentLang === "en" ? "close" : "zavřít");
+      if (pickerOverlay) pickerOverlay.setAttribute("aria-label", currentLang === "en" ? "Guide selector" : "Výběr průvodce");
+      if (pickerClose) pickerClose.setAttribute("aria-label", currentLang === "en" ? "Close" : "Zavřít");
       TOURS.forEach(function(tour, i) {
         var done = completed.includes(tour.id);
         var isRec = i === recIdx;
