@@ -4270,6 +4270,96 @@ SCHMIDT Lena (19)
       ["Chyba při načtení UI. Obnov stránku (Ctrl+F5).", "UI failed to load. Refresh the page (Ctrl+F5)."]
     ].sort(function(a, b) { return b[0].length - a[0].length; });
 
+    const I18N_WORD_EN = [
+      [/\bMěly by\b/g, "Should"],
+      [/\bMěla by\b/g, "Should"],
+      [/\bMěl by\b/g, "Should"],
+      [/\bMěli by\b/g, "Should"],
+      [/\bMají\b/g, "Should"],
+      [/\bMá\b/g, "Should"],
+      [/\bJe\b/g, "Is"],
+      [/\bJsou\b/g, "Are"],
+      [/\bMůže\b/g, "Can"],
+      [/\bMěli bychom\b/g, "Should we"],
+      [/\bMěl bys\b/g, "Should you"],
+      [/\bpro\b/gi, "for"],
+      [/\bPROTI\b/g, "CON"],
+      [/\bProti\b/g, "Against"],
+      [/\bproti\b/g, "against"],
+      [/\bnebo\b/g, "or"],
+      [/\ba\b/g, "and"],
+      [/\bve\b/g, "in"],
+      [/\bv\b/g, "in"],
+      [/\bna\b/g, "on"],
+      [/\bdo\b/g, "to"],
+      [/\bze\b/g, "from"],
+      [/\bs\b/g, "with"],
+      [/\bkdyž\b/g, "when"],
+      [/\bpokud\b/g, "if"],
+      [/\bprotože\b/g, "because"],
+      [/\bnež\b/g, "than"],
+      [/\bkdo\b/g, "who"],
+      [/\bco\b/g, "what"],
+      [/\bjak\b/g, "how"],
+      [/\bproč\b/g, "why"],
+      [/\bsvoboda\b/gi, "freedom"],
+      [/\bspravedlnost\b/gi, "justice"],
+      [/\betika\b/gi, "ethics"],
+      [/\bmorálně\b/gi, "morally"],
+      [/\bprávo\b/gi, "right"],
+      [/\bpráva\b/gi, "rights"],
+      [/\bzákon\b/gi, "law"],
+      [/\bstát\b/gi, "state"],
+      [/\bspolečnost\b/gi, "society"],
+      [/\bškola\b/gi, "school"],
+      [/\bškoly\b/gi, "schools"],
+      [/\bžáci\b/gi, "students"],
+      [/\bžák\b/gi, "student"],
+      [/\bdebata\b/gi, "debate"],
+      [/\bdebaty\b/gi, "debates"],
+      [/\bdebatě\b/gi, "debate"],
+      [/\btéma\b/gi, "topic"],
+      [/\btémat\b/gi, "topics"],
+      [/\btechnologie\b/gi, "technology"],
+      [/\bAI\b/g, "AI"],
+      [/\binternet\b/gi, "internet"],
+      [/\bsociální sítě\b/gi, "social media"],
+      [/\bekonomie\b/gi, "economy"],
+      [/\bpráce\b/gi, "work"],
+      [/\bpeníze\b/gi, "money"],
+      [/\bzdraví\b/gi, "health"],
+      [/\bživot\b/gi, "life"],
+      [/\bbudoucnost\b/gi, "future"],
+      [/\bpolitika\b/gi, "politics"],
+      [/\bhistorie\b/gi, "history"],
+      [/\bglobalizace\b/gi, "globalization"],
+      [/\bklima\b/gi, "climate"],
+      [/\benergie\b/gi, "energy"],
+      [/\bzbraně\b/gi, "weapons"],
+      [/\barmáda\b/gi, "military"],
+      [/\bválka\b/gi, "war"],
+      [/\bsvět\b/gi, "world"],
+      [/\blidé\b/gi, "people"],
+      [/\bděti\b/gi, "children"],
+      [/\brodiče\b/gi, "parents"],
+      [/\bpřátelé\b/gi, "friends"],
+      [/\brodina\b/gi, "family"],
+      [/\bidentita\b/gi, "identity"],
+      [/\bkultura\b/gi, "culture"],
+      [/\bumění\b/gi, "art"],
+      [/\bškolních\b/gi, "school"],
+      [/\bčas\b/gi, "time"],
+      [/\bpauza\b/gi, "break"],
+      [/\bkolo\b/gi, "round"],
+      [/\bvýsledky\b/gi, "results"],
+      [/\bobtížnost\b/gi, "difficulty"],
+      [/\bvyhledávání\b/gi, "search"],
+      [/\bnáhodné\b/gi, "random"],
+      [/\bvymazat\b/gi, "clear"],
+      [/\bano\b/gi, "yes"],
+      [/\bne\b/gi, "no"]
+    ];
+
     let currentLang = "cs";
     let i18nBusy = false;
     let i18nObserver = null;
@@ -4293,6 +4383,9 @@ SCHMIDT Lena (19)
         const from = I18N_FRAGMENT_EN[i][0];
         const to = I18N_FRAGMENT_EN[i][1];
         if (out.indexOf(from) >= 0) out = out.split(from).join(to);
+      }
+      for (let i = 0; i < I18N_WORD_EN.length; i++) {
+        out = out.replace(I18N_WORD_EN[i][0], I18N_WORD_EN[i][1]);
       }
       return out;
     }
