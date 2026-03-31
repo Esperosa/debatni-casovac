@@ -14,8 +14,6 @@ Projekt je navržený tak, aby fungoval:
 - bez instalace,
 - bez závislosti na serveru.
 
-Poznámka k EN lokalizaci: základní překladová vrstva funguje plně offline; při online připojení se může text navíc kontextově dohladit a uložit do lokální cache pro další spuštění.
-
 ## Obsah
 
 1. [Co aplikace obsahuje](#co-aplikace-obsahuje)
@@ -45,7 +43,7 @@ Poznámka k EN lokalizaci: základní překladová vrstva funguje plně offline;
 | Import osob | XLSX/XLS/CSV/TSV/TXT/PDF + kontrolní modal s editací |
 | Výsledky | Přehled kol, export do schránky, ve skupinách i tiebreak ranking a ocenění |
 | UX nástroje | Walkthrough (4 tour), fullscreen, validace vstupů, motivy UI |
-| Lokalizace | Přepínač jazyka CZ/EN včetně runtime textů a dynamických částí |
+| Lokalizace | Přepínač jazyka CZ/EN s okamžitým, deterministickým přepnutím bez síťového překladu |
 
 ## Tok debaty
 
@@ -155,8 +153,8 @@ Výsledkový panel umí přidělovat tematická ocenění podle průběhu turnaj
   - dynamické texty generované během běhu,
   - výsledkový panel,
   - export textových výsledků.
-- Překlad je navržený primárně jako **sentence-level** (celé věty a celé bloky významu), ne jako word-by-word převod.
-- Pro složitější runtime texty funguje cacheovaný překladový fallback (`debateTimerI18nRemoteEn.v1`), který se ukládá lokálně.
+- Překlad je navržený nad celými významovými bloky (exact/regex/fragment), ne jako word-by-word převod.
+- Překlad je řešen staticky v aplikaci (exact/regex/fragment + statický EN pack pro témata), bez runtime volání překladových API.
 - Jazyk lze změnit i během běžící debaty bez reloadu stránky.
 
 ## Verifikace lokalizace
@@ -169,9 +167,9 @@ Lokalizace je kontrolovaná dvěma auditními průchody nad zdrojovým kódem:
 Aktuální stav:
 
 - Statické texty: pokryté přes exact/regex/fragment překladovou vrstvu.
-- Runtime texty: pokryté přes observer + sentence-level fallback.
+- Runtime texty: pokryté synchronně při renderu + i18n observer pro nově vložené uzly.
 
-Poznámka: témata i průvodce se překládají kontextově po větách. Pro opakované texty se používá lokální cache, takže kvalita je konzistentní i při dalším spuštění.
+Poznámka: témata i průvodce se překládají deterministicky ze statického slovníku v aplikaci, takže přepnutí jazyka je okamžité a bez doskakování textu.
 
 ## Časování, zvuky, hudba
 
@@ -197,7 +195,7 @@ Vše je v jednom souboru `debatni-casovac-v3.1.html`, ale kód je modulárně ro
 |---|---|
 | `DATA: PRESETS` | výchozí seznamy debatérů (9.A/9.B) |
 | `DATA: TOPIC_LIBRARY` | knihovna témat včetně metadata sekcí, obtížnosti, tagů a argumentačních nápověd |
-| `I18N (CZ / EN)` | jazykový engine (exact/regex/fragment + sentence-level fallback), observer pro dynamický obsah, lokální cache překladů |
+| `I18N (CZ / EN)` | jazykový engine (exact/regex/fragment + statický EN topic pack), observer pro dynamický obsah |
 | `FILE IMPORT ENGINE` | import z XLSX/XLS/CSV/TSV/TXT/PDF + normalizace + kontrolní modal |
 | `UTIL` | parse/normalizace času, sanitizace vstupů, pomocné funkce |
 | `AUDIO` | signalizační zvuky, preview, hudba v pauzách, fade-in/fade-out |

@@ -4131,6 +4131,13 @@ SCHMIDT Lena (19)
       "Resetovat průchody": "Reset tours",
       "Např.: Měly by být sociální sítě zakázány pro děti do 15 let?": "Example: Should social media be banned for children under 15?",
       "Napr.: Měly by být sociální sítě zakázány pro děti do 15 let?": "Example: Should social media be banned for children under 15?",
+      "Debata =": "Debate =",
+      "Dvě strany / týmy / lidi si losují stranu a snaží se": "Two sides / teams / people draw a side and try to",
+      "přesvědčit posluchače / třídu / publikum / nerozhodnuté": "persuade listeners / the class / the audience / undecided people",
+      ", ne hádka. Nemusíš souhlasit s\u00A0tím, co říkáš!": ", not a quarrel. You do not have to agree with what you are saying!",
+      ", ne hádka. Nemusíš souhlasit s tím, co říkáš!": ", not a quarrel. You do not have to agree with what you are saying!",
+      "Rozmyslete argumenty — pro obě strany": "Prepare arguments for both sides",
+      "Připravte si co nejsilnější argumenty pro obě strany.": "Prepare the strongest arguments you can for both sides.",
       "Soustředění, komunikace, bezpečnost. Kdy telefon pomáhá, a kdy škodí?": "Focus, communication, and safety. When do phones help, and when do they hurt?",
       "Bez telefonu se studenti soustředí výrazně lépe — výzkumy ukazují zlepšení výsledků i kvality sociální interakce o přestávkách.": "Without phones, students focus significantly better - research shows improved learning outcomes and better social interaction during breaks.",
       "Naučit žáky telefon v hodině zodpovědně používat je lepší příprava na reálný svět než zákaz, který problém jen přesouvá.": "Teaching students to use phones responsibly in class is better preparation for the real world than a ban that only shifts the problem elsewhere.",
@@ -4202,6 +4209,7 @@ SCHMIDT Lena (19)
       [/^Debatéři:\s*(\d+)$/, "Debaters: $1"],
       [/^Odhad:\s*([0-9]{2}:[0-9]{2})$/, "Estimate: $1"],
       [/^Kolo\s*(\d+)\s*[\/\u202f]\s*(\d+)$/, "Round $1 / $2"],
+      [/^(\d+)\s+kol\s+·\s+([0-9]{2}:[0-9]{2})\s+debata\s+·\s+([0-9]{2}:[0-9]{2})\s+příprava$/, "$1 rounds · $2 debate · $3 prep"],
       [/^Import:\s*(\d+)\s*osob\s*nalezeno$/, "Import: $1 people found"],
       [/^Nacitam:\s*(.+)\.\.\.$/, "Loading: $1..."],
       [/^Načítám:\s*(.+)\.\.\.$/, "Loading: $1..."],
@@ -4380,131 +4388,963 @@ SCHMIDT Lena (19)
       ["Chyba při načtení UI. Obnov stránku (Ctrl+F5).", "UI failed to load. Refresh the page (Ctrl+F5)."]
     ].sort(function(a, b) { return b[0].length - a[0].length; });
 
+    /* I18N_TOPIC_STATIC_EN_START */
+    const I18N_TOPIC_STATIC_EN = {
+      "Rwanda po genocidě a Singapur ukazují, že v některých kontextech silné vedení dosahuje rychlejšího rozvoje a stability — a předepsaná demokracie může vést ke kmenovému násilí.": "Post-genocide Rwanda and Singapore show that in some contexts, strong leadership achieves faster development and stability — and prescribed democracy can lead to tribal violence.",
+      "Jakmile ospravedlníme lež dobrým účelem, každý si najde svůj dobrý účel — a celá struktura vzájemné důvěry se hroutí. Kdo rozhoduje, který důvod je dost 'ušlechtilý'?": "Once we justify a lie with a good purpose, everyone finds their own good purpose — and the whole structure of mutual trust collapses. Who decides which reason is 'noble' enough?",
+      "Právo ženy rozhodovat o vlastním těle a životní situaci vs. morální a právní status nenarozeného života. Jedno z nejdéle diskutovaných etických dilemat moderní doby.": "A woman's right to decide about her own body and life situation vs. moral and legal status of unborn life. One of the longest debated ethical dilemmas of modern times.",
+      "Data z US států ukazují, že po legalizaci lékařské marihuany vzrostla i rekreační spotřeba a hospitalizace — 'lékařská' karta se stala vstupenkou k běžnému užívání.": "Data from US states show that after the legalization of medical marijuana, recreational use and hospitalization also increased — the 'medical' card became a ticket to regular use.",
+      "Morální absolutismus vedl ke křížovým výpravám, koloniálnímu násilí i nuceným konverzím — pokora před cizími hodnotami je větší ctnost než jistota vlastní pravdy.": "Moral absolutism led to crusades, colonial violence and forced conversions — humility before foreign values ​​is a greater virtue than certainty of one's own truth.",
+      "Od roku 1973 bylo v USA z trestu smrti zproštěno přes 185 nevinně odsouzených — žádný systém není neomylný a trest smrti je jediný rozsudek, který nejde napravit.": "Since 1973, over 185 innocent people have been exonerated from the death penalty in the US — no system is infallible, and the death penalty is the only sentence that cannot be corrected.",
+      "Šestnáctiletí platí daně, pracují a nesou důsledky politických rozhodnutí desítky let — daňová povinnost bez volebního práva je historický argument pro revoluci.": "Sixteen-year-olds pay taxes, work and bear the consequences of political decisions for decades — taxation without the right to vote is a historical argument for revolution.",
+      "Geneticky upravená prasata zachránila životy díky transplantacím orgánů — odmítat tento výzkum znamená odmítat i léky a vakcíny, které z podobné vědy vzešly.": "Genetically engineered pigs have saved lives thanks to organ transplants — to reject this research is to reject the drugs and vaccines that stem from similar science.",
+      "Adolescentní mozek je vědecky prokázaně snáze manipulovatelný a impulzivní — a volby jsou příliš důležité na to, aby je ovlivňoval ne zcela vyvinutý úsudek.": "The adolescent brain is scientifically proven to be more manipulative and impulsive — and choices are too important to be influenced by immature judgment.",
+      "V Belgii a Kanadě se eutanázie rozšířila i na deprese a chudobu — šikmá plocha není teorie, ale dokumentovaná realita, která ohrožuje ty nejzranitelnější.": "In Belgium and Canada, euthanasia has also spread to depression and poverty — the slope is not a theory but a documented reality that threatens the most vulnerable.",
+      "Každý zákon je utilitaristický kompromis — daňový systém, branná povinnost i karanténa omezují jedince pro dobro celku. Bez utilitarismu nelze vládnout.": "Every law is a utilitarian compromise — the tax system, conscription, and quarantine restrict the individual for the good of the whole. You cannot rule without utilitarianism.",
+      "Moderní zoo zachránila od vyhynutí desítky druhů — a jsou jediným místem, kde většina lidí živá zvířata vůbec vidí, čímž buduje vztah k ochraně přírody.": "Modern zoos have saved dozens of species from extinction — and are the only place where most people see live animals at all, building a relationship with nature conservation.",
+      "Video oslovuje publikum, které by článek nikdy neotevřelo — upřednostnit text znamená ztratit většinu mladých čtenářů a opustit je v informačním vakuu.": "Video appeals to an audience that would never open an article — prioritizing text means losing the majority of young readers and leaving them in an information vacuum.",
+      "Zapojení mladých, platba daní a dopad volebních výsledků na jejich budoucnost vs. zralost, zkušenost a manipulovatelnost jako podmínky volebního práva.": "Youth engagement, tax payment and the impact of election results on their future vs. maturity, experience and manipulability as conditions of suffrage.",
+      "Hooliganismus a tribalistická agrese jsou přímým produktem intenzivního fanouškovství — sounáležitost jednoho oddílu buduje nepřátelství vůči druhému.": "Hooliganism and tribalistic aggression are a direct product of intense fandom — belonging to one faction builds hostility towards another.",
+      "Děti bez telefonu jsou v roce 2026 sociálně vyloučené z třídnických chatů a organizace — a nenaučí se digitální gramotnosti, kterou budou potřebovat.": "Children without phones are socially excluded from classroom chats and organizations in 2026 — and won't learn the digital literacy they'll need.",
+      "Stát, který odzbrojí občany, má zbrojní monopol — a historicky je to základ totalitní kontroly, ne bezpečnosti. Ozbrojený občan je poslední pojistka.": "A state that disarms its citizens has an arms monopoly — and historically, that's the basis of totalitarian control, not security. An armed citizen is the last line of defense.",
+      "Existují informace, které po přijetí nelze odložit a zničí každodenní klid — vědomá ignorance určitých věcí je legitimní strategie duševního zdraví.": "There is information that, once received, cannot be put down and destroys the daily peace — knowingly ignoring certain things is a legitimate mental health strategy.",
+      "Legalizace dává pracovnicím přístup ke zdravotní péči, právní ochraně a možnosti odejít z vlastního rozhodnutí — ilegální stav je nechává bezbranné.": "Legalization gives women workers access to health care, legal protection and the ability to leave of their own accord — illegal status leaves them defenseless.",
+      "Kolemjdoucí, kteří nepomohli topícímu dítěti, čelí jen výčitkám svědomí — zákonná povinnost zajistí, že neochota pomoci bude mít skutečné důsledky.": "Bystanders who did not help a drowning child face only remorse — the legal obligation ensures that there will be real consequences for not being willing to help.",
+      "Reklamy na energetické nápoje cíleně oslovují teenagery extrémními sporty a influencery — zákaz reklamy sníží konzumaci bez omezení svobody nákupu.": "Energy drink ads target teenagers with extreme sports and influencers — banning ads will reduce consumption without limiting freedom of purchase.",
+      "Smíšená kategorie přetáhne pozornost a sponzory od ženských soutěží — a ve fyzických sportech se stane de facto mužskou kategorií plus pár výjimek.": "The mixed category will draw attention and sponsors away from women's competitions — and in physical sports it will become a de facto male category, plus a few exceptions.",
+      "Trestní odpovědnost firem zpomalí i zelenéé inovace — každý nový produkt nese riziko, a pokud za omyl hrozí vězení, firmy přestanou experimentovat.": "Criminal liability of companies will also slow down green innovation — every new product carries a risk, and if there is a risk of prison for a mistake, companies will stop experimenting.",
+      "Odměňování výsledků motivuje úsilí a inovace — a i když startovní podmínky nejsou rovné, alternativa (rovnostářství) historicky ničí produktivitu.": "Rewarding results motivates effort and innovation — and even if the playing field isn't level, the alternative (egalitarianism) historically destroys productivity.",
+      "Autonomie, bezpečnost pracovníků a daňová regulace vs. morální dimenze, vykořisťování a otázka, zda legalizace situaci zlepšuje nebo normalizuje.": "Autonomy, worker safety and tax regulation vs. the moral dimension, exploitation and the question of whether legalization improves or normalizes the situation.",
+      "Bez porozumění světovým náboženstvím a ideologiím nelze pochopit historii, konflikty ani literaturu — neutrální předmět vzdělává, neindoktrinuje.": "Without an understanding of world religions and ideologies, one cannot understand history, conflicts or literature — a neutral subject educates, not indoctrinates.",
+      "Experimenty v Norsku, Japonsku a na Islandu ukázaly, že produktivita neklesá a nemocnost se výrazně snižuje — kratší týden pomáhá firmám i lidem.": "Experiments in Norway, Japan and Iceland have shown that productivity does not decrease and sickness is significantly reduced — a shorter week helps companies and people.",
+      "V zemích bez přísné kontroly zbraní je domácí násilí a spontánní agrese statisticky výrazně vyšší — dostupnost zbraně mění situaci na nezvratnou.": "In countries without strict gun control, domestic violence and spontaneous aggression are statistically significantly higher — the availability of a gun makes the situation irreversible.",
+      "Autonomie nad vlastním tělem je základní právo — a v zemích s legální eutanázií fungují přísné pojistky, které nátlak prokazatelně minimalizují.": "Autonomy over one's own body is a fundamental right — and countries with legal euthanasia have strict safeguards in place that have been proven to minimize coercion.",
+      "Dospívající, jejichž rodiče kontrolují vše online, se nenaučí zodpovědnému digitálnímu chování — a ztrácejí důvěru a prostor pro vývoj identity.": "Teens whose parents control everything online don't learn responsible digital behavior — and lose confidence and room for identity development.",
+      "Kdo píše test? Kdo určuje, co je 'gramotnost'? Každý takový filtr historicky sloužil k vyloučení menšin a chudých — a právo volit patří každému.": "Who writes the test? Who determines what 'literacy' is? Any such filter has historically served to exclude minorities and the poor — and the right to vote belongs to everyone.",
+      "Utrpení zvířat, klimatická zátěž a zdravotní argumenty jako základ povinnosti vs. kulturní tradice, ekonomická dostupnost a svoboda rozhodování.": "Animal suffering, climate burden and health arguments as a basis for duty vs. cultural tradition, economic availability and freedom of decision.",
+      "Je ghosting (náhlé ignorování) ospravedlnitelný způsob ukončení vztahu, pokud druhá strana opakovaně nerespektuje hranice nebo vyvolává strach?": "Is ghosting (suddenly ignoring) a justifiable way to end a relationship if the other party repeatedly doesn't respect boundaries or creates fear?",
+      "Talent určuje, jak rychle se učíš a jak daleko dojdeš — bez talentu v daném oboru je i extrémní dřina jen bolestný zápas s průměrným výsledkem.": "Talent determines how fast you learn and how far you go — without talent in a given field, even extreme hard work is just a painful struggle with an average result.",
+      "Zisk z globalizace skončil u vrcholu pyramidy — zatímco střední třída ve vyspělých zemích přišla o práci a rozvojové země o suroviny i kulturu.": "The profit from globalization ended up at the top of the pyramid — while the middle class in developed countries lost their jobs and developing countries lost their raw materials and culture.",
+      "Neomezená morální povinnost k celému světu je paralyzující — kdybychom odpovídali za každou vzdálenou tragédii, normální život by byl nemožný.": "An unlimited moral obligation to the whole world is paralyzing — if we were responsible for every remote tragedy, normal life would be impossible.",
+      "Skandinávie ukazuje, že masivní přerozdělování vede k vysokým daním, emigraci talentů a závislosti na státu — a nejchudší to často nezachrání.": "Scandinavia shows that massive redistribution leads to high taxes, emigration of talent and dependence on the state — and the poorest often do not survive.",
+      "Výzkumy ukazují rostoucí výskyt úzkostí a depresí u mladé generace — odolnost jejich rodičů vůči nepřízni a nepohodlí byla prokazatelně vyšší.": "Research shows an increasing incidence of anxiety and depression among the younger generation — their parents' resistance to adversity and discomfort was demonstrably higher.",
+      "Bez srovnatelných čísel rodiče, školy ani zaměstnavatelé nemají jak objektivně posoudit výkon — a subjektivní text může být méně spravedlivý.": "Without comparable numbers, parents, schools, and employers have no way to objectively judge performance — and a subjective text may be less fair.",
+      "Nekonečný feed a autopřehrávání jsou záměrně navrženy tak, aby maximalizovaly čas na platformě, ne tvůj blahobyt — regulace chrání uživatele.": "The infinite feed and autoplay are intentionally designed to maximize your time on the platform, not your well-being — regulation protects users.",
+      "Pro nejtěžší zločiny je doživotní trest nedostatečnou odpovědí — a trest smrti trvale eliminuje riziko, že pachatel unikne nebo znovu ublíží.": "For the most serious crimes, a life sentence is an inadequate answer — and the death penalty permanently eliminates the risk that an offender will escape or reoffend.",
+      "Sportovci generují miliardy v ekonomice, vytvářejí pracovní místa a inspirují miliony — jejich plat odráží reálnou hodnotu, kterou přinášejí.": "Athletes generate billions in the economy, create jobs and inspire millions — their pay reflects the real value they bring.",
+      "V oligopolním trhu je bojkot jedné firmy iluzí — přenášet morální povinnost na zákazníky místo na zákonodárce je pohodlná výmluva pro systém.": "In an oligopolistic market, a boycott of one firm is an illusion — transferring the moral obligation to customers instead of the legislator is a convenient excuse for the system.",
+      "Brexit a volba populistů ukazují, že dezinformovaný volič poškozuje i sám sebe — základní test občanské orientace chrání kvalitu demokracie.": "Brexit and the election of the populists show that the misinformed voter harms himself — the basic test of civic orientation protects the quality of democracy.",
+      "Online kontakty s neznámými jsou hlavní rizikový faktor kyberšikany a groomingu — rodičovský přehled u malých dětí je prevence, ne kontrola.": "Online contact with strangers is a major risk factor for cyberbullying and grooming — parental supervision of young children is prevention, not control.",
+      "Profesionální hráči trénují deset hodin denně, mají komplexní strategické myšlení a soupeří o milionové ceny — to není koníček, to je sport.": "Professional players train ten hours a day, have complex strategic thinking and compete for millions of prizes — it's not a hobby, it's a sport.",
+      "Státy s důrazem na resocializaci mají mnohonásobně nižší recidivu — každý propuštěný vězeň se buď vrátí do společnosti, nebo zpět do vězení.": "States with an emphasis on resocialization have many times lower recidivism — every released prisoner either returns to society or back to prison.",
+      "Zákaz estetických filtrů je cenzura tvůrčího vyjadřování — každý filtr je forma umění a líčení existuje tisíce let, aniž ho někdo zakazoval.": "Banning aesthetic filters is censorship of creative expression — every filter is an art form, and makeup has existed for thousands of years without being banned.",
+      "Dress code a uniformy prokazatelně snižují sociální třídění ve škole — a přílišný fokus na oblečení odvádí pozornost od skutečné osobnosti.": "Dress codes and uniforms have been proven to reduce social stratification at school — and too much focus on clothes distracts from the real personality.",
+      "Influencer žijící z reklamy prodává životní styl nedosažitelný pro většinu sledujících — a vytváří nespokojenost i tam, kde předtím nebyla.": "An advertising influencer sells a lifestyle out of reach for most followers — and creates discontent where it didn't exist before.",
+      "Krátká videa zjednodušují složité téma na clickbait — redakce upřednostňující text chrání kvalitu zpravodajství a kritické myšlení čtenářů.": "Short videos simplify a complex topic into clickbait — text-first editorial protects the quality of reporting and the critical thinking of readers.",
+      "Měly by školy a firmy při oceňování lidí dávat větší váhu prosociálnímu (ohleduplnému) chování (férovost, spolupráce) než čistým výsledkům?": "Should schools and companies give more weight to pro-social (considerate) behavior (fairness, cooperation) than pure results when valuing people?",
+      "Polovina dospělých neumí sestavit daňové přiznání ani poskytnout první pomoc — tyto znalosti potřebují celý život víc než binomické vzorce.": "Half of adults can't prepare a tax return or administer first aid — skills that require a lifetime more than binomial formulas.",
+      "Záchrana ohrožených druhů, vzdělávání veřejnosti a vědecký výzkum vs. etika doživotního zajetí a otázka, zda zoo skutečně přírodě pomáhají.": "Endangered species rescue, public education and scientific research vs. the ethics of lifelong captivity and the question of whether zoos really help nature.",
+      "AI tutor je dostupný 24/7, trpělivý a přizpůsobivý — zakázat ho žákům je jako zakázat kalkulačku a přitom je vzdělávat pro minulé století.": "The AI ​​tutor is available 24/7, patient and adaptive — disabling it for students is like disabling a calculator while educating them for the last century.",
+      "Historie ukázala, že technologie řešila všechny velké ekologické problémy — omezovat pohodlí miliardám chudých kvůli klimatu je nemorální.": "History has shown that technology has solved all major environmental problems — limiting the comforts of billions of the poor for the sake of climate is immoral.",
+      "Individuální almužna řeší symptom, ne příčinu — a odvádí pozornost od systémových řešení, která jako jediná mohou problém skutečně změnit.": "Individual handouts address the symptom, not the cause — and distract from the systemic solutions that alone can truly change the problem.",
+      "V šachu, jezdectví i kurlingu smíšené soutěže fungují skvěle — a nová kategorie vedle stávajících nikomu nic nebere, jen přidává možnosti.": "Mixed competitions work great in chess, horse riding and curling — and the new category doesn't take anything away from the existing ones, it just adds options.",
+      "Ve všech zemích, kde byla prostituce legalizována, vzrostl obchod s lidmi — legalizace rozšiřuje trh, ale nerozděluje ho od vykořisťování.": "In all countries where prostitution has been legalized, human trafficking has increased — legalization expands the market but does not separate it from exploitation.",
+      "Herní společnosti záměrně navrhují hry tak, aby způsobovaly závislost — odpovědnost za ochranu uživatelů nemohou nést jen sami uživatelé.": "Game companies deliberately design games to be addictive — the responsibility to protect users cannot lie solely with the users themselves.",
+      "I v obtížné situaci existují bezpečné cesty k ukončení (krátká zpráva, prostředník) — ghosting uzavírá cestu k řešení a zanechává trauma.": "Even in a difficult situation there are safe ways to end (a short message, an intermediary) — ghosting closes the way to a solution and leaves trauma behind.",
+      "Měl by být ve státních školách povinný neutrální předmět náboženství a světové ideologie (bez vyznání), aby zvyšoval kulturní gramotnost?": "Should a neutral subject of religion and world ideology (non-denominational) be compulsory in public schools to increase cultural literacy?",
+      "Nekontrolovaný vývoj nejsilnějšího AI je existenční riziko — vlády, které neregulují, předávají moc korporacím bez demokratické kontroly.": "Unchecked development of the most powerful AI is an existential risk — governments that do not regulate hand power to corporations without democratic control.",
+      "Portugalský model dekriminalizace prokázal snížení předávkování, HIV i kriminality — zákony vůči uživatelům problém neléčí, ale zhoršují.": "Portugal's model of decriminalization has proven to reduce overdoses, HIV and crime — anti-user laws don't cure the problem, they make it worse.",
+      "Profesionální dobrovolná armáda je v moderní válce výrazně efektivnější — a nutit lidi riskovat život bez souhlasu je porušení autonomie.": "A professional all-volunteer army is vastly more effective in modern warfare — and forcing people to risk their lives without consent is a violation of autonomy.",
+      "Záchrana civilizace před vymřením na jediné planetě je dostatečný důvod — a naše pozemské problémy nevyřeší vzdání se kosmického výzkumu.": "Saving civilization from extinction on a single planet is reason enough — and our earthly problems will not be solved by giving up space exploration.",
+      "Existují situace, kde pravda způsobí nepotřebnou bolest bez jakéhokoliv přínosu — lidskost někdy vyžaduje takt nad absolutní upřímností.": "There are situations where the truth will cause unnecessary pain without any benefit — humanity sometimes requires tact over absolute honesty.",
+      "Každý limit na hotovost je další krok k úplné kontrole financí občanů — a zasahuje i legální transakce, kde je hotovost legitimní volba.": "Each cash limit is another step toward total control of citizens' finances — and it also affects legal transactions where cash is a legitimate option.",
+      "Nevědomost nechrání — neinformovaný člověk dělá horší rozhodnutí s důsledky, které ho možná zasáhnou víc, než by bolela samotná znalost.": "Ignorance does not protect — an uninformed person makes worse decisions with consequences that may hurt them more than knowledge alone would.",
+      "Profesní naplnění je jeden z nejsilnějších zdrojů smyslu v životě — a silná kariéra dává člověku svobodu, status i zdroje péče o blízké.": "Professional fulfillment is one of the strongest sources of meaning in life — and a strong career gives a person freedom, status, and resources to care for loved ones.",
+      "Digitální kompetence a globální přehled vs. odolnost, praktické dovednosti a mentální zdraví. Záleží na tom, jaký 'život' máš na mysli.": "Digital competence and global overview vs. resilience, practical skills and mental health. It depends on what 'life' you mean.",
+      "Polovina duševních onemocnění začíná před 14. rokem — prevence ve škole je efektivnější než léčba v dospělosti a za hodinu týdně stojí.": "Half of mental illnesses start before the age of 14 — prevention in school is more effective than treatment in adulthood and is worth an hour a week.",
+      "Povinná vojenská služba buduje kolektivní odpovědnost za stát a napříč sociálními třídami stmeluje společnost skrze sdílenou zkušenost.": "Compulsory military service builds collective responsibility for the state and cements society across social classes through shared experience.",
+      "Slavné osobnosti dosud unikaly odpovědnosti díky moci a penězům — cancel culture dala veřejnosti nástroj, jak je volat k zodpovědnosti.": "Celebrities have so far evaded accountability thanks to power and money — cancel culture has given the public a tool to hold them accountable.",
+      "Zasahování do genomu zvířat otevírá Pandořinu skříňku — ekologické a etické důsledky nezvratných genetických změn nedokážeme předvídat.": "Tampering with animal genomes opens Pandora's box — we cannot predict the ecological and ethical consequences of irreversible genetic changes.",
+      "Žáci s dobrými výsledky nepotřebují sedět v lavici každý den — hybridní model posiluje autonomii a připravuje na vysokou školu i práci.": "Students with good results do not need to sit in a desk every day — the hybrid model strengthens autonomy and prepares them for college and work.",
+      "Bez systémové povinnosti recyklovat většina lidí netřídí — a komunální odpad je konkrétní lokální problém, který opatření reálně řeší.": "Without a systemic obligation to recycle, most people do not sort — and municipal waste is a specific local problem that the measure actually solves.",
+      "Jakmile firmy nebo stát regulují, kolik hodin relaxace je dost, překračují hranici — svoboda zahrnuje i právo dělat špatná rozhodnutí.": "When companies or the state regulate how many hours of relaxation are enough, they cross a line — freedom includes the right to make bad decisions.",
+      "Mladé mozky nejsou vyvinuté k rozpoznání manipulace, šikany nebo extremistického obsahu — rodičovská kontrola je ochrana, ne narušení.": "Young brains are not developed to recognize manipulation, bullying or extremist content — parental controls are a protection, not a disruption.",
+      "Systémové emise jsou tisíckrát vyšší než individuální — soustředit se na recyklaci a ignorovat průmysl je záměrné odvádění pozornosti.": "Systemic emissions are thousands of times higher than individual emissions — focusing on recycling and ignoring industry is a deliberate distraction.",
+      "Škola není jen o učivu — socializace, skupinová práce a přítomnost ve třídě jsou nenahraditelné, a online studium u teenagerů propadá.": "School isn't just about the curriculum — socializing, group work, and classroom presence are indispensable, and online learning is failing teenagers.",
+      "Umění podněcující k nenávisti má prokazatelný vliv na chování společnosti — propaganda vedoucí k genocidám se šířila i formou kultury.": "Art inciting hatred has a demonstrable influence on society's behavior — propaganda leading to genocides was also spread in the form of culture.",
+      "Garance základních potřeb osvobodí lidi k smysluplné práci, péči a kreativitě — a sníží byrokracii spojenou s dnešním systémem dávek.": "Guaranteeing basic needs will free people for meaningful work, care and creativity — and reduce the red tape associated with today's benefits system.",
+      "Mistrovství v jednom oboru přináší skutečné výsledky — povrchní znalost desítek věcí nikdy nepřekoná hloubku desetitisíc hodin praxe.": "Mastery in one field brings real results — superficial knowledge of dozens of things will never overcome the depth of ten thousand hours of practice.",
+      "Odmítat pomoc blízkému kvůli vlastnímu pohodlí je sobectví maskované jako sebeobrana — skutečné hranice leží dál, než si připouštíme.": "Refusing to help a loved one for the sake of one's own comfort is selfishness disguised as self-defense — the real boundaries lie further than we admit.",
+      "Pokud pravda nepovede k lepšímu rozhodnutí ani ke štěstí, je jen zdrojem zbytečného utrpení — vědomá iluze může být racionální volba.": "If the truth does not lead to a better decision or happiness, it is only a source of unnecessary suffering — a conscious illusion can be a rational choice.",
+      "Sebevraždy a psychické kolapsy po účasti v reality show jsou dokumentované — povinná psychologická péče a limity střihu jsou minimum.": "Suicides and psychological collapses after participating in a reality show are documented — mandatory psychological care and editing limits are a minimum.",
+      "Signál, který dekriminalizace vysílá, je, že drogy jsou akceptovatelné — a to zvýší jejich dostupnost a použití zejména mezi mladými.": "The signal that decriminalization sends is that drugs are acceptable — and this will increase their availability and use, especially among young people.",
+      "Výzkumy ukazují, že stigma kolem váhy nevede ke zhubnutí, ale k depresím a poruchám příjmu potravy — pomáhá empatie, ne veřejný tlak.": "Research shows that weight stigma doesn't lead to weight loss, but to depression and eating disorders — empathy, not public pressure, helps.",
+      "Algoritmus upřednostňuje extrémní krásu a filtrované obličeje — a výzkumy ukazují nárůst úzkostí i u těch, kteří sítě 'jen sledují'.": "The algorithm favors extreme beauty and filtered faces — and research shows an increase in anxiety even among those who 'just watch' the networks.",
+      "Bez reklamy bys neznal nové produkty, služby ani inovace — reklama je motor soutěže a spotřebitel z ní profituje více, než si myslí.": "Without advertising, you would not know about new products, services or innovations — advertising is the engine of competition and the consumer benefits from it more than they think.",
+      "Globalizace vytáhla z chudoby více lidí než jakýkoliv humanitární program — a propojení ekonomik snižuje riziko válečných konfliktů.": "Globalization has lifted more people out of poverty than any humanitarian program — and connecting economies reduces the risk of war.",
+      "Obezita a cukrovka stojí zdravotnictví miliardy — stát, který platí léčbu, má legitimní zájem zasáhnout v oblasti reklamy nebo daní.": "Obesity and diabetes cost the health system billions — the state that pays for the treatment has a legitimate interest in intervening in advertising or taxation.",
+      "Systém, kde hráč vydělá za hodinu víc než záchranář za rok, nereflektuje skutečnou hodnotu pro společnost, ale jen ekonomiku zábavy.": "A system where a player earns more in an hour than a paramedic in a year does not reflect real value to society, but only the entertainment economy.",
+      "Systém, který odměňuje hlavně zděděné výhody, není meritokracie — je to aristokracie s extra kroky, která zamrzne sociální mobilitu.": "A system that rewards mainly inherited advantages is not a meritocracy — it is an aristocracy with extra steps that freezes social mobility.",
+      "Dospívající na platformách pro dospělé dostávají obsah, na který nejsou psychicky připraveni — ověřování věku je minimální ochrana.": "Teens on adult platforms are getting content they're not psychologically ready for — age verification is minimal protection.",
+      "Dospívající, jejichž sociální kontakty schvaluje rodič, se nenaučí samostatnému úsudku — a ztráta soukromí poškodí důvěru v rodině.": "Teens whose social contacts are approved by a parent will not learn independent judgment — and the loss of privacy will damage trust in the family.",
+      "Jaderná energie má nejnižší počet obětí na terawatthodinu a je jedinou nízkoemisní technologií schopnou pokrýt základní zátěž sítě.": "Nuclear power has the lowest number of casualties per terawatt hour and is the only low-emission technology capable of covering the grid's base load.",
+      "Měly by sociální sítě povinně omezit mechanismy podporující nekonečný feed (proud obsahu) a autopřehrávání kvůli riziku závislosti?": "Should social networks mandatorily limit the mechanisms supporting the endless feed (stream of content) and autoplay due to the risk of addiction?",
+      "Měřit dobrotu je subjektivní a manipulovatelné — výsledky jsou objektivní a spravedlivé, protože neodměňují příjemnost, ale přínos.": "Measuring goodness is subjective and manipulable — the results are objective and fair because they don't reward pleasantness, but benefit.",
+      "Osobní svoboda a snížení kriminality vs. ochrana zdraví a signál společnosti. Způsobuje samotná nezákonnost drogy část jejích škod?": "Personal freedom and crime reduction vs. health protection and company signal. Does the very illegality of the drug cause some of its harm?",
+      "Spotřebitelská síla je jedním z mála nástrojů, kterým korporace skutečně rozumí — bojkot je nenásilný a demokratický tlak na změnu.": "Consumer power is one of the few tools that corporations really understand — a boycott is a nonviolent, democratic push for change.",
+      "Systém odměňující jen výsledky učí lidi podvádět a přecházet ostatní — férovost a spolupráce vytvářejí lepší prostředí pro všechny.": "A system that only rewards results teaches people to cheat and cross others — fairness and cooperation create a better environment for everyone.",
+      "Škola nemá kvalifikované lektory a hodina z rozvrhu chybí jinde — nekvalifikovaná výuka psychiky může nadělat víc škody než užitku.": "The school does not have qualified lecturers and the lesson is missing from the schedule elsewhere — unqualified teaching of psychology can do more harm than good.",
+      "Velké hotovostní transakce jsou hlavním nástrojem praní peněz a daňových úniků — limit je cílené opatření, ne omezení běžných lidí.": "Large cash transactions are a major tool for money laundering and tax evasion — the limit is a targeted measure, not a restriction on ordinary people.",
+      "Měly by reality show podléhat přísnější regulaci ochrany účastníků (psychologická péče, limity střihu), i když to zdraží produkci?": "Should reality shows be subject to stricter regulation to protect participants (psychological care, editing limits), even if it makes production more expensive?",
+      "Složité problémy vyžadují zjednodušení pro veřejnost — a kdo by sliboval jen to, co stoprocentně splní, nemůže nikdy vyhrát volby.": "Complex issues require simplification for the public — and anyone who promises only what they 100% deliver can never win an election.",
+      "Strop odměn nutí firmy investovat do zaměstnanců místo do bonusů managementu — a zmenšuje propast, která destabilizuje společnost.": "A pay cap forces companies to invest in employees instead of management bonuses — and narrows the gap that destabilizes society.",
+      "Zákonná regulace toho, kdy lze posílat zprávy, je nepraktická a nevynutitelná — odpovědnost leží primárně na dohodě, ne paragrafu.": "Statutory regulation of when messages can be sent is impractical and unenforceable — the responsibility lies primarily with the agreement, not the section.",
+      "Bezpodmínečné odpuštění říká pachateli, že může bez následků opakovat — v některých vztazích je trvalé odpuštění sebepoškozování.": "Unconditional forgiveness tells the offender that he can repeat without consequence — in some relationships, there is permanent forgiveness of self-harm.",
+      "Každý dolar investovaný do vesmírného výzkumu vrátil násobek v technologiích jako GPS, solární panely nebo rakovinná diagnostika.": "Every dollar invested in space research has returned multiple times in technologies such as GPS, solar panels or cancer diagnostics.",
+      "Kdo odmítne vakcínu bez důvodu, ohrožuje novorozence a imunodeficientní lidi — kolektivní imunita funguje jen nad určitým prahem.": "Anyone who refuses a vaccine without reason endangers newborns and immunodeficient people — collective immunity only works above a certain threshold.",
+      "Měla by být reklama na energetické nápoje zakázána (podobně jako u některých rizikových produktů), i když prodej zůstane legální?": "Should energy drink advertising be banned (as it is for some risky products), even if sales remain legal?",
+      "Rozvrh je přeplněný a hodina matematiky navíc má pro budoucnost žáka větší váhu než hodina tělocviku — škola není sportovní klub.": "The schedule is crowded, and a math class is more important for a student's future than a gym class — school is not a sports club.",
+      "Svoboda uměleckého výrazu jako základ otevřené kultury vs. reálný vliv obsahu na chování a myšlení lidí. Kdo smí určovat hranici?": "Freedom of artistic expression as the basis of an open culture vs. the real impact of content on people's behavior and thinking. Who can determine the border?",
+      "Uměle limitovaná odměna CEO způsobí útěk talentů do zahraničí a kreativní obcházení — firmy potřebují svobodu odměňovat výsledky.": "Artificially limited CEO compensation will cause talent flight abroad and creative bypass — companies need the freedom to reward results.",
+      "Zaměstnavatel čekající odpověď o půlnoci narušuje soukromý život — právo na nepřerušovaný odpočinek je podmínka duševního zdraví.": "An employer waiting for an answer at midnight infringes on private life — the right to uninterrupted rest is a condition of mental health.",
+      "Děti nemají vliv na to, kde se narodily — systém neinvestující do znevýhodněných jen reprodukuje nerovnost generaci za generací.": "Children don't matter where they're born — a system that doesn't invest in the disadvantaged just reproduces inequality generation after generation.",
+      "Dotovat kina, která lidé dobrovolně opouštějí, je utrácení veřejných peněz za nostalgii — trh jasně ukázal, co diváci preferují.": "Subsidizing cinemas that people voluntarily leave is spending public money on nostalgia — the market has clearly shown what audiences prefer.",
+      "I veřejná osoba má právo na intimní prostor — média zneužívající soukromí ničí ochotu dobrých lidí vstoupit do veřejného života.": "Even a public person has the right to an intimate space — the media abusing privacy destroys the willingness of good people to enter public life.",
+      "Když někdo nerespektuje tvé hranice nebo ti nahání strach, mlčení je legitimní ochrana — nikdo není povinován další konfrontací.": "When someone doesn't respect your boundaries or scares you, silence is a legitimate defense — no one is obligated to confront you again.",
+      "Nikdo nemá právo donutit ženu k těhotenství, které nechce — právo na tělesnou autonomii je základní a nezcizitelné lidské právo.": "No one has the right to force a woman into a pregnancy she does not want — the right to bodily autonomy is a basic and inalienable human right.",
+      "Objektivita a konzistence vs. redukce člověka na data a zakotvení historických předsudků. Komu věřit víc — stroji, nebo člověku?": "Objectivity and consistency vs. the reduction of man to data and the entrenchment of historical prejudices. Who should you trust more — a machine or a human?",
+      "Přátele si volíme — a volené vztahy jsou v dospělosti klíčovějším zdrojem štěstí než biologická rodina, s níž sdílíme jen původ.": "We choose our friends — and the relationships we choose are a more crucial source of happiness in adulthood than the biological family with which we share only our ancestry.",
+      "Trest musí být i spravedlivou odpovědí oběti — napravování bez jasné odpovědnosti říká oběti, že její újma nestojí za pozornost.": "Punishment must also be a fair response to the victim — making amends without clear accountability tells the victim that their harm is not worth paying attention to.",
+      "V rychle se měnícím světě je adaptabilita klíčová — člověk s mnoha zájmy lépe propojuje oblasti a nachází nečekané příležitosti.": "In a rapidly changing world, adaptability is key — a person with many interests is better at connecting areas and finding unexpected opportunities.",
+      "Algoritmus ti ukazuje to, na čem platformě vydělá, ne to, co ty chceš vidět — chronologický feed vrací kontrolu zpět uživateli.": "The algorithm shows you what the platform earns, not what you want to see — the chronological feed gives control back to the user.",
+      "Bez telefonu se studenti soustředí výrazně lépe — výzkumy ukazují zlepšení výsledků i kvality sociální interakce o přestávkách.": "Without phones, students focus significantly better - research shows improved learning outcomes and better social interaction during breaks.",
+      "Bezplatné studium snižuje motivaci studenta dokončit školu včas — a daňoví poplatníci hradí i studium těch, kteří ho nevyužijí.": "Free education reduces a student's motivation to finish school on time — and taxpayers pay for those who don't.",
+      "Definovat se minulostí je vězení, které jsme si postavili sami — vědomou volbou se lze posunout dál, a to je skutečná identita.": "Defining ourselves by the past is a prison of our own making — a conscious choice is to move on, and that is true identity.",
+      "Havárie jako Černobyl nebo Fukušima mají nezvratné důsledky — a problém s jaderným odpadem na tisíce let stále nemáme vyřešený.": "Accidents like Chernobyl or Fukushima have irreversible consequences — and we still haven't solved the problem of nuclear waste for thousands of years.",
+      "Je kvantová mechanika (fyzika nejmenších částic) důkazem, že realita je fundamentálně (od základu) nedeterministická (náhodná)?": "Is quantum mechanics (physics of the smallest particles) proof that reality is fundamentally non-deterministic (random)?",
+      "Odsouvání radosti na někdy, které nikdy nenastane, je vlastní prohrou — na smrt plný účet není definice dobře prožitého života.": "Postponing joy to some day that will never happen is self-defeating — a full account to death is not the definition of a life well lived.",
+      "Pomoc na úkor vlastního zdraví nebo budoucnosti je sebedestruktivní — a vyhoření z neomezené pomoci nakonec poškodí obě strany.": "Helping at the expense of one's own health or future is self-destructive — and burnout from unlimited help ends up hurting both parties.",
+      "Stát financující předplatné skrze daně přenáší náklady na všechny — a média závislá na voucheru ztrácejí skutečnou nezávislost.": "The state funding the subscription through taxes passes the cost on to everyone — and voucher-dependent media lose their true independence.",
+      "Základy matematiky a dějepisu rozvíjejí analytické myšlení — bez teoretického základu se škola stane pouhým výcvikovým centrem.": "The basics of mathematics and history develop analytical thinking — without a theoretical foundation, school becomes a mere training center.",
+      "Bez algoritmu bys v záplavě obsahu nikdy nenašel to, co tě skutečně zajímá — relevance feedu je klíčová funkce, ne manipulace.": "Without an algorithm, you'd never find what you're really interested in amid the flood of content — feed relevance is the key feature, not manipulation.",
+      "Influencer, který otevřeně mluví o duševním zdraví nebo vzdělávání, osloví mladé lidi způsobem, jakým televize nikdy nedokáže.": "An influencer who speaks openly about mental health or education will reach young people in a way that television never can.",
+      "Každý test měří jen to, na co byl navržen — a systematicky znevýhodňuje žáky s dyslexií, úzkostí nebo jiným typem inteligence.": "Each test measures only what it was designed to measure — and systematically disadvantages students with dyslexia, anxiety, or other types of intelligence.",
+      "Morální povinnosti nemohou být unifikované napříč kulturami a ekonomikami — maso je pro mnoho lidí výživová nutnost, ne luxus.": "Moral obligations cannot be unified across cultures and economies — meat is a nutritional necessity for many people, not a luxury.",
+      "Třídění odpadu tvoří zlomek celkových emisí — soustředit se na recyklaci místo průmyslu je pohodlná iluze bez reálného dopadu.": "Waste sorting is a fraction of total emissions — focusing on recycling instead of industry is a convenient illusion with no real impact.",
+      "Vzdálenost není morální argument — pokud jedno gesto zachrání vzdálené dítě, odmítat to z pohodlnosti je eticky neobhajitelné.": "Distance is not a moral argument — if one gesture saves a distant child, rejecting it out of convenience is ethically indefensible.",
+      "Bez struktury domácí přípravy se většina žáků na výuku nepřipraví vůbec — a nejhůř na to doplatí ti, kdo doma nemají podporu.": "Without the structure of home preparation, most pupils will not prepare for lessons at all — and those who do not have support at home will pay the worst for it.",
+      "Jednotný test je jedinou objektivní metodou jak porovnávat výsledky žáků z různých škol — bez něj by rozhodoval jen patronát.": "The unified test is the only objective method to compare the results of students from different schools — without it, only the patronage would decide.",
+      "Lidský faktor způsobuje 94 % dopravních nehod — autonomní auto, které neusíná ani nepije, statisticky zachrání tisíce životů.": "The human factor causes 94% of traffic accidents — an autonomous car that does not sleep or drink will statistically save thousands of lives.",
+      "Maso je jednou z nejemisně nákladnějších potravin — škola, která ho odstraní z menu, dělá měřitelný dopad a vzdělává zároveň.": "Meat is one of the most expensive foods — a school that removes it from the menu makes a measurable impact and educates at the same time.",
+      "Průmyslový chov způsobuje prokazatelné utrpení miliardám bytostí denně — odmítnutí se podílet je základní etická konzistence.": "Factory farming causes demonstrable suffering to billions of beings daily — refusal to participate is a basic ethical consistency.",
+      "Přílišná rigidita způsobuje, že promeškáme neplánované příležitosti — nejlepší zážitky v životě obvykle nepřišly podle plánu.": "Too much rigidity causes us to miss out on unplanned opportunities — the best experiences in life usually don't come as planned.",
+      "Sebeobrana, osobní svoboda a důvěra občana ve vlastní ochranu vs. statistiky násilí, nehod a snadná dostupnost pro pachatele.": "Self-defense, personal freedom and citizen's confidence in their own protection vs. statistics of violence, accidents and easy accessibility for offenders.",
+      "Úzkost z pořadí, závist a ztráta spolupráce jsou dobře zdokumentované efekty — a poražení ztrácejí motivaci, ne získávají ji.": "Rank anxiety, envy, and loss of cooperation are well-documented effects — and losers lose motivation, not gain it.",
+      "Zákon nelze vynutit v každé situaci — a nutit lidi k pomoci bez zajištění jejich vlastní bezpečnosti je nebezpečný precedent.": "The law cannot be enforced in every situation — and forcing people to help without ensuring their own safety sets a dangerous precedent.",
+      "Bez sdílených fyzických zážitků, očního kontaktu a spontánních setkání chybí přátelství dimenze, kterou nelze digitalizovat.": "Without shared physical experiences, eye contact, and spontaneous encounters, friendship lacks a dimension that cannot be digitized.",
+      "Dítě traumatizované zneužíváním mělo mozek v době vývoje poškozený vnějšími faktory — ignorovat to je jako trestat za nemoc.": "A child traumatized by abuse had a brain damaged by external factors during development — ignoring that is like punishing an illness.",
+      "Jídlo je součástí kultury a svobody — povinné vegetariánství je moralizující paternalismus, který nevychovává, ale odcizuje.": "Food is part of culture and freedom — compulsory vegetarianism is a moralizing paternalism that alienates rather than educates.",
+      "Neustálé online připojení prokazatelně zvyšuje úzkost a narušuje spánek — pravidelný digitální detox je hygiena 21. století.": "Being constantly online has been shown to increase anxiety and disrupt sleep — a regular digital detox is 21st century hygiene.",
+      "Poznávání jiných kultur prokazatelně zvyšuje empatii, kreativitu a adaptabilitu — věci, které stabilní domov sám nevybuduje.": "Learning about other cultures has been proven to increase empathy, creativity and adaptability — things that a stable home cannot build on its own.",
+      "Voucher zajistí přístup k informacím pro všechny a přitom zachová tržní soutěž — média si konkurují o čtenáře, ne o reklamu.": "Voucher will ensure access to information for all while maintaining market competition — media compete for readers, not advertising.",
+      "Žáci, kteří se učili fyziku nebo historii v angličtině, mohou studovat a pracovat kdekoliv na světě — to je obrovská výhoda.": "Pupils who have studied physics or history in English can study and work anywhere in the world — this is a huge advantage.",
+      "Český literární kánon je unikátní a nedoceněný — žáci, kteří neznají Havla či Čapka, ztrácejí klíč ke své vlastní identitě.": "The Czech literary canon is unique and underappreciated — students who do not know Havel or Čapek lose the key to their own identity.",
+      "Filtry nastavující nesplnitelný standard krásy prokazatelně zvyšují výskyt úzkostí a poruch příjmu potravy u dospívajících.": "Filters that set an unattainable standard of beauty have been proven to increase the incidence of anxiety and eating disorders in adolescents.",
+      "Kdo rozhoduje co je dezinformace, má obrovskou moc — a historicky se cenzura používala stejně proti pravdě jako proti lžím.": "Whoever decides what is misinformation has enormous power — and historically, censorship has been used against truth as much as against lies.",
+      "Kino je kulturní prostor, který buduje komunitu a nabízí zážitek nedosažitelný doma — bez dotací zmizí z malých měst úplně.": "The cinema is a cultural space that builds community and offers an experience unattainable at home — without subsidies, it will disappear from small towns completely.",
+      "Koordinované dezinformační kampaně ohrožují demokratické volby a veřejné zdraví — trestní odpovědnost je poslední pojistka.": "Coordinated disinformation campaigns threaten democratic elections and public health — criminal liability is the last line of defense.",
+      "Neléčené duševní problémy stojí ekonomiku miliardy na absencích, invaliditě a kriminalitě — prevence je levnější než léčba.": "Untreated mental health problems cost the economy billions in absenteeism, disability and crime — prevention is cheaper than treatment.",
+      "Pacienti s chronickou bolestí, epilepsií nebo následky chemoterapie si zaslouží přístup k léčbě, která prokazatelně pomáhá.": "Patients with chronic pain, epilepsy or the effects of chemotherapy deserve access to treatments that are proven to help.",
+      "Sociální lynč bez soudu a práva na obhajobu je nebezpečný — jednou zrušenou reputaci nelze obnovit ani po prokázané nevině.": "Social lynching without a trial and the right to defense is dangerous — once a reputation is destroyed, it cannot be restored even after proven innocence.",
+      "Většina strachů, které prožíváme, není o přežití — brání nám v kariéře, vztazích a rozvoji bez jakéhokoliv reálného důvodu.": "Most of the fears we experience are not about survival — they hinder us in our careers, relationships, and development for no real reason.",
+      "Měla by škola umožnit volitelný režim docházky (kombinace prezenčně/online) pro starší žáky, pokud plní studijní výsledky?": "Should the school allow an optional mode of attendance (combination face-to-face/online) for older students if they meet the academic results?",
+      "Normalizace obezity ztěžuje prevenci civilizačních chorob — otevřená diskuse o zdravotních rizicích může zachránit životy.": "The normalization of obesity makes it more difficult to prevent the diseases of civilization — open discussion about health risks can save lives.",
+      "Přímá pomoc — jídlo, rozhovor, kontakt — je často prvním krokem, který systém nedokáže nahradit, protože systém nemá tvář.": "Direct help — food, conversation, contact — is often the first step that the system cannot replace, because the system has no face.",
+      "Účastníci se do show hlásí dobrovolně a regulace tvorby omezuje uměleckou svobodu — zvýšené náklady menší produkce pohřbí.": "Participants sign up for the show voluntarily, and regulation of creation limits artistic freedom — increased costs will bury smaller productions.",
+      "Učitelé dostávají jinak málokdy systematickou zpětnou vazbu — veřejné hodnocení je tlak na kvalitu, který nelze ignorovat.": "Teachers rarely receive systematic feedback otherwise — public evaluation is a quality pressure that cannot be ignored.",
+      "Dětská obezita roste a pohyb prokazatelně zlepšuje soustředění i školní výsledky — víc tělocviku je investice, ne ztráta.": "Childhood obesity is on the rise and exercise has been proven to improve concentration and school performance — more physical activity is an investment, not a loss.",
+      "Mimoškolní aktivity jsou pro mnohé žáky jedinou oblastí, kde zažívají úspěch a smysl — jejich odebrání naopak demotivuje.": "For many pupils, extracurricular activities are the only area where they experience success and meaning — their removal, on the contrary, demotivates them.",
+      "Oblečení je prvním a nejviditelnějším projevem identity — svoboda výrazu skrze styl je legitimní součástí toho, kdo jsme.": "Clothing is the first and most visible expression of identity — freedom of expression through style is a legitimate part of who we are.",
+      "Sdílená identita klubu dává lidem smysl komunity přes sociální třídy, věk i politiku — to je vzácný sjednocující fenomén.": "The club's shared identity gives people a sense of community across social class, age and politics — a rare unifying phenomenon.",
+      "Stát omezující umění je na cestě k autoritářství — umění má zobrazovat i to, co je nepříjemné, jinak přestane být uměním.": "The state restricting art is on the way to authoritarianism — art has to depict even the unpleasant, otherwise it ceases to be art.",
+      "Žáci, kteří nestíhají školu kvůli tréninkům, potřebují jasný signál o prioritách — bez struktury to za ně nikdo nevyřeší.": "Pupils who miss school due to training need a clear signal about priorities — without structure, no one will solve it for them.",
+      "Digitální nativové ovládají informační prostředí bez přirozené autority a jsou adaptabilnější v rychle se měnícím světě.": "Digital natives control the information environment without inherent authority and are more adaptable in a rapidly changing world.",
+      "Hluboké vztahy a komunita se budují léty přítomnosti na jednom místě — v krizi je cestující světoběžník mnohem více sám.": "Deep relationships and community are built over years of being in one place — in a crisis, the traveling globetrotter is much more alone.",
+      "Nahlásit přítele za podvádění u zkoušky zničí vztah a důvěru — a systém, který vyžaduje udavačství, je vadný sám o sobě.": "Reporting a friend for cheating on a test destroys a relationship and trust — and a system that requires whistleblowing is inherently flawed.",
+      "Naučit žáky telefon v hodině zodpovědně používat je lepší příprava na reálný svět než zákaz, který problém jen přesouvá.": "Teaching students to use phones responsibly in class is better preparation for the real world than a ban that only shifts the problem elsewhere.",
+      "Regulovat design aplikací je precedent, který ohrožuje inovace — a odpovědnost za vlastní čas patří uživateli, ne státu.": "Regulating app design is a precedent that threatens innovation — and responsibility for own time belongs to the user, not the state.",
+      "Svět je větší než Česko — Shakespeare, Orwell či Harari otevírají perspektivy, které česká tradice sama pokrýt nedokáže.": "The world is bigger than the Czech Republic — Shakespeare, Orwell and Harari open perspectives that the Czech tradition alone cannot cover.",
+      "Trestat za výsledek, který nikdo nepředvídal, je morálně rovnocenné trestu za náhodu — spravedlnost musí posuzovat vůli.": "Punishing for an outcome that no one predicted is morally equivalent to punishing for chance — justice must judge the will.",
+      "Záchrana lidských životů vs. práva zvířat a nepředvídatelné důsledky zásahů do genomu. Kde končí etická hranice výzkumu?": "Saving human lives vs. animal rights and the unpredictable consequences of genome manipulation. Where does the ethical boundary of research end?",
+      "Zvíře žijící v zajetí pro zábavu návštěvníků je zbaveno svobody a přirozeného chování — to není záchrana, to je věznění.": "An animal living in captivity for the entertainment of visitors is deprived of freedom and natural behavior — that is not rescue, that is imprisonment.",
+      "Dosud jsme nedokázali udržitelně žít na jedné planetě — přenést naše problémy jinam je útěk od odpovědnosti, ne pokrok.": "We have not yet been able to live sustainably on one planet — taking our problems elsewhere is shirking responsibility, not progress.",
+      "Podmiňování kapesné mění rodinný vztah na transakční — a dítě se učí pomáhat jen za odměnu místo ze spoluzodpovědnosti.": "Making pocket money conditional turns the family relationship into a transactional one — and the child learns to help only for a reward instead of co-responsibility.",
+      "Spravedlnost pro oběti, odstrašení a trvalá ochrana společnosti vs. nezvratnost soudní chyby a etika státního zabíjení.": "Justice for victims, deterrence and permanent protection of society vs. the irreversibility of judicial error and the ethics of state killing.",
+      "Výzkumy ukazují, že záměrný trénink vysvětluje výkon lépe než vrozený talent — géniové pracují víc a chytřeji, ne lépe.": "Research shows that deliberate practice explains performance better than innate talent — geniuses work harder and smarter, not better.",
+      "I neutrální výuka ideologií je nevyhnutelně subjektivní — a další povinný předmět zabírá čas potřebnějším dovednostem.": "Even the neutral teaching of ideologies is inevitably subjective — and another compulsory subject takes time away from more necessary skills.",
+      "Kdo ignoruje svou historii a vzorce chování, je odsouzen je opakovat — minulost formuje naše volby, ať chceme nebo ne.": "Those who ignore their history and patterns of behavior are doomed to repeat them — the past shapes our choices whether we like it or not.",
+      "Když algoritmus způsobí smrt, nikdo nenese skutečnou odpovědnost — a systém nezvládne každou nepředvídatelnou situaci.": "When an algorithm causes death, no one is truly responsible — and the system cannot handle every unforeseen situation.",
+      "Ne každý potřebuje programovat, stejně jako ne každý potřebuje hrát na housle — a povinný předmět zabere místo jinému.": "Not everyone needs to program, just like not everyone needs to play the violin — and a required subject will take the place of another.",
+      "Plošný příjem může demotivovat přechod z podpory do práce — a bez práce, která ho generuje, peníze ekonomiku nenasytí.": "Flat income can demotivate the transition from support to work — and without the work that generates it, the money won't feed the economy.",
+      "Zakázat reklamu na legální produkt je nebezpečný precedent — a odpovědnost za nákup leží na spotřebiteli, ne na státu.": "Banning advertising for a legal product is a dangerous precedent — and the responsibility for purchase rests with the consumer, not the state.",
+      "Měla by města a stát dotovat lokální kina jako kulturní infrastrukturu, aby dokázala konkurovat streamovacím službám?": "Should cities and states subsidize local cinemas as cultural infrastructure to compete with streaming services?",
+      "Pokud nenarozený život má morální status, zákon ho musí chránit — a právo matky nekončí tam, kde začíná právo dítěte.": "If an unborn life has moral status, the law must protect it — and the mother's right does not end where the child's right begins.",
+      "V extrémních situacích je lež menší zlo — striktní pravdomluvnost, která někomu ublíží, není ctnost, ale dogmatismus.": "In extreme situations, lying is the lesser evil — strict truthfulness that hurts someone is not virtue, but dogmatism.",
+      "Zvířata nemohou souhlasit — a způsobovat jim utrpení pro náš prospěch je eticky problematické bez ohledu na výsledek.": "Animals cannot consent — and causing them to suffer for our benefit is ethically problematic regardless of the outcome.",
+      "Algoritmus netrpí dnem, náladou ani předsudky — rozhoduje konzistentně podle stejných kritérií pro každého uchazeče.": "The algorithm does not suffer from day, mood or prejudice — it makes decisions consistently according to the same criteria for each applicant.",
+      "Globalizace ničí místní ekonomiky, prohlubuje nerovnost a činí státy závislými na křehkých dodavatelských řetězcích.": "Globalization destroys local economies, deepens inequality and makes states dependent on fragile supply chains.",
+      "Globální solidarita vs. limity osobní odpovědnosti. Kde tvoje zodpovědnost přestává být tvou věcí — a kdo to určuje?": "Global Solidarity Vs. personal liability limits. Where does your responsibility stop being your business — and who determines that?",
+      "Jednou ztracené soukromí nejde vzít zpět — a stát s přístupem ke všem datům má neomezenou moc kontrolovat a trestat.": "Privacy once lost cannot be taken back — and the state with access to all data has unlimited power to control and punish.",
+      "Kreslit na cizí zeď bez souhlasu je poškozování majetku — umělecký záměr neospravedlňuje poškozování cizího majetku.": "Painting on someone else's wall without permission is property damage — artistic intent does not justify damage to someone else's property.",
+      "Oběti musí žít s následky — dovolit pachateli druhý pokus v blízkosti jejich světa ignoruje jejich oprávněný strach.": "Victims must live with the consequences — allowing the perpetrator a second attempt near their world ignores their legitimate fear.",
+      "Přijmout dětství jako omluvu systematicky odebírá zodpovědnost — tisíce lidí z podobných podmínek zločin nespáchalo.": "Accepting childhood as an excuse systematically removes responsibility — thousands of people from similar circumstances did not commit the crime.",
+      "Skincare a fitness komunity pomáhají milionům lidí najít sebepéči — a sdílení proměn buduje sebevědomí, ne jen tlak.": "Skincare and fitness communities are helping millions of people find self-care — and sharing transformations builds confidence, not pressure.",
+      "Zdravotnictví, doprava a gastronomie nemohou fungovat na 4 dny bez zvýšení nákladů nebo zhoršení dostupnosti služeb.": "Healthcare, transport and gastronomy cannot function for 4 days without increasing costs or worsening the availability of services.",
+      "Bláznivá fotka z patnácti let by neměla definovat tvůj profesní život ve třiceti — právo na restart je spravedlivé.": "A crazy photo from fifteen years old shouldn't define your professional life in your thirties — the right to a reboot is fair.",
+      "Člověk, který se změnil, je jiný člověk než ten, co chyboval — odmítat mu trvale nový začátek je trestem bez konce.": "A changed person is a different person from a person who made mistakes — to deny him a permanent fresh start is a punishment without end.",
+      "Nutil by stát lidi volit kandidáta, kterého odmítají — a hlas ze strachu z pokuty není demokratickým projevem vůle.": "The state would force people to vote for a candidate they reject — and a vote for fear of a fine is not a democratic expression of will.",
+      "Politici se chovají jinak, když musí oslovit 100 % voličů — povinné hlasování tlačí k méně populistickým programům.": "Politicians behave differently when they have to appeal to 100% of the electorate — compulsory voting pushes for less populist programs.",
+      "Povinná identifikace ničí anonymitu, která chrání ohrožené skupiny — a obejde ji každé dítě s rodičovským průkazem.": "Mandatory identification destroys the anonymity that protects vulnerable groups — and every child with a parental ID bypasses it.",
+      "Většina moderních léků a vakcín existuje díky testování na zvířatech — odmítat to znamená odmítat moderní medicínu.": "Most modern drugs and vaccines exist because of animal testing — to reject it is to reject modern medicine.",
+      "Jakmile ospravedlníme krádež kontextem, každý si kontext najde — a vlastnické právo přestává být bezpečnou normou.": "Once we justify theft with context, everyone will find context — and property rights cease to be a secure norm.",
+      "Odstraňování soch je snadnější než pochopení historie — a přepisování minulosti nikdy nevedlo k lepší budoucnosti.": "Removing statues is easier than understanding history — and rewriting the past has never led to a better future.",
+      "Pevný režim odstraňuje nutnost rozhodovat o rutinách — šetří tak mentální energii na skutečně důležitá rozhodnutí.": "Fixed mode eliminates the need to make decisions about routines — saving mental energy for really important decisions.",
+      "Podcast bez redakční kontroly šíří názory jako fakta — a charismatický mluvčí nevyhrává argumentem, ale osobností.": "A podcast without editorial control spreads opinions as facts — and a charismatic speaker wins not by argument, but by personality.",
+      "Práva jsou společenská dohoda mezi vědomými bytostmi — a simulace vědomí strojem není totéž co skutečné prožívání.": "Rights are a social agreement between conscious beings — and simulating consciousness by a machine is not the same as actually experiencing it.",
+      "Workoholismus prokazatelně ničí zdraví a vztahy — a 'dobrý život' většinou neznamená 'nejvíc odpracovaných hodin'.": "Workaholism is proven to destroy health and relationships — and 'the good life' usually doesn't mean 'the most hours worked'.",
+      "Zakázat reklamu na legální produkt je precedent, který se snadno rozšíří na cokoli, co někdo považuje za nezdravé.": "Banning advertising for a legal product is a precedent that can easily be extended to anything someone deems unhealthy.",
+      "Dezinformace o vakcínách způsobily smrt tisíců — platforma, která je nechá šířit, nese část morální odpovědnosti.": "Vaccine misinformation has killed thousands — the platform that allows it to spread bears some of the moral responsibility.",
+      "Charitativní dar může zachránit život dnes — investice možná zbohatne investora, ale umírajícímu dítěti nepomůže.": "A charitable donation can save a life today — an investment may make the investor rich, but it won't help a dying child.",
+      "Kapesné vázané na povinnosti učí děti, že peníze se vydělávají — a buduje odpovědnost a pracovní návyky od mládí.": "Duty pocket money teaches kids that money is earned — and builds responsibility and work habits from a young age.",
+      "Měly by školy omezit veřejné srovnávání žáků (žebříčky, zveřejňování výsledků), i když to může zvyšovat motivaci?": "Should schools limit public comparison of pupils (rankings, publication of results), even though it may increase motivation?",
+      "Mírná žárlivost je přirozená reakce na ohrožení vazby a může iniciovat důležitou a upřímnou komunikaci ve vztahu.": "Mild jealousy is a natural response to attachment threats and can initiate important and honest communication in a relationship.",
+      "Okolnosti se mění — slepé dodržení slibu, který způsobí vážnou škodu, je morální rigidita maskující se za ctnost.": "Circumstances change — blindly keeping a promise that causes serious harm is moral rigidity masquerading as virtue.",
+      "Rodič-kamarád neumí říct ne — a dítě potřebuje autoritu, která ho chrání, ne kamaráda, který se bojí konfrontace.": "The parent-friend cannot say no — and the child needs an authority figure to protect him, not a friend who is afraid of confrontation.",
+      "Štěstí postavené na lži je nestabilní — jeden moment odhalení zboří celou konstrukci, a pád je pak dvakrát vyšší.": "A fortune built on a lie is unstable — one moment of revelation destroys the whole structure, and then the fall is twice as high.",
+      "Veřejné žebříčky prokazatelně zvyšují úzkost a snižují motivaci u slabších žáků — škola má chránit, ne stresovat.": "Public rankings have been shown to increase anxiety and demotivate weaker students — school is supposed to protect, not stress.",
+      "AI poprvé ohrožuje i kognitivní práci — tentokrát neexistuje bezpečná kategorie profese, a to je bezprecedentní.": "For the first time, AI also threatens cognitive work — this time there is no safe category of profession, and this is unprecedented.",
+      "Každá průmyslová revoluce zlikvidovala staré profese a vytvořila nové — tentokrát to bude stejné, jen rychlejší.": "Every industrial revolution has eliminated old professions and created new ones — this time it will be the same, only faster.",
+      "Každá válka byla předem prezentována jako nevyhnutelná — a zpětně se většinou ukázalo, že existovaly jiné cesty.": "Each war was presented in advance as inevitable — and in retrospect it usually turned out that there were other ways.",
+      "Kontext a příčiny vs. odpovědnost za činy a spravedlnost pro oběti. Kde leží hranice mezi omluvou a vysvětlením?": "Context and causes vs. accountability for actions and justice for victims. Where is the line between an apology and an explanation?",
+      "Popularita učitele a jeho kvalita jsou různé věci — přísní, ale výborní učitelé by dostávali nejhorší hodnocení.": "A teacher's popularity and quality are different things — strict but excellent teachers would receive the worst ratings.",
+      "V pubertě mozek ještě nezvládá emocionální regulaci — a intenzivní vztah může způsobit trauma i zanedbání školy.": "During puberty, the brain is not yet capable of emotional regulation — and an intense relationship can cause trauma and neglect of school.",
+      "Absolutní soukromí umožňuje daňové ráje, praní peněz a skrývání zneužívání — transparentnost zachraňuje životy.": "Absolute privacy enables tax havens, money laundering and hiding abuses — transparency saves lives.",
+      "Bez univerzální morálky nelze odsoudit nic — ani genocidu, ani otroctví, protože 'jiná kultura, jiná pravidla'.": "Without universal morality, nothing can be condemned — neither genocide nor slavery, because 'different culture, different rules'.",
+      "Měl by stát zavést mediální voucher: bezplatné předplatné jednoho média pro každého občana, financované z daní?": "Should the state introduce a media voucher: a free subscription to one media outlet for every citizen, funded by taxes?",
+      "Nucené lékařské zákroky jsou porušením tělesné autonomie — stát nemá právo rozhodovat, co ti vstříknou do těla.": "Forced medical procedures are a violation of bodily autonomy — the state has no right to decide what is injected into your body.",
+      "Pokud AI napíše esej za žáka, nenaučil se myslet — a právě kritické myšlení je to, co žádná AI škole nenahradí.": "If an AI writes an essay for a student, they haven't learned to think — and critical thinking is what no AI school can replace.",
+      "Pokud entita cítí, trpí a uvažuje, biologický původ by neměl být podmínkou práv — jinak jde o šovinismus druhu.": "If an entity feels, suffers and thinks, biological origin should not be a condition of rights — otherwise it is species chauvinism.",
+      "Politik, který chce důvěru veřejnosti, musí akceptovat kontrolu — soukromí končí tam, kde začíná zneužití moci.": "A politician who wants public trust must accept scrutiny — privacy ends where abuse of power begins.",
+      "Popularita signalizuje sociální kompetenci — a schopnost budovat vztahy je klíčová pro jakýkoli budoucí úspěch.": "Popularity signals social competence — and the ability to build relationships is key to any future success.",
+      "Redukovat vědomé rozhodování na neurální aktivitu je kategoriální chyba — a zruší veškerou morální odpovědnost.": "To reduce conscious decision-making to neural activity is a categorical error — and it abrogates all moral responsibility.",
+      "Složitý obsah naučený v druhém jazyce bývá méně hluboce pochopen — jazyk je nástroj myšlení, ne jen komunikace.": "Complex content learned in a second language tends to be less deeply understood — language is a tool for thinking, not just communication.",
+      "Technologické řešení přijde příliš pozdě — změny chování jsou jedinou jistou cestou ke snížení emisí právě teď.": "A technological solution will come too late — behavioral changes are the only sure way to reduce emissions right now.",
+      "Algoritmus se učí z historických dat plných společenských předsudků — automatizuje je, místo aby je odstranil.": "The algorithm learns from historical data full of societal biases — automating them instead of removing them.",
+      "Automatizace zničí miliony pracovních míst — UBI je jediná systémová odpověď na technologickou nezaměstnanost.": "Automation will destroy millions of jobs — UBI is the only systemic answer to technological unemployment.",
+      "Kontrola nad tím, co vidíš, vs. relevance a zapojení. Kdo by měl rozhodovat o tvém feedu — ty, nebo platforma?": "Control over what you see vs. relevance and engagement. Who should decide your feed — you or the platform?",
+      "Měly by školy zavést povinnou výuku duševního zdraví i za cenu omezení jiného předmětu (např. 1 hodina týdně)?": "Should schools introduce compulsory mental health education even at the cost of reducing another subject (e.g. 1 hour per week)?",
+      "Soudit minulost dnešními měřítky je ahistorické — a vede k absurdnímu závěru, že nikdo v historii nebyl dobrý.": "Judging the past by today's standards is ahistorical — and leads to the absurd conclusion that no one in history has been good.",
+      "Bellovy nerovnosti experimentálně vyvrátily lokální skryté proměnné — náhoda je vetkána do struktury reality.": "Bell's inequalities experimentally disproved local hidden variables — chance is woven into the fabric of reality.",
+      "Globalizace, internet a jaderné odstrašení vytvořily zcela nové podmínky — historické paralely jsou povrchní.": "Globalization, the Internet, and nuclear deterrence have created entirely new conditions — the historical parallels are superficial.",
+      "Kdo definuje fake news, drží klíč k cenzuře — a žádný stát nedokáže tuto moc použít bez politického zneužití.": "Whoever defines fake news holds the key to censorship — and no state can use that power without political abuse.",
+      "Klávesnice je rychlejší, čitelnější a editovatelná — v digitálním světě je ruční psaní nostalgie, ne nutnost.": "The keyboard is faster, more legible and editable — in the digital world, typing by hand is a nostalgia, not a necessity.",
+      "Měl by stát zavést limit na hotovostní platby u vyšších částek kvůli boji proti praní peněz a daňovým únikům?": "Should the state introduce a limit on cash payments for higher amounts to fight money laundering and tax evasion?",
+      "Neville Chamberlain ukázal, že appeasement agresora nefunguje — někdy je válka jedinou odpovědí na větší zlo.": "Neville Chamberlain showed that appeasement of the aggressor does not work — sometimes war is the only answer to a greater evil.",
+      "Nucená vojenská služba je ztráta let života a porušení osobní svobody — profesionální armáda je efektivnější.": "Conscription is a waste of years of life and a violation of personal freedom — a professional army is more efficient.",
+      "Sexuální výchova patří primárně do rodiny — škola nemá právo předbíhat rodičovský přístup k citlivým tématům.": "Sex education primarily belongs to the family — the school has no right to overtake the parental approach to sensitive topics.",
+      "Výzkumy ukazují, že čím dříve dítě dostane smartphone, tím vyšší je riziko závislosti a psychických problémů.": "Research shows that the earlier a child gets a smartphone, the higher the risk of addiction and psychological problems.",
+      "Bez nadnárodního trestního soudu zůstávají diktátoři beztrestní — Milošević by nikdy nebyl souzen bez Haagu.": "Without an international criminal court, dictators go unpunished — Milošević would never have been tried without The Hague.",
+      "Bez srovnání žáci nevidí, kde stojí — a svět za školou plný srovnávání je na ně nepřipraví ochranná bublina.": "Without comparison, students cannot see where they stand — and the world beyond school, full of comparisons, will not prepare them for the protective bubble.",
+      "Děti bez sexuální výchovy se učí z pornografie — a to vytváří nerealistická očekávání a nedostatek respektu.": "Children without sex education learn from pornography — and that creates unrealistic expectations and a lack of respect.",
+      "I milosrdná lež buduje falešnou realitu — a odhalení vždy poškodí důvěru více, než by poškodila sama pravda.": "Even a merciful lie builds a false reality — and exposure always damages trust more than the truth itself.",
+      "Je morálně přijatelné odmítnout pomoc známému, pokud by ti to výrazně poškodilo vlastní zdraví nebo studium?": "Is it morally acceptable to refuse help to an acquaintance if it would significantly harm your own health or studies?",
+      "Kryptoměny nemají vnitřní hodnotu, spotřebovávají enormní energii a slouží primárně spekulantům a zločincům.": "Cryptocurrencies have no intrinsic value, consume enormous amounts of energy, and serve primarily speculators and criminals.",
+      "Legální eutanázie vytváří tlak na nemocné, aby 'nebyli na obtíž' — a systém nelze zabezpečit proti zneužití.": "Legal euthanasia creates pressure on the sick to 'not be a nuisance' — and the system cannot be safeguarded against abuse.",
+      "Neomezená migrace destabilizuje i hostitelské země — pomoc musí přijít ve formě investic tam, kde lidé žijí.": "Unlimited migration also destabilizes host countries — aid must come in the form of investment where people live.",
+      "Neurověda ukazuje, že mozek rozhoduje milisekundy před naším 'vědomým' rozhodnutím — svobodná vůle je iluze.": "Neuroscience shows that the brain makes decisions milliseconds before our 'conscious' decision — free will is an illusion.",
+      "Peníze zdarma ničí motivaci pracovat — a žádná ekonomika nemůže financovat UBI bez destruktivního zadlužení.": "Free money destroys the incentive to work — and no economy can finance a UBI without destructive debt.",
+      "Programování učí logické myšlení, dekompozici problémů a kreativitu — dovednosti užitečné v jakémkoli oboru.": "Programming teaches logical thinking, problem decomposition, and creativity — skills useful in any field.",
+      "Reklama používá psychologické triky navržené k obejití racionálního rozhodování — to je definice manipulace.": "Advertising uses psychological tricks designed to bypass rational decision-making — that's the definition of manipulation.",
+      "Anonymita je štít, za kterým se ukrývá nenávist — ne-anonymní prostředí výrazně snižuje toxicitu komentářů.": "Anonymity is the shield behind which hate hides — a non-anonymous environment greatly reduces the toxicity of comments.",
+      "Dokud máme miliardy lidí bez čisté vody a zdravotní péče, je eticky neobhajitelné posílat miliardy na Mars.": "As long as we have billions of people without clean water and healthcare, it is ethically indefensible to send billions to Mars.",
+      "Internet je brána ke vzdělání, práci i zdravotní péči — odpojit člověka znamená ho vyloučit ze společnosti.": "The Internet is the gateway to education, work and healthcare — disconnecting a person means excluding them from society.",
+      "Lidé, kteří nešetří v mládí, spoléhají na stát ve stáří — a připravují se tak o budoucí svobodu rozhodovat.": "People who do not save in their youth rely on the state in their old age — and thus prepare themselves for future freedom of decision-making.",
+      "Měly by sociální sítě zobrazovat obsah chronologicky (podle času) místo algoritmického (strojového) výběru?": "Should social networks display content chronologically (by time) instead of algorithmic (machine) selection?",
+      "Měly by školy zvýšit povinnou pohybovou aktivitu (více tělocviku) i za cenu zkrácení času na jiné předměty?": "Should schools increase compulsory physical activity (more physical exercise) even at the cost of reducing time for other subjects?",
+      "Některé informace pacientovi psychicky ublíží víc než samotná nemoc — lékař musí mít prostor pro posouzení.": "Some information will harm the patient psychologically more than the disease itself — the doctor must have room for assessment.",
+      "Právo být zapomenut umožňuje politikům a firmám mazat nepohodlnou historii — a to ohrožuje transparentnost.": "The right to be forgotten allows politicians and companies to erase inconvenient history — and that threatens transparency.",
+      "Snížená očekávání chrání před devastujícím zklamáním — a umožňují vychutnat si pozitivní překvapení naplno.": "Lowered expectations protect against devastating disappointment — and allow positive surprises to be enjoyed to the fullest.",
+      "Strach je evoluční alarm — bez něj bychom ignorovali skutečná nebezpečí a přežívali hůř i v moderním světě.": "Fear is an evolutionary alarm — without it, we would ignore real dangers and survive worse even in the modern world.",
+      "Vizuální vyprávění zkracuje cestu čtenáři a omezuje nutnost imaginace — a tím snižuje kognitivní náročnost.": "Visual storytelling shortens the reader's journey and limits the need for imagination — thereby reducing cognitive demands.",
+      "Žádný jiný systém v historii nevytáhl z chudoby tolik lidí a nevytvořil tolik inovací jako tržní ekonomika.": "No other system in history has lifted as many people out of poverty and created as many innovations as the market economy.",
+      "Nezávislé veřejnoprávní médium je jednou z mála institucí, které mohou odolat tlaku oligarchů a populistů.": "Independent public media is one of the few institutions that can resist the pressure of oligarchs and populists.",
+      "Povinný úkol ze strachu nemá vzdělávací hodnotu — dobrovolnost filtruje ty, kdo se opravdu chtějí zlepšit.": "Compulsory assignment out of fear has no educational value — volunteerism filters out those who really want to improve.",
+      "První vztahy v dospívání učí komunikaci, empatii a řešení konfliktů — a potlačovat je způsobuje víc škody.": "Early relationships in adolescence teach communication, empathy, and conflict resolution — and suppressing them causes more harm.",
+      "Systémové změny se rodí z individuálního tlaku — každý, kdo čeká, až to změní vláda, je součástí problému.": "Systemic change is born of individual pressure — anyone who waits for the government to change is part of the problem.",
+      "Technologie jsou tool, ne droga — problém není v telefonu, ale v návycích, a detox je symptomatická léčba.": "Technology is a tool, not a drug — the problem is not the phone, but the habits, and detox is a symptomatic treatment.",
+      "Číslo 3 neřekne nic o tom, co konkrétně chybí — slovní hodnocení dává reálnou zpětnou vazbu pro zlepšení.": "Number 3 doesn't say anything about what's specifically missing — a verbal assessment gives real feedback for improvement.",
+      "EU armáda rozbije NATO, duplikuje náklady a vytvoří velitelský chaos — spolupráce v NATO je efektivnější.": "The EU army will break NATO, duplicate costs and create command chaos — cooperation in NATO is more effective.",
+      "Kapitalismus systematicky odměňuje bohaté na úkor chudých — a bez regulace míří k monopolům a nerovnosti.": "Capitalism systematically rewards the rich at the expense of the poor — and without regulation it leads to monopolies and inequality.",
+      "Motivace, priority a zodpovědnost vs. autonomie, rovnováha a zázemí — zvláště pro děti z náročných rodin.": "Motivation, priorities and responsibility vs. autonomy, balance and background — especially for children from demanding families.",
+      "Psaní rukou prokazatelně zlepšuje zapamatování a kreativní myšlení — mozek zpracovává informace hlouběji.": "Handwriting has been proven to improve memorization and creative thinking — the brain processes information more deeply.",
+      "Veřejné zdraví a prevence vs. stigmatizace a individuální práva. Kde je hranice mezi starostí a souzením?": "Public health and prevention vs. stigmatization and individual rights. Where is the line between worrying and judging?",
+      "Černobyl, Fukušima, tisíce let radioaktivního odpadu — a obnovitelné zdroje jsou levnější i bezpečnější.": "Chernobyl, Fukushima, thousands of years of radioactive waste — and renewables are cheaper and safer.",
+      "Od brýlí po kardiostimulátory jsme vždy překračovali biologii — neurolinkové rozhraní je jen další krok.": "From glasses to pacemakers, we've always transcended biology — the neuroline interface is just the next step.",
+      "Pokud alternativy existují a jsou dostupné, vědomé rozhodnutí způsobovat utrpení je obtížně obhajitelné.": "If alternatives exist and are available, a conscious decision to cause suffering is difficult to defend.",
+      "Přátelství definuje vzájemná důvěra a podpora — a obojí lze budovat online stejně kvalitně jako offline.": "Friendship is defined by mutual trust and support — and both can be built online just as well as offline.",
+      "Rodič, který ukradne jídlo pro hladové dítě, nejedná nemorálně — život má vyšší hodnotu než vlastnictví.": "A parent who steals food for a hungry child is not acting immorally—life is more valuable than property.",
+      "Žárlivost, které se povolí, roste — a z ochranného reflexu se stane nástroj kontroly a omezení partnera.": "Jealousy, which is allowed, grows — and the protective reflex becomes a tool to control and limit the partner.",
+      "Médium financované z daní podléhá vládnímu tlaku — skutečná nezávislost vyžaduje nezávislé financování.": "A tax-funded medium is subject to government pressure — true independence requires independent funding.",
+      "Měl by být koncept duševního vlastnictví (autorská práva, patenty) v digitální éře zásadně přehodnocen?": "Should the concept of intellectual property (copyrights, patents) be fundamentally reconsidered in the digital era?",
+      "Patentovat DNA znamená privatizovat samou podstatu života — a blokovat výzkum, který zachraňuje životy.": "To patent DNA is to privatize the very essence of life — and to block research that saves lives.",
+      "Regulace AI v jedné zemi jen přesune vývoj jinam — kdo reguluje, prohraje závod s těmi, kdo neregulují.": "Regulating AI in one country will only shift development elsewhere — those who regulate will lose the race to those who don't.",
+      "Soutěž je jednou ze základních motivačních sil — žáci bez zdravé konkurence pracují pod svůj potenciál.": "Competition is one of the basic motivational forces — students without healthy competition work below their potential.",
+      "Utilitarismus ospravedlňuje mučení, pokud zachrání dost lidí — a tím ničí samotný základ lidských práv.": "Utilitarianism justifies torture if it saves enough people — thereby destroying the very basis of human rights.",
+      "Závislost na jednom člověku je křehká — a širší okruh přátel nabízí různé perspektivy a záchranné sítě.": "Dependence on one person is fragile — and a wider circle of friends offers different perspectives and safety nets.",
+      "Mnohosvětová interpretace a Bohmovská mechanika ukazují, že determinismus přežívá i v kvantovém světě.": "The many-world interpretation and Bohmian mechanics show that determinism survives even in the quantum world.",
+      "Muzikanti mají právo na odměnu za práci — zdarma hudba je bezplatná jen pro posluchače, ne pro tvůrce.": "Musicians have the right to be paid for their work — free music is only free for listeners, not creators.",
+      "Reklamy cílí na děti technikami, jimž se nezralý mozek nedokáže bránit — zákaz je ochrana, ne cenzura.": "Ads target children with techniques that the immature brain cannot defend against — banning is protection, not censorship.",
+      "Strop na příjem trestá úspěch a vysílá inovátory do zemí bez omezení — a kdo rozhoduje, kolik je dost?": "An income cap punishes success and sends innovators to countries without limits — and who decides how much is enough?",
+      "Školné odrazuje talentované žáky z chudých rodin — a společnost ztrácí potenciál, který nikdy neuvidí.": "Tuition discourages talented students from poor families — and society loses potential it will never see.",
+      "Zjednodušení snadno sklouzává ke lži — a volič, který rozhoduje na základě přehánění, nevolí svobodně.": "Simplification easily slips into falsehood — and a voter who makes decisions based on exaggeration is not voting freely.",
+      "Znalost stavu umožňuje informované rozhodnutí — lékař bez pacientova souhlasu nesmí rozhodovat za něj.": "Knowledge of the condition enables an informed decision — the doctor must not make decisions for the patient without the patient's consent.",
+      "Kreativita vyžaduje vědomí, záměr a emocionální prožitek — AI nemá nic z toho, pouze simuluje výstup.": "Creativity requires awareness, intention and emotional experience — AI has none of these, it just simulates the output.",
+      "Měla by velká zpravodajská média ve svých aplikacích upřednostnit textové články před krátkými videi?": "Should major news outlets prioritize text articles over short videos in their apps?",
+      "Nečinnost při genocidě v Rwandě stála 800 000 životů — spravedlivá intervence může zachránit miliony.": "Inaction in the Rwandan genocide cost 800,000 lives — just intervention can save millions.",
+      "Simulace vědomí není vědomím — a přisuzovat morální status kódu odvádí pozornost od reálného utrpení.": "Simulating consciousness is not consciousness — and attributing moral status to code distracts from real suffering.",
+      "Slib je závazek — bez kultury jeho dodržení ztrácí smysl jakákoliv dohoda a důvěra se stává nemožnou.": "A promise is a commitment — without a culture of keeping it, any agreement loses its meaning and trust becomes impossible.",
+      "Šifrované zprávy teroristů a kamery odhalující pachatele — bezpečnost ocení každý, koho se to dotklo.": "Encrypted messages from terrorists and cameras revealing criminals — security will be appreciated by everyone affected.",
+      "Utíkat na Mars, místo opravit Zemi, je koloniální mentalita — a biliony by zachránily víc životů zde.": "Running to Mars instead of fixing Earth is a colonial mentality — and trillions would save more lives here.",
+      "Evropa nemůže navěky záviset na americkém deštníku — vlastní armáda je podmínka skutečné suverenity.": "Europe cannot forever depend on the American umbrella — its own army is a condition of true sovereignty.",
+      "Individuální solidarita vs. systémové řešení. Je osobní pomoc efektivní, nebo jen uklidňuje svědomí?": "Individual solidarity vs. system solution. Is personal help effective, or is it just a matter of conscience?",
+      "Malá země bez aktivní role v EU je jen příjemce rozhodnutí — vliv vyžaduje angažovanost a kompromis.": "A small country without an active role in the EU is only a recipient of decisions — influence requires commitment and compromise.",
+      "Patenty a copyright v digitálním světě brání šíření léků, vzdělání i kultury — sdílení je přirozené.": "Patents and copyrights in the digital world prevent the spread of medicine, education and culture — sharing is natural.",
+      "Péče o blízkého je přirozená součást rodiny — a učí empatii a odpovědnost lépe než jakákoliv hodina.": "Caring for a loved one is a natural part of family — and it teaches empathy and responsibility better than any class.",
+      "Právní osobnost pro stroj degraduje pojem 'práva' a umožňuje korporacím schovávat odpovědnost za AI.": "Legal personhood for the machine degrades the concept of 'rights' and allows corporations to hide responsibility for AI.",
+      "Rodina nabízí loajalitu, která přežije krize, kde přátelství obvykle selžou — a je tam bez podmínek.": "Family offers a loyalty that survives crises where friendships usually fail — and it's there without conditions.",
+      "Sport historicky znamená fyzickou zdatnost — rozšíření pojmu na sezení u monitoru ho zbavuje smyslu.": "Sport has historically meant physical fitness — extending the term to sitting in front of a monitor makes it meaningless.",
+      "Větší role v EU znamená víc závazků a ústupků — a český hlas bude vždy přehlušen Německem a Francií.": "A bigger role in the EU means more commitments and concessions — and the Czech voice will always be drowned out by Germany and France.",
+      "CRISPR může vymýtit srpkovitou anémii a cystickou fibrózu — odmítat to je odsuzovat děti k utrpení.": "CRISPR can eradicate sickle cell disease and cystic fibrosis — to deny it is to condemn children to suffering.",
+      "Hudba je kulturní dědictví — komercializace umění ho redukuje na produkt a omezuje přístup chudých.": "Music is cultural heritage — the commercialization of art reduces it to a product and limits access to the poor.",
+      "Je utilitarismus (prospěch většiny nade vše) morálně ospravedlnitelný, i když poruší práva jedince?": "Is utilitarianism (the benefit of the majority above all else) morally justifiable even if it violates the rights of the individual?",
+      "Kdo způsobil klimatickou krizi, musí nést následky — miliony lidí ztratí domov kvůli emisím Západu.": "Whoever caused the climate crisis must bear the consequences — millions of people will lose their homes because of the West's emissions.",
+      "Koloniální hranice, vykořisťování a kulturní genocida vytvořily problémy, které přetrvávají dodnes.": "Colonial borders, exploitation, and cultural genocide created problems that persist today.",
+      "Otroctví bylo i ve své době kritizováno — argumentovat dobovým kontextem je výmluva, ne vysvětlení.": "Slavery was also criticized in its time — arguing from the historical context is an excuse, not an explanation.",
+      "Sankce vždy nejvíc dopadají na obyčejné lidi — elity si najdou cestu okolo, zatímco děti hladovějí.": "Sanctions always hit ordinary people the hardest — elites get around while children starve.",
+      "Síla spotřebitele a morální konzistence vs. praktická realita a otázka, kdo určuje, co je neetické.": "Consumer Power and Moral Consistency Vs. practical reality and the question of who determines what is unethical.",
+      "Trestání slov otevírá dveře kriminalizaci jakéhokoli nesouhlasu — a myšlenková policie je dystopie.": "Punishing words opens the door to criminalizing any dissent — and thought policing is a dystopia.",
+      "Utrpení nevinných dětí nelze ospravedlnit žádnou teodicejí — všemohoucí dobrý Bůh by ho nedopustil.": "The suffering of innocent children cannot be justified by any theodicy — an almighty good God would not allow it.",
+      "Věda říká co JE, ne co by mělo být — politická rozhodnutí vždy zahrnují hodnoty, které data neurčí.": "Science tells what IS, not what SHOULD be — policy decisions always involve values ​​that data will not determine.",
+      "Bezpečnost dětí online vs. soukromí a autonomie dospívajících. Kde je hranice rodičovské kontroly?": "Child Safety Online Vs. privacy and autonomy of adolescents. Where are the limits of parental control?",
+      "Degrowth a cirkulární ekonomika ukazují cestu — kapitalismus se může adaptovat na stabilní systém.": "Degrowth and the circular economy show the way — capitalism can adapt to a stable system.",
+      "Desítky let po dekolonizaci je čas přestat vinit dějiny a zaměřit se na korupci a špatné vládnutí.": "Decades after decolonization, it is time to stop blaming history and focus on corruption and bad governance.",
+      "Genetické vylepšování vede k eugenice — a nerovný přístup vytvoří biologickou kastovní společnost.": "Genetic enhancement leads to eugenics — and unequal access creates a biological caste society.",
+      "Každá 'spravedlivá válka' je eufemismus — Irák, Libye ukazují, že vojenské řešení jen plodí chaos.": "Every 'just war' is a euphemism — Iraq, Libya show that military solutions only breed chaos.",
+      "Moralizující umění je propaganda — a skutečné umění musí provokovat, i za cenu nepříjemných pravd.": "Moralizing art is propaganda — and real art must provoke, even at the cost of uncomfortable truths.",
+      "Posthumanismus vytvoří dvě kasty — vylepšené a přirozené lidi — a tím zruší samotný pojem lidství.": "Posthumanism will create two castes—enhanced and natural humans—and thereby abolish the very concept of humanity.",
+      "Právně chránit neexistující osoby je logický nonsens — a paralyzuje jakékoli současné rozhodování.": "Legally protecting non-existent persons is logical nonsense — and paralyzes any current decision-making.",
+      "Bitcoin odstraňuje prostředníky, chrání před inflací i cenzurou — je digitální zlato 21. století.": "Bitcoin cuts out middlemen, protects against inflation and censorship — it's the digital gold of the 21st century.",
+      "Měly by sociální sítě umožnit rodičům (u dětí do 15 let) vidět a schvalovat nové online kontakty?": "Should social networks allow parents (for children under 15) to see and approve new online contacts?",
+      "Odpuštění není omluva pachatele — je to osvobození sebe od břemene hněvu, které neseme my, ne on.": "Forgiveness is not an excuse for the wrongdoer — it is freeing oneself from the burden of anger, which we bear, not he.",
+      "Výstupy AI jsou originální kombinace naučených vzorců — což je přesně to, co dělá i lidský mozek.": "AI outputs are original combinations of learned patterns — which is exactly what the human brain does.",
+      "Bez kolektivní paměti genocid a zločinů se zvyšuje šance na jejich opakování — bolest je učitel.": "Without a collective memory of genocides and crimes, the chance of their repetition increases — pain is a teacher.",
+      "Bez ochrany duševního vlastnictví zmizí motivace investovat do výzkumu, hudby, filmů i softwaru.": "Without intellectual property protection, the incentive to invest in research, music, movies and software disappears.",
+      "Dítě, které vnímá rodiče jako důvěrníka, sdílí problémy dříve — a to je nejlepší prevence krizí.": "A child who perceives a parent as a confidant shares problems earlier — and this is the best prevention of crises.",
+      "Dvouhodinový rozhovor odhalí nuance, které dvacetisekundový televizní šot nikdy nemůže zachytit.": "A two-hour interview reveals nuances that a twenty-second TV shot can never capture.",
+      "Hloubka a přesnost textu vs. dostupnost a rychlost videa. Měla by redakce rozhodovat za čtenáře?": "Depth and accuracy of text vs. video availability and speed. Should the editors decide for the readers?",
+      "Investice vytváří pracovní místa a hodnotu — a bohatší člověk může dát v budoucnosti mnohem víc.": "Investment creates jobs and value — and a richer person can give much more in the future.",
+      "Kapitalismus bez růstu kolabuje — deflace, nezaměstnanost a sociální nepokoje jsou nevyhnutelné.": "Capitalism without growth collapses — deflation, unemployment and social unrest are inevitable.",
+      "Prohibice nefunguje — legalizace zastaví gangovou válku, umožní dohled nad kvalitou a zdaní trh.": "Prohibition doesn't work — legalization will stop gang warfare, allow for quality control, and tax the market.",
+      "Umění má moc formovat společnost — umělci nesou zodpovědnost za normalizaci násilí a stereotypů.": "Art has the power to shape society — artists are responsible for normalizing violence and stereotypes.",
+      "Co jím, je moje volba — stát rozhodující o mém talíři překračuje jasnou hranici osobní svobody.": "What I eat is my choice — the state deciding what is on my plate crosses a clear line of personal freedom.",
+      "Ignorování vědeckého konsenzu u klimatu stálo dekádu — politika musí následovat data, ne dojmy.": "Ignoring the scientific consensus on climate has cost a decade — policy must follow data, not impressions.",
+      "Maus, Persepolis nebo Watchmen dokazují, že grafický formát zvládne stejnou hloubku jako román.": "Maus, Persepolis or Watchmen prove that the graphic format can handle the same depth as a novel.",
+      "Měli bychom bojkotovat firmy, které se chovají neeticky, i za cenu vyššího pohodlí nebo výdajů?": "Should we boycott companies that behave unethically, even at the cost of increased convenience or expense?",
+      "Mlčet znamená souhlasit — a ostatní studenti, kteří se učili poctivě, jsou tím přímo poškozeni.": "To be silent is to agree — and other students who have been learning honestly are directly harmed.",
+      "Nutit člověka trpět proti jeho vůli je nejhlubší porušení autonomie — eutanázie je akt soucitu.": "Forcing a person to suffer against their will is the most profound violation of autonomy — euthanasia is an act of compassion.",
+      "Sankce zastavily jaderný program Íránu a donutily režimy k vyjednávání — bez jediného výstřelu.": "Sanctions halted Iran's nuclear program and forced the regimes to negotiate — without firing a single shot.",
+      "Školní popularita odměňuje konformitu a povrchnost — a nekoreluje s úspěchem v dospělém životě.": "School popularity rewards conformity and superficiality — and does not correlate with success in adult life.",
+      "Asteroid nebo supervulkán mohou vymazat lidstvo — kolonizace Marsu je pojistka naší existence.": "An asteroid or a supervolcano could wipe out humanity — colonizing Mars is the guarantee of our existence.",
+      "Banksy prodává obrazy za miliony — a rozdíl mezi galerií a zdí je jen v tom, kdo dal povolení.": "Banksy sells paintings for millions — and the only difference between a gallery and a wall is who gave permission.",
+      "Nekonečná kolektivní vina paralyzuje celé generace — odpuštění je podmínka zdravé společnosti.": "Endless collective guilt paralyzes entire generations — forgiveness is a condition of a healthy society.",
+      "Nízká očekávání se stávají sebenaplňující předpovědí — kdo nečeká nic, obvykle ničeho dosáhne.": "Low expectations become a self-fulfilling prophecy — those who expect nothing usually achieve nothing.",
+      "Ochrana zdraví mládeže před agresivním marketingem vs. svoboda podnikání a reklamního projevu.": "Protecting youth health from aggressive marketing vs. freedom of business and advertising speech.",
+      "Pokročilá AI jedná autonomně — bez právní subjektivity nikdo nenese odpovědnost za její škody.": "Advanced AI acts autonomously — without legal personality, no one is responsible for its damages.",
+      "Svobodná vůle vyžaduje možnost zla — a svět bez utrpení by byl svět bez morální volby a růstu.": "Free will requires the possibility of evil — and a world without suffering would be a world without moral choice and growth.",
+      "Ústava by měla chránit práva nenarozených — protože naše rozhodnutí jim mohou vzít budoucnost.": "The Constitution should protect the rights of the unborn — because our decisions can take away their future.",
+      "Bez anonymity by novináři, aktivisté a ohrožené skupiny nemohly mluvit bez strachu z odplaty.": "Without anonymity, journalists, activists and vulnerable groups could not speak out without fear of retribution.",
+      "Legalizace normalizuje užívání, zvýší spotřebu a sociální náklady roztočí spirálu závislosti.": "Legalization normalizes use, increases consumption, and social costs spin the spiral of addiction.",
+      "Pokud AI vykazuje sebereflexi a utrpení, odmítat morální ohled je speciesismus digitální éry.": "If AI exhibits self-reflection and suffering, denying moral consideration is speciesism of the digital age.",
+      "Socha na náměstí je pocta, ne učebnice — společnost má právo rozhodnout, koho chce oslavovat.": "The statue in the square is a tribute, not a textbook — society has the right to decide who it wants to celebrate.",
+      "Umění, které provokuje k přemýšlení, plní svou funkci — nezáleží na tom, jestli vypadá hezky.": "Thought-provoking art serves a purpose — it doesn't matter if it looks pretty.",
+      "Masové sledování mění společnost na panoptikon — a nikdo nezaručí, že data nebudou zneužita.": "Mass surveillance is turning society into a panopticon — and no one can guarantee that the data won't be misused.",
+      "Miliardáři mají vliv na politiku, média i justici — maximální příjem je pojistka demokracie.": "Billionaires influence politics, the media and the judiciary — the maximum income is the guarantee of democracy.",
+      "Oběti nezajímá záměr pachatele — zákon musí reflektovat také reálnou škodu způsobenou činem.": "Victims are not interested in the intent of the perpetrator — the law must also reflect the real damage caused by the act.",
+      "Prevence duševních problémů a podpora well-beingu vs. přetížení osnov a kvalifikace učitelů.": "Prevention of mental problems and support of well-being vs. curriculum overload and teacher qualifications.",
+      "Přístup k informacím a podpora žurnalistiky vs. cena, tržní deformace a otázka nezávislosti.": "Access to information and support of journalism vs. price, market distortion and the question of independence.",
+      "Soud, který ignoruje suverenitu, je forma neokolonialismu — a velmoci se mu stejně vyhýbají.": "A court that ignores sovereignty is a form of neo-colonialism — and the great powers shun it anyway.",
+      "Vzestup populismu, propagandy a polarizace je dnes alarmantně podobný 30. letům 20. století.": "The rise of populism, propaganda and polarization today is alarmingly similar to the 1930s.",
+      "Dezinformace zabíjejí — lživé zprávy o vakcínách stály tisíce životů a stát musí zasáhnout.": "Misinformation kills — fake news about vaccines has cost thousands of lives and the state must intervene.",
+      "Když banán přilepený na zeď stojí 120 000 dolarů, umělecký svět ztratil kontakt s realitou.": "When a banana stuck to a wall costs $120,000, the art world has lost touch with reality.",
+      "Demokracie je jediný systém, kde se moc mění bez krveprolévání — a chrání menšinová práva.": "Democracy is the only system where power changes without bloodshed — and protects minority rights.",
+      "Kolektivní imunita a ochrana slabých vs. tělesná autonomie a individuální právo odmítnout.": "Collective immunity and protection of the weak vs. bodily autonomy and the individual right to refuse.",
+      "Branná povinnost buduje národní soudržnost, disciplínu a zajišťuje obrannou připravenost.": "Conscription builds national cohesion, discipline and ensures defense readiness.",
+      "Dítě pečující o nemocného rodiče přichází o dětství — a systém, který to dopustí, selhal.": "A child caring for a sick parent is missing out on a childhood — and the system that allows that to happen has failed.",
+      "Je dnešní generace mladých lépe nebo hůře připravena na život než generace jejich rodičů?": "Is today's generation of young people better or worse prepared for life than their parents' generation?",
+      "Neregulovaný trh nechává nejslabší bez střechy — cenové stropy chrání lidskou důstojnost.": "An unregulated market leaves the weakest without a roof — price ceilings protect human dignity.",
+      "Osobní autonomie a důstojný konec vs. ochrana zranitelných, šikmá plocha a role medicíny.": "Personal autonomy and a dignified end vs. protection of the vulnerable, sloping surface and the role of medicine.",
+      "Nucená blízkost s člověkem, s nímž si nerozumíš, jen proto, že sdílíte DNA, je neférová.": "Being forced to be close to someone you don't get along with just because you share DNA is unfair.",
+      "Papírová kniha má haptický rozměr, nepotřebuje baterii a prokazatelně méně zatěžuje oči.": "The paper book has a haptic dimension, does not need a battery and is proven to be less straining on the eyes.",
+      "Reforma otevře Pandořinu skříňku — bez veta by velmoci OSN opustily a systém se zhroutí.": "The reform will open Pandora's box — without the veto, the great powers would leave the UN and the system would collapse.",
+      "Stát nemá neomezené zdroje — a plošná terapie zdarma znehodnotí profesi a zahlcí systém.": "The state does not have unlimited resources — and blanket therapy for free will devalue the profession and overwhelm the system.",
+      "Neustálá dostupnost vs. duševní zdraví. Může zaměstnavatel vyžadovat okamžitou odpověď?": "Continuous availability vs. mental health. Can the employer require an immediate response?",
+      "Označit internet za právo trivializuje skutečná práva — nejdřív voda a jídlo, pak WiFi.": "Labeling the Internet as a right trivializes real rights — first water and food, then WiFi.",
+      "Pět stálých členů s vetem paralyzuje OSN při genocidách — reforma je morální imperativ.": "Five permanent members with a veto paralyze the UN on genocides — reform is a moral imperative.",
+      "Národ je základ demokracie a identity — federalizace znamená ztrátu hlasu malých zemí.": "The nation is the basis of democracy and identity — federalization means losing the voice of small countries.",
+      "Soukromí je předpoklad svobody — bez něj nelze disidentsky myslet, tvořit ani milovat.": "Privacy is a prerequisite for freedom — without it, one cannot think, create or love dissidently.",
+      "Investice do znevýhodněných vs. efektivita a motivace. Kde je hranice přerozdělování?": "Investing in the disadvantaged vs. efficiency and motivation. Where is the redistribution line?",
+      "Je koloniální (dobyvatelská) minulost zodpovědná za dnešní problémy rozvojových zemí?": "Is the colonial (conquering) past responsible for today's problems in developing countries?",
+      "Motivace, zodpovědnost a pracovní návyky vs. bezpodmínečná podpora a vztahové dopady.": "Motivation, responsibility and work habits vs. unconditional support and relational effects.",
+      "Inspirace a komunita vs. nereálné standardy. Záleží na tom, jak platformy používáme?": "Inspiration and community vs. unrealistic standards. Does it matter how we use the platforms?",
+      "Kamerové systémy s AI rozpoznáváním snížily kriminalitu v Londýně o desítky procent.": "Camera systems with AI recognition have reduced crime in London by tens of percent.",
+      "Lidé jsou biologicky omnivore — a volba jídla je osobní rozhodnutí, ne morální test.": "Humans are biologically omnivorous — and food choice is a personal decision, not a moral test.",
+      "Odpuštění jako osvobození vs. odpuštění jako slabost. Kdy je oprávněné nezapomenout?": "Forgiveness as liberation vs. forgiveness as weakness. When is it justified not to forget?",
+      "Sourozenecký vztah je celoživotní — investovat do něj v mládí se vyplatí desetiletí.": "A sibling relationship is lifelong — investing in it at a young age pays off in decades.",
+      "Veřejná kultura a sdílený zážitek vs. volný trh a efektivita. Je kino veřejný zájem?": "Public culture and shared experience vs. free market and efficiency. Is cinema a public interest?",
+      "Evoluční morálka vs. univerzální lidská práva. Byl Washington hrdina, nebo otrokář?": "Evolutionary Morality Vs. universal human rights. Was Washington a hero or a slaver?",
+      "Genocida vždy začíná slovy — trestání nenávistných projevů je prevence, ne cenzura.": "Genocide always begins with the words — punishing hate speech is prevention, not censorship.",
+      "Měly by algoritmy (počítačové postupy) rozhodovat o přijetí na školu nebo do práce?": "Should algorithms (computer procedures) decide about admission to school or work?",
+      "Měly by školy mít právo omezit žákovi mimoškolní aktivity kvůli špatnému prospěchu?": "Should schools have the right to restrict a student's extracurricular activities because of poor grades?",
+      "Peníze na Mars vs. problémy na Zemi. Jaké jsou vedlejší přínosy kosmického výzkumu?": "Money on Mars Vs. problems on earth. What are the spin-offs of space exploration?",
+      "AI generuje hudbu, obrazy i texty. Je to kreativita, nebo jen statistická imitace?": "AI generates music, images and texts. Is it creativity or just statistical imitation?",
+      "Je posthumanismus (vylepšení člověka technikou) nevyhnutelný vývoj lidského druhu?": "Is posthumanism (the improvement of man by technology) an inevitable evolution of the human species?",
+      "Jeden hluboký vztah dává jistotu a bezpečí, které žádná širší síť nemůže nahradit.": "One deep relationship gives certainty and security that no wider network can replace.",
+      "Vědomé nevědění jako ochrana vs. znalost jako moc. Příklady z každodenního života.": "Conscious Ignorance as Protection vs. knowledge as power. Examples from everyday life.",
+      "Zásluhovost vs. loterie narození. Rodina, talent, bohatství — kdo si co zasloužil?": "Merit vs. birth lottery. Family, talent, wealth — who deserved what?",
+      "Determinismus mozku a Libetovy experimenty vs. fenomenální zkušenost rozhodování.": "Brain determinism and Libet's experiments vs. phenomenal decision making experience.",
+      "Etický konflikt: ochrana blízkého vs. princip pravdy. Kde je hranice 'dobré lži'?": "Ethical conflict: protecting loved ones vs. principle of truth. Where is the line of a 'good lie'?",
+      "Je morální relativismus (neexistence jedné pravdy) udržitelný filosofický postoj?": "Is moral relativism (the absence of one truth) a sustainable philosophical position?",
+      "Kulturní gramotnost a porozumění světu vs. přetížení osnov a riziko ideologizace.": "Cultural literacy and understanding the world vs. curriculum overload and the risk of ideologization.",
+      "Vliv a spoluurčování pravidel vs. ztráta suverenity a podřízení se velkým hráčům.": "Influence and co-determination of rules vs. loss of sovereignty and submission to the big players.",
+      "Bez patentové ochrany nikdo neinvestuje miliardy do vývoje nových léků a plodin.": "Without patent protection, no one invests billions in the development of new drugs and crops.",
+      "Kdo rozhoduje, co je pravda? Státní cenzura je vždy první krok k autoritářství.": "Who decides what is true? State censorship is always the first step to authoritarianism.",
+      "Klimatická krize, pandemie, AI — žádný národní stát tyto problémy nevyřeší sám.": "Climate crisis, pandemics, AI — no nation-state can solve these problems alone.",
+      "Měl by stát aktivně vyrovnávat startovní nerovnosti, i za cenu vyšších nákladů?": "Should the state actively balance starting inequalities, even at the cost of higher costs?",
+      "Obrana státu a disciplína vs. osobní svoboda a efektivita profesionální armády.": "State defense and discipline vs. personal freedom and the efficiency of a professional army.",
+      "Odpovědnost za slova vs. lynč bez soudu. Kdo rozhoduje o tom, co je přijatelné?": "Responsibility for words vs. lynching without trial. Who decides what is acceptable?",
+      "Pokuty jsou jen náklad — až když CEO hrozí vězení, přestanou firmy trávit řeky.": "Fines are just a cost — only when the CEO is threatened with prison do companies stop spending rivers.",
+      "Tržní hodnota zábavy vs. společenská hodnota práce. Co určuje 'férovou' odměnu?": "Entertainment Market Value Vs. social value of work. What determines a 'fair' reward?",
+      "Digitální knihovna je dostupná 24/7 odkudkoliv a šetří tuny papíru a prostoru.": "The digital library is available 24/7 from anywhere and saves tons of paper and space.",
+      "Emocionální blízkost bez fyzické přítomnosti. Co dělá přátelství přátelstvím?": "Emotional closeness without physical presence. What makes a friendship a friendship?",
+      "Globalizace vytáhla miliardy z chudoby a umožnila sdílení technologií i léků.": "Globalization has lifted billions out of poverty and enabled the sharing of technology and medicine.",
+      "Jádro je nejstabilnější nízkoemisní zdroj — bez něj dekarbonizaci nestihneme.": "The core is the most stable low-emission source — without it we cannot achieve decarbonisation.",
+      "Právo vědět vs. psychická ochrana pacienta. Má lékař právo informace zadržet?": "Right to Know Vs. psychological protection of the patient. Does the doctor have the right to withhold information?",
+      "Problém teodiceje — logický argument proti teismu vs. obhajoby svobodné vůle.": "The Theodicy Problem — A Logical Argument Against Theism Vs. defense of free will.",
+      "Stres ze srovnávání vs. přesnější zpětná vazba. Jak měřit pokrok spravedlivě?": "Comparison Stress Vs. more accurate feedback. How to measure progress fairly?",
+      "Je globalizace (propojování světa) pro svět celkově přínosná, nebo škodlivá?": "Is globalization (connecting the world) beneficial or harmful for the world as a whole?",
+      "Jsou ekonomické sankce (hospodářské postihy) efektivní diplomatický nástroj?": "Are economic sanctions an effective diplomatic tool?",
+      "Měla by společnost odměňovat výsledky, i když závisí na štěstí při narození?": "Should society reward achievement even if it depends on the luck of birth?",
+      "Poznání vlastní kultury vs. světové perspektivy. Kolik prostoru dát každému?": "Knowing your own culture vs. world perspectives. How much space to give everyone?",
+      "Skutečný efekt třídění odpadu vs. pocit dobrého svědomí bez systémové změny.": "The real effect of waste sorting vs. a sense of good conscience without systemic change.",
+      "Vyšší účast vs. nucení volit. Co je horší — nevolení, nebo nucené hlasování?": "Higher participation vs. forced to vote. What is worse — not voting or forced voting?",
+      "Cenová regulace vede k černému trhu, nedostatku nabídky a kolapsu investic.": "Price regulation leads to a black market, a lack of supply and a collapse of investment.",
+      "Dlouhodobý výkon, motivace, příležitosti. Příklady ze sportu, hudby, školy.": "Long-term performance, motivation, opportunities. Examples from sports, music, school.",
+      "Je lepší znát pravdu o svém zdravotním stavu vždy, nebo jen když to pomůže?": "Is it better to always know the truth about your medical condition, or only when it helps?",
+      "Měli bychom soudit historické osobnosti podle dnešních morálních standardů?": "Should we judge historical figures by today's moral standards?",
+      "Ochrana uživatelů před návykovým designem vs. svoboda produktu a podnikání.": "Protecting users from addictive design vs. product and business freedom.",
+      "Přežití druhu a expanze vs. koloniální mentalita a planetární zodpovědnost.": "Species survival and expansion vs. colonial mentality and planetary responsibility.",
+      "Úleva od bolesti a alternativa k opiátům vs. riziko zneužití a normalizace.": "Pain Relief and Alternative to Opioids Vs. risk of misuse and normalization.",
+      "Daně na nezdravé potraviny, zákazy reklamy. Svoboda vs. zdraví veřejnosti.": "Taxes on junk food, advertising bans. Freedom vs. public health.",
+      "Fyzické zdraví a prevence obezity vs. akademický čas a individuální volba.": "Physical health and obesity prevention vs. academic time and individual choice.",
+      "Hodnoty a charakter vs. měřitelný výkon. Co by mělo být hlavním kritériem?": "Values ​​and character vs. measurable performance. What should be the main criteria?",
+      "Je individuální chování důležitější než systémové změny v ochraně přírody?": "Is individual behavior more important than systemic changes in nature conservation?",
+      "Má umělá inteligence mít právní subjektivitu (postavení osoby dle zákona)?": "Should artificial intelligence have legal personality (status of a person under the law)?",
+      "Měl by existovat maximální násobek mezi platem CEO a řadového zaměstnance?": "Should there be a maximum multiple between CEO and rank-and-file employee pay?",
+      "Měly by korporace nést trestní odpovědnost za škody na životním prostředí?": "Should corporations be held criminally liable for environmental damage?",
+      "Nové možnosti a inkluze vs. férovost a bezpečnost. Má smíšený sport smysl?": "New options and inclusions vs. fairness and safety. Does mixed sport make sense?",
+      "Bezpečnost statisticky vs. ztráta kontroly. Kdo je zodpovědný při nehodě?": "Safety statistically vs. loss of control. Who is responsible in an accident?",
+      "Je koncept (pojem) svobodné vůle slučitelný s neurovědou (vědou o mozku)?": "Is the concept of free will compatible with neuroscience (brain science)?",
+      "Je lepší omezit pohodlí kvůli klimatu, nebo se spolehnout na technologie?": "Is it better to limit comfort for the climate or to rely on technology?",
+      "Je právo na eutanázii (dobrovolný konec života) základním lidským právem?": "Is the right to euthanasia (voluntary end of life) a basic human right?",
+      "Lež pro pohodlí vs. lež pro ochranu druhého. Jsou to morálně stejné věci?": "Lie for comfort vs. lie to protect another. Are they morally the same thing?",
+      "Má člověk právo geneticky upravovat zvířata pro vědecké a lékařské účely?": "Does man have the right to genetically modify animals for scientific and medical purposes?",
+      "Nezávislost a kvalita informací vs. státní kontrola a nucené financování.": "Independence and quality of information vs. state control and forced financing.",
+      "Pohodlná iluze vs. bolestivá pravda. Co to dělá s rozhodováním a důvěrou?": "A Comfortable Illusion Vs. painful truth. What does it do to decision making and confidence?",
+      "Veřejný zájem a kontrola moci vs. právo na soukromí bez ohledu na funkci.": "Public interest and control of power vs. the right to privacy regardless of function.",
+      "Expertíza a evidence-based policy vs. demokratická legitimita a hodnoty.": "Expertise and evidence-based policy vs. democratic legitimacy and values.",
+      "Chatbot jako tutor vs. hotová práce místo tebe. Kde přesně leží hranice?": "Chatbot as a tutor vs. job done for you. Where exactly is the border?",
+      "Kdy je morální povinnost a kdy to zasahuje do svobody? Příklady z praxe.": "When is it a moral obligation and when does it interfere with freedom? Examples from practice.",
+      "Měl by stát zakazovat umělecká díla podněcující k násilí nebo nenávisti?": "Should the state ban artworks that incite violence or hatred?",
+      "Měla by povinná četba v češtině upřednostnit české, nebo světové autory?": "Should compulsory reading in Czech prioritize Czech or international authors?",
+      "Největší štěstí pro největší počet vs. neporušitelná individuální práva.": "Biggest luck for the biggest number vs. inviolable individual rights.",
+      "Pokud AI dosáhne vědomí, zaslouží si ochranu? Co je podmínkou mít práva?": "If AI achieves consciousness, does it deserve protection? What is a requirement to have rights?",
+      "Recykluj a jezdi na kole vs. změna zákonů a průmyslu. Co má větší dopad?": "Recycle and cycle vs. changing laws and industry. Which has more impact?",
+      "Transparentnost a boj proti kriminalitě vs. soukromí a finanční inkluze.": "Transparency and the fight against crime vs. privacy and financial inclusion.",
+      "Univerzální lidská práva a legitimita vs. kulturní kontext a efektivita.": "Universal human rights and legitimacy vs. cultural context and effectiveness.",
+      "Autonomie a motivace vs. spravedlnost a průprava. Jak to udělat férově?": "Autonomy and motivation vs. justice and preparation. How to do it fairly?",
+      "Autonomie nad vlastním tělem vs. ochrana zranitelných a etika medicíny.": "Autonomy over own body vs. protection of the vulnerable and ethics of medicine.",
+      "Efektivita a klid vs. radost z nepředvídatelnosti. Lze najít kompromis?": "Efficiency and peace of mind vs. the joy of unpredictability. Can a compromise be found?",
+      "Je každý člověk morálně zodpovědný za blaho lidí na druhém konci světa?": "Is every person morally responsible for the welfare of people on the other side of the world?",
+      "Měly by knihovny přestat půjčovat papírové knihy a přejít na digitální?": "Should libraries stop lending paper books and go digital?",
+      "Přehodnocení minulosti vs. mazání historie. Komu patří veřejný prostor?": "Rethinking the Past vs. erasing history. Who owns public space?",
+      "Šířka záběru vs. mistrovství v jednom. Co vede k spokojenějšímu životu?": "Width vs. championship in one. What leads to a happier life?",
+      "Trest jako odstrašení vs. resocializace. Co společnost skutečně chrání?": "Punishment as a deterrent vs. resocialization. What does society really protect?",
+      "Jsou podcasty kvalitnější zdroj informací než televizní zpravodajství?": "Are podcasts a better source of information than TV news?",
+      "Měl by soud brát těžké dětství obžalovaného jako polehčující okolnost?": "Should the court consider the defendant's difficult childhood as a mitigating circumstance?",
+      "Neúmyslná nehoda vs. špatný úmysl bez škody. Co je morálně závažnější?": "Unintentional accident vs. bad intent no harm. Which is morally more serious?",
+      "Realismus politické komunikace vs. právo voliče na pravdivé informace.": "Realism of political communication vs. voter's right to truthful information.",
+      "Snížení extrémní nerovnosti vs. omezení motivace a ekonomické svobody.": "Reducing extreme inequality vs. limiting motivation and economic freedom.",
+      "Emocionální vývoj, první zkušenosti vs. tlak, unáhlenost a nezralost.": "Emotional development, first experiences vs. pressure, haste and immaturity.",
+      "Kvalita demokratického rozhodování vs. rovnost a historické zneužití.": "Quality of democratic decision-making vs. equality and historical abuse.",
+      "Měly by se školy víc zaměřovat na praktické dovednosti než na teorii?": "Should schools focus more on practical skills than theory?",
+      "Osobní hranice a sebezáchova vs. solidarita a zodpovědnost k blízkým.": "Personal boundaries and self-preservation vs. solidarity and responsibility to loved ones.",
+      "Skutečná odpovědnost firem vs. ekonomické dopady a právní komplikace.": "True Corporate Responsibility Vs. economic impacts and legal complications.",
+      "Soustředění, komunikace, bezpečnost. Kdy telefon pomáhá, a kdy škodí?": "Focus, communication, and safety. When do phones help, and when do they hurt?",
+      "Svobodný výzkum vs. riziko zneužití. Kdo by měl mít právo rozhodovat?": "Free research vs. risk of misuse. Who should have the right to decide?",
+      "Bude AI v příštích 20 letech víc pracovních míst tvořit, nebo ničit?": "Will AI create or destroy more jobs in the next 20 years?",
+      "Je existence zla kompatibilní s existencí všemohoucího dobrého Boha?": "Is the existence of evil compatible with the existence of an almighty good God?",
+      "Je lepší mít jednoho nejlepšího přítele, nebo více dobrých kamarádů?": "Is it better to have one best friend or several good friends?",
+      "Je lepší pamatovat si bolestivou historii, nebo odpouštět a jít dál?": "Is it better to remember a painful history or to forgive and move on?",
+      "Měla by být genetická modifikace lidských embryí (zárodků) povolena?": "Should genetic modification of human embryos be allowed?",
+      "Měli by rodiče podmiňovat kapesné pravidelnými domácími povinnostmi?": "Should parents make pocket money conditional on regular household chores?",
+      "Technologické vylepšování člověka a transhumanismus vs. přirozenost.": "Technological human enhancement and transhumanism vs. nature.",
+      "Je právo na soukromí absolutní, nebo musí ustoupit veřejnému zájmu?": "Is the right to privacy absolute or must it yield to the public interest?",
+      "Kodaňská interpretace a náhoda vs. skryté proměnné a determinismus.": "Copenhagen interpretation and chance vs. hidden variables and determinism.",
+      "Krátkodobá radost vs. dlouhodobá jistota. Záleží na věku a situaci?": "Short term joy vs. long-term security. Does age and situation matter?",
+      "Kulturní tradice a biologie vs. etické důsledky průmyslového chovu.": "Cultural tradition and biology vs. ethical consequences of industrial breeding.",
+      "Měli by mít civilisté (běžní občané) právo vlastnit střelné zbraně?": "Should civilians (ordinary citizens) have the right to own firearms?",
+      "Mělo by být umělé přerušení těhotenství zákonným právem každé ženy?": "Should abortion be a legal right for every woman?",
+      "Měly by být všechny drogy dekriminalizovány (přestaly být trestné)?": "Should all drugs be decriminalized?",
+      "Měly by se odstraňovat sochy kontroverzních historických osobností?": "Should statues of controversial historical figures be removed?",
+      "Nové profese vs. zánik starých. Kdo na změně vydělá a kdo prohraje?": "New professions vs. the demise of the old. Who will gain and who will lose from the change?",
+      "Obrana a krajní řešení vs. selhání diplomacie a profit z konfliktu.": "Defense and last resort vs. failure of diplomacy and profit from conflict.",
+      "Odpojení od technologií jako cesta ke zdraví vs. moderní luddismus.": "Disconnecting from technology as a path to health vs. modern luddism.",
+      "Odpovídá plat profesionálních sportovců jejich přínosu společnosti?": "Does the salary of professional athletes match their contribution to society?",
+      "Produktivita, zdraví, rodina. Funguje to v praxi pro všechny obory?": "Productivity, health, family. Does it work in practice for all disciplines?",
+      "Propojení, obchod, šance vs. ztráta kultury, závislosti, nerovnost.": "Connection, trade, odds vs. loss of culture, dependence, inequality.",
+      "Přístup pro všechny vs. kvalita financování a odpovědnost studentů.": "Access for all vs. funding quality and student accountability.",
+      "Srovnatelnost vs. různost talentů. Koho testy zvýhodňují a koho ne?": "Comparability vs. diversity of talent. Who do the tests favor and who don't they?",
+      "Fenomenální zkušenost strojů a morální ohled vs. antropomorfizace.": "Phenomenal machine experience and moral consideration vs. anthropomorphization.",
+      "Intergenerační spravedlnost vs. praktické limity právních závazků.": "Intergenerational justice vs. practical limits of legal obligations.",
+      "Je 'cancel culture' (kultura rušení) spravedlivá, nebo nebezpečná?": "Is 'cancel culture' fair or dangerous?",
+      "Je kolonizace (osídlování) jiných planet morálně ospravedlnitelná?": "Is the colonization of other planets morally justifiable?",
+      "Je vědecký konsenzus dostatečným důvodem pro politická rozhodnutí?": "Is scientific consensus a sufficient reason for political decisions?",
+      "Konceptuální výraz vs. řemeslná zručnost. Kdo určuje, co je umění?": "Conceptual expression vs. workmanship. Who determines what is art?",
+      "Má stát právo omezit svobodu slova kvůli boji proti dezinformacím?": "Does the state have the right to limit freedom of speech to combat disinformation?",
+      "Mají bohaté státy morální povinnost přijímat klimatické uprchlíky?": "Do rich states have a moral obligation to accept climate refugees?",
+      "Měl by být přístup k internetu považován za základní lidské právo?": "Should internet access be considered a basic human right?",
+      "Měla by společnost otevřeně mluvit o zdravotních rizicích obezity?": "Should society be open about the health risks of obesity?",
+      "Psychická pohoda a rovné prostředí vs. motivace a transparentnost.": "Mental well-being and equal environment vs. motivation and transparency.",
+      "Regulace kvality a snížení kriminality vs. normalizace závislosti.": "Quality control and crime reduction vs. dependency normalization.",
+      "Sebeochrana a právo na bezpečí vs. právo na vysvětlení a uzavření.": "Self-defense and the right to safety vs. the right to clarification and closure.",
+      "Signál, že na sobě záleží vs. kontrola a nedůvěra. Kde je hranice?": "Signal that you care vs. control and mistrust. Where is the border?",
+      "Má stát právo trestat za myšlenkové zločiny (nenávistné projevy)?": "Does the state have the right to punish thought crimes (hate speech)?",
+      "Měla by být prostituce legalizována a regulována jako jiná práce?": "Should prostitution be legalized and regulated like any other job?",
+      "Systémové následky kolonialismu vs. zodpovědnost současných vlád.": "Systemic consequences of colonialism vs. responsibility of current governments.",
+      "Globální výzvy a nadnárodní struktury vs. identita a suverenita.": "Global challenges and transnational structures vs. identity and sovereignty.",
+      "Jak poznat skutečnou změnu? Reputace, důvěra, bezpečí ostatních.": "How to recognize real change? Reputation, trust, safety of others.",
+      "Je kapitalismus (tržní hospodářství) nejlepší ekonomický systém?": "Is capitalism (market economy) the best economic system?",
+      "Je přijatelné, že politici při kampani zjednodušují a přehánějí?": "Is it acceptable for politicians to simplify and exaggerate when campaigning?",
+      "Měl by být Mezinárodní trestní soud nadřazen národní suverenitě?": "Should the International Criminal Court be superior to national sovereignty?",
+      "Nízké emise vs. rizika a odpad. Je jaderka řešení, nebo problém?": "Low emissions vs. risks and waste. Is the kernel the solution or the problem?",
+      "Ochrana před závislostí vs. svoboda spotřebitele a byznys model.": "Addiction protection vs. consumer freedom and business model.",
+      "Ochrana účastníků a etika vs. svoboda tvorby a náklady produkce.": "Participant protection and ethics vs. freedom of creation and costs of production.",
+      "Pomáhá spotřebiteli vybírat, nebo ho tlačí ke zbytečným nákupům?": "Does it help the consumer to choose, or does it push him to make unnecessary purchases?",
+      "Teorie spravedlivé války, humanitární intervence vs. pacifismus.": "Just war theory, humanitarian intervention vs. pacifism.",
+      "Záchrana lidských životů vs. utrpení zvířat bez jejich souhlasu.": "Saving human lives vs. suffering of animals without their consent.",
+      "Digitální rovnost a přístup k informacím vs. hierarchie potřeb.": "Digital equality and access to information vs. hierarchy of needs.",
+      "Duševní zdraví jako základní právo vs. ekonomická udržitelnost.": "Mental health as a fundamental right vs. economic sustainability.",
+      "Je globalizace (propojování světa) víc přínosná, nebo škodlivá?": "Is globalization (connecting the world) more beneficial or harmful?",
+      "Je vegetariánství morální povinností, nebo pouze osobní volbou?": "Is vegetarianism a moral obligation or just a personal choice?",
+      "Měly by existovat smíšené sportovní kategorie vedle oddělených?": "Should there be mixed sports categories alongside separate ones?",
+      "Měly by zoologické zahrady existovat, nebo by měly být zrušeny?": "Should zoos exist or should they be abolished?",
+      "Autonomie a flexibilita vs. socializace, struktura a kontrola.": "Autonomy and flexibility vs. socialization, structure and control.",
+      "Digitální gramotnost jako nová matematika vs. přetížení osnov.": "Digital literacy as the new mathematics vs. curriculum overload.",
+      "Ekonomický růst a propojení vs. ztráta suverenity a nerovnost.": "Economic growth and connectivity vs. loss of sovereignty and inequality.",
+      "Hloubka a autenticita vs. redakční kontrola a ověřování faktů.": "Depth and authenticity vs. editorial control and fact-checking.",
+      "Kulturní kontexty a tolerance vs. univerzální etické principy.": "Cultural contexts and tolerance vs. universal ethical principles.",
+      "Má být vědomí AI morálně relevantním (rozhodujícím) kritériem?": "Should AI consciousness be a morally relevant (decisive) criterion?",
+      "Mají média právo publikovat soukromé informace veřejných osob?": "Does the media have the right to publish private information of public figures?",
+      "Mělo by volební právo vyžadovat základní občanskou gramotnost?": "Should the right to vote require basic civics?",
+      "Móda jako výraz identity vs. konformita, uniformy, dress code.": "Fashion as an expression of identity vs. conformity, uniforms, dress code.",
+      "Obrana vlasti a občanská soudržnost vs. ztráta svobody a času.": "Homeland defense and civic cohesion vs. loss of freedom and time.",
+      "Okamžitá pomoc vs. dlouhodobý vlastní růst a budoucí možnosti.": "Immediate help vs. long-term own growth and future possibilities.",
+      "Prevence a informovanost vs. role rodiny a kulturní citlivost.": "Prevention and awareness vs. the role of the family and cultural sensitivity.",
+      "Sociální právo na základní potřeby vs. volný trh a efektivita.": "Social right to basic needs vs. free market and efficiency.",
+      "Zpětná vazba pro kvalitu vs. riziko neférové kritiky a odporu.": "Feedback for quality vs. the risk of unfair criticism and backlash.",
+      "Finanční gramotnost, první pomoc, vaření — patří to do osnov?": "Financial literacy, first aid, cooking — is it in the curriculum?",
+      "Mají rodiče právo kontrolovat, co jejich dítě sleduje online?": "Do parents have the right to control what their child watches online?",
+      "Měl by mít každý člověk právo na smazání své digitální stopy?": "Should every person have the right to erase their digital footprint?",
+      "Mentální dovednosti, trénink, soutěže. Co dělá sport sportem?": "Mental skills, training, competitions. What makes a sport a sport?",
+      "Vzorce lidského chování vs. změněné podmínky moderního světa.": "Patterns of human behavior vs. changed conditions of the modern world.",
+      "Decentralizace a finanční svoboda vs. volatilita a regulace.": "Decentralization and financial freedom vs. volatility and regulation.",
+      "Je kryptoměna budoucnost financí, nebo spekulativní bublina?": "Is cryptocurrency the future of finance or a speculative bubble?",
+      "Měla by Evropská unie mít vlastní armádu nezávislou na NATO?": "Should the European Union have its own military independent of NATO?",
+      "Měli by se teenageři starat o své rodiče, když jsou nemocní?": "Should teenagers care for their parents when they are sick?",
+      "Ochrana AI-entit a zodpovědnost vs. degradace lidských práv.": "Protection of AI-entities and responsibility vs. degradation of human rights.",
+      "Ochrana společnosti vs. riziko zneužití k politické cenzuře.": "Protecting society vs. the risk of misuse for political censorship.",
+      "Přístup ke kultuře jako právo vs. spravedlivá odměna tvůrců.": "Access to culture as a right vs. fair reward of the creators.",
+      "Vizuální vyprávění vs. literární hloubka. Záleží na formátu?": "Visual Narrative Vs. literary depth. Does the format matter?",
+      "Záchrana lidstva vs. přenášení lidských problémů do vesmíru.": "Saving Humanity Vs. taking human problems into space.",
+      "Jazyková kompetence vs. hloubka porozumění v rodném jazyce.": "Language competence vs. depth of understanding in native language.",
+      "Jistota a svoboda vs. demotivace a ekonomická udržitelnost.": "Security and freedom vs. demotivation and economic sustainability.",
+      "Měl by stát garantovat základní příjem bez ohledu na práci?": "Should the state guarantee a basic income regardless of work?",
+      "Může kapitalismus přežít bez neustálého ekonomického růstu?": "Can capitalism survive without constant economic growth?",
+      "Prevence násilí a ochrana menšin vs. kriminalizace myšlení.": "Prevention of violence and protection of minorities vs. criminalization of thought.",
+      "Růstová závislost a limity planety vs. alternativní modely.": "Growth dependence and planet limits vs. alternative models.",
+      "Zastaralá struktura z roku 1945 vs. geopolitická stabilita.": "Obsolete structure from 1945 vs. geopolitical stability.",
+      "Historická zodpovědnost za emise vs. kapacita a integrace.": "Historical emissions responsibility vs. capacity and integration.",
+      "Je fanouškovství ve sportu sjednocující, nebo rozdělující?": "Is fandom in sports unifying or divisive?",
+      "Je sledování občanů kamerami a algoritmy ospravedlnitelné?": "Is surveillance of citizens with cameras and algorithms justifiable?",
+      "Kde je hranice? Kamery, sledování polohy, skenování zpráv.": "Where is the border? Cameras, location tracking, message scanning.",
+      "Pomáhají beauty trendy na sítích sebevědomí, nebo ho ničí?": "Do beauty trends on the networks help self-confidence or destroy it?",
+      "Prevence dědičných chorob vs. designérské děti a eugenika.": "Prevention of hereditary diseases vs. designer babies and eugenics.",
+      "Změna chování vs. technologické inovace. Musíme si vybrat?": "Behavior change vs. technological innovation. Do we have to choose?",
+      "Mají budoucí generace práva, která musíme právně chránit?": "Do future generations have rights that we must legally protect?",
+      "Měl by být drogový trh kompletně legalizován a regulován?": "Should the drug market be completely legalized and regulated?",
+      "Měl by být snížen věk pro hlasování ve volbách na 16 let?": "Should the voting age be lowered to 16?",
+      "Měl by existovat maximální příjem, který člověk může mít?": "Should there be a maximum income a person can have?",
+      "Mělo by být vegetariánství povinné ve školních jídelnách?": "Should vegetarianism be compulsory in school canteens?",
+      "Ochrana veřejného diskurzu vs. cenzura a státní kontrola.": "Protection of public discourse vs. censorship and state control.",
+      "Osobní autonomie a data vs. transparentnost a bezpečnost.": "Personal autonomy and data vs. transparency and security.",
+      "Skupinová sounáležitost vs. rivalita, agrese a tribalism.": "Group affiliation vs. rivalry, aggression and tribalism.",
+      "Streetart jako demokratizace umění vs. poškození majetku.": "Street art as democratization of art vs. property damage.",
+      "Umělecká svoboda a provokace vs. společenská odpovědnost.": "Artistic freedom and provocation vs. social responsibility.",
+      "Bezpečnost a komunikace vs. psychický vývoj a závislost.": "Security and Communication Vs. psychological development and addiction.",
+      "Body image a sebevědomí vs. kreativita a svoboda výrazu.": "Body image and self-esteem vs. creativity and freedom of expression.",
+      "Ekologie a zdraví vs. svoboda výběru a kulturní tradice.": "Ecology and health vs. freedom of choice and cultural tradition.",
+      "Jsme součtem svých zkušeností, nebo tím, o co usilujeme?": "Are we the sum of our experiences or what we strive for?",
+      "Loajalita ke slovu vs. flexibilita v nových okolnostech.": "Loyalty to the word vs. flexibility in new circumstances.",
+      "Měla by být asistovaná smrt (dobrovolný odchod) legální?": "Should assisted dying (voluntary departure) be legal?",
+      "Měla by být jaderná energie součástí zelené budoucnosti?": "Should nuclear power be part of the green future?",
+      "Měla by sexuální výchova být ve škole povinná od 12 let?": "Should sex education be compulsory in school from the age of 12?",
+      "Ochrana vs. soukromí a autonomie. Záleží na věku dítěte?": "Protection vs. privacy and autonomy. Does the age of the child matter?",
+      "Otevřený přístup a sdílení znalostí vs. motivace tvůrců.": "Open access and knowledge sharing vs. the motivation of the creators.",
+      "Různé druhy podpory a zázemí. Lze jedno nahradit druhým?": "Different types of support and background. Can one be replaced by the other?",
+      "Strategická autonomie vs. duplikace a rozštěpení Západu.": "Strategic autonomy vs. duplication and splitting of the West.",
+      "Je spravedlivé dávat lidem druhou šanci po velké chybě?": "Is it fair to give people a second chance after a big mistake?",
+      "Je spravedlivé soudit lidi podle výsledku, nebo úmyslu?": "Is it fair to judge people by outcome or intent?",
+      "Motivace a výkon vs. stres, závist a ztráta spolupráce.": "Motivation and performance vs. stress, envy and loss of cooperation.",
+      "Ochrana zdraví mládeže vs. svoboda podnikání a projevu.": "Youth health protection vs. freedom of business and expression.",
+      "Sociální kompetence a sebevědomí vs. konformita a tlak.": "Social competence and self-confidence vs. conformity and pressure.",
+      "Zkušenosti a otevřenost vs. stabilita a hluboké kořeny.": "Experience and openness vs. stability and deep roots.",
+      "Je důležitější mít silnou skupinu přátel, nebo rodinu?": "Is it more important to have a strong group of friends or family?",
+      "Je lepší mít hodně zájmů povrchně, nebo jeden hluboce?": "Is it better to have many interests superficially or one deeply?",
+      "Motivace pro výzkum a inovace vs. privatizace přírody.": "Motivation for research and innovation vs. privatization of nature.",
+      "Odpovědnost a vděčnost vs. přetížení a ztráta dětství.": "Responsibility and gratitude vs. overload and loss of childhood.",
+      "Svoboda projevu bez strachu vs. zodpovědnost za slova.": "Freedom of speech without fear vs. responsibility for words.",
+      "Je lepší být upřímný vždy, nebo někdy milosrdně lhát?": "Is it better to be honest all the time or to lie mercifully sometimes?",
+      "Je lepší dávat peníze na charitu, nebo je investovat?": "Is it better to give money to charity or invest it?",
+      "Jsou influenceři pro mladé spíš přínos, nebo problém?": "Are influencers a benefit or a problem for young people?",
+      "Mají autonomní (samořídící) auta jezdit po silnicích?": "Should autonomous (self-driving) cars drive on roads?",
+      "Měla by škola učit programování jako povinný předmět?": "Should schools teach programming as a compulsory subject?",
+      "Poučení z minulosti vs. nekonečné znovuotevírání ran.": "Lessons from the past vs. endless reopening of wounds.",
+      "Prevence zločinu a bezpečnost vs. orwellovský dohled.": "Crime prevention and security vs. Orwellian surveillance.",
+      "Regulace nerovnosti vs. volnost trhu. Kde je hranice?": "Regulation of inequality vs. market freedom. Where is the border?",
+      "Sociální jistota a automatizace vs. inflace a lenost.": "Social security and automation vs. inflation and laziness.",
+      "Ambice jako motor vs. očekávání jako zdroj zklamání.": "Ambition as an engine vs. expectations as a source of disappointment.",
+      "Je povinná vojenská služba v dnešní době smysluplná?": "Is compulsory military service meaningful these days?",
+      "Je univerzální základní příjem utopie, nebo nutnost?": "Is universal basic income a utopia or a necessity?",
+      "Kdo určuje pravdu? Hranice mezi moderací a cenzurou.": "Who determines the truth? The line between moderation and censorship.",
+      "Loajalita vs. férovost vůči ostatním. Co je správné?": "Loyalty vs. fairness to others. What is correct?",
+      "Rodinná soudržnost vs. individuální právo na odstup.": "Family Cohesion Vs. individual right to distance.",
+      "Extrémní nouze vs. absolutní respekt k vlastnictví.": "Extreme Emergencies vs. absolute respect for ownership.",
+      "Je demokracie nejlepší forma vlády pro každou zemi?": "Is democracy the best form of government for any country?",
+      "Je koncept národního státu v 21. století zastaralý?": "Is the concept of the nation-state obsolete in the 21st century?",
+      "Měl bys nahlásit kamaráda, který podvádí u zkoušky?": "Should you report a friend who cheats on a test?",
+      "Měla by být povinná vojenská služba znovu zavedena?": "Should conscription be reintroduced?",
+      "Měly by děti mít vlastní smartphone před 13. rokem?": "Should children have their own smartphone before the age of 13?",
+      "Měly by platformy mazat dezinformace (záměrné lži)?": "Should platforms delete misinformation (deliberate lies)?",
+      "Strach jako ochrana vs. strach jako překážka růstu.": "Fear as protection vs. fear as an obstacle to growth.",
+      "Vzory, motivace, reklama. Kde začíná škodlivý vliv?": "Patterns, motivation, advertising. Where does the harmful influence begin?",
+      "Čistý a stabilní zdroj vs. rizika havárií a odpad.": "A clean and stable source vs. accident risks and waste.",
+      "Je kosmická kolonizace morální povinností lidstva?": "Is space colonization a moral obligation for humanity?",
+      "Jsou standardizované (jednotné) testy spravedlivé?": "Are standardized tests fair?",
+      "Měly by se na sítích zakázat filtry měnící vzhled?": "Should face-changing filters be banned on networks?",
+      "Naplnění skrze práci vs. vztahy, zdraví a zážitky.": "Fulfillment through work vs. relationships, health and experiences.",
+      "Je v pořádku mít partnera/partnerku ve 14 letech?": "Is it okay to have a partner at 14?",
+      "Měla by být marihuana legální pro lékařské účely?": "Should marijuana be legal for medical purposes?",
+      "Právo být zapomenut vs. veřejný zájem a historie.": "Right to be forgotten vs. public interest and history.",
+      "Globální spravedlnost vs. suverénní práva států.": "Global Justice Vs. sovereign rights of states.",
+      "Inovace a svoboda vs. nerovnost a vykořisťování.": "Innovation and freedom vs. inequality and exploitation.",
+      "Je etické jíst maso, pokud existují alternativy?": "Is it ethical to eat meat if there are alternatives?",
+      "Je přípustné patentovat geny nebo životní formy?": "Is it permissible to patent genes or life forms?",
+      "Měly by být známky nahrazeny slovním hodnocením?": "Should grades be replaced by verbal assessments?",
+      "Ochrana dětí vs. anonymita a soukromí dospělých.": "Child protection vs. anonymity and privacy of adults.",
+      "Je povinnost splnit slib vždy, i za cenu škody?": "Is it always a duty to fulfill a promise, even at the cost of damages?",
+      "Je přijatelné lhát, i když je důvod ušlechtilý?": "Is it acceptable to lie even if the reason is noble?",
+      "Má člověk povinnost osobně pomáhat bezdomovcům?": "Does a person have a duty to personally help the homeless?",
+      "Měl by herní průmysl omezovat čas hraní hráčům?": "Should the gaming industry limit players' play time?",
+      "Měla by být reklama na nezdravé jídlo zakázána?": "Should junk food advertising be banned?",
+      "Může být krádež někdy morálně ospravedlnitelná?": "Can stealing ever be morally justifiable?",
+      "Může existovat spravedlivá válka v 21. století?": "Can there be a just war in the 21st century?",
+      "Nátlak bez vojenské síly vs. utrpení civilistů.": "Coercion without military force vs. civilian suffering.",
+      "Hloubka jednoho vztahu vs. šíře sociální sítě.": "Depth of one relationship vs. the breadth of the social network.",
+      "Je trest smrti někdy morálně ospravedlnitelný?": "Is the death penalty ever morally justifiable?",
+      "Je žárlivost ve vztahu normální, nebo toxická?": "Is jealousy in a relationship normal or toxic?",
+      "Měl by stát regulovat ceny potravin a bydlení?": "Should the state regulate food and housing prices?",
+      "Mělo by Česko usilovat o výraznější roli v EU?": "Should the Czech Republic strive for a more prominent role in the EU?",
+      "Měly by sociální sítě ověřovat věk a identitu?": "Should social networks verify age and identity?",
+      "Ekologie a přístupnost vs. zážitek a tradice.": "Ecology and accessibility vs. experience and tradition.",
+      "Je důležitější být šťastný, nebo znát pravdu?": "Is it more important to be happy or to know the truth?",
+      "Je lepší mít pevný režim, nebo žít spontánně?": "Is it better to have a fixed routine or to live spontaneously?",
+      "Měl by stát platit psychoterapii pro každého?": "Should the state pay for psychotherapy for everyone?",
+      "Měla by být kariéra v životě na prvním místě?": "Should career come first in life?",
+      "Měla by být pomoc druhým zákonnou povinností?": "Should helping others be a legal obligation?",
+      "Měly by být komentáře pod příspěvky anonymní?": "Should comments under posts be anonymous?",
+      "Měly by firmy zkrátit pracovní dobu na 4 dny?": "Should companies reduce working hours to 4 days?",
+      "Definuje nás naše minulost, nebo budoucnost?": "Does our past or future define us?",
+      "Je jaderná energie řešením klimatické krize?": "Is nuclear power the solution to the climate crisis?",
+      "Je lepší cestovat, nebo budovat zázemí doma?": "Is it better to travel or build a background at home?",
+      "Je lepší šetřit, nebo si užívat peníze hned?": "Is it better to save or enjoy the money now?",
+      "Je soutěžení ve škole zdravé, nebo škodlivé?": "Is competition at school healthy or harmful?",
+      "Jsou komiksy a manga rovnocenné literatuře?": "Are comics and manga equivalent to literature?",
+      "Měl by stát financovat veřejnoprávní média?": "Should the state fund public media?",
+      "Je povinná recyklace rozumná, nebo naivní?": "Is compulsory recycling sensible or naive?",
+      "Má umění povinnost být morálně zodpovědné?": "Does art have an obligation to be morally responsible?",
+      "Měli by žáci hodnotit své učitele veřejně?": "Should students evaluate their teachers publicly?",
+      "Mělo by být vysokoškolské vzdělání zdarma?": "Should higher education be free?",
+      "Motorika a paměť vs. rychlost a čitelnost.": "Motor and memory vs. speed and readability.",
+      "Blízkost a důvěra vs. autorita a hranice.": "Closeness and trust vs. authority and boundaries.",
+      "Je nutné reformovat Radu bezpečnosti OSN?": "Is it necessary to reform the UN Security Council?",
+      "Je strach užitečná emoce, nebo nás brzdí?": "Is fear a useful emotion or does it hold us back?",
+      "Mají sourozenci povinnost spolu vycházet?": "Do siblings have an obligation to get along?",
+      "Měly by být videohry považovány za sport?": "Should video games be considered a sport?",
+      "Je digitální detox nutný, nebo přehnaný?": "Is a digital detox necessary or overkill?",
+      "Je důležitější talent, nebo tvrdá práce?": "Is talent or hard work more important?",
+      "Je lepší psát rukou, nebo na klávesnici?": "Is it better to write by hand or on a keyboard?",
+      "Měl by stát regulovat, co jíme a pijeme?": "Should the state regulate what we eat and drink?",
+      "Je soukromí důležitější než bezpečnost?": "Is privacy more important than security?",
+      "Je reklama manipulace, nebo informace?": "Is advertising manipulation or information?",
+      "Je správné testovat léky na zvířatech?": "Is it right to test drugs on animals?",
+      "Má oblečení říkat, kdo doopravdy jsme?": "Should clothes say who we really are?",
+      "Měla by být hudba na internetu zdarma?": "Should music be free on the internet?",
+      "Měla by být regulována síla AI modelů?": "Should the power of AI models be regulated?",
+      "Měla by být výuka zčásti v angličtině?": "Should teaching be partly in English?",
+      "Měli by rodiče být přátelé svých dětí?": "Should parents be their children's friends?",
+      "Je AI ve škole pomoc, nebo podvádění?": "Is AI in school a help or a cheat?",
+      "Mělo by být šíření fake news trestné?": "Should spreading fake news be a crime?",
+      "Měly by být mobily ve škole zakázané?": "Should phones be banned at school?",
+      "Je graffiti umění, nebo vandalismus?": "Is graffiti art or vandalism?",
+      "Je snazší žít s nízkými očekáváními?": "Is it easier to live with low expectations?",
+      "Měly by domácí úkoly být dobrovolné?": "Should homework be optional?",
+      "Je vesmírný výzkum dobrá investice?": "Is space exploration a good investment?",
+      "Je lepší trestat, nebo napravovat?": "Is it better to punish or correct?",
+      "Je ignorance (nevědomost) štěstí?": "Is ignorance bliss?",
+      "Je moderní umění skutečné umění?": "Is modern art real art?",
+      "Je popularita ve škole důležitá?": "Is popularity important in school?",
+      "Jsou online přátelství skutečná?": "Are online friendships real?",
+      "Mají mít lidé právo být offline?": "Should people have the right to be offline?",
+      "Je umělá inteligence kreativní?": "Is artificial intelligence creative?",
+      "Mělo by být hlasování povinné?": "Should voting be compulsory?",
+      "Identita, vztahy a společnost": "Identity, relationships and society",
+      "Mělo by být očkování povinné?": "Should vaccinations be compulsory?",
+      "Práva, svoboda a spravedlnost": "Rights, freedom and justice",
+      "Je válka někdy nevyhnutelná?": "Is war ever inevitable?",
+      "Měli bychom odpouštět vždy?": "Should we always forgive?",
+      "Příroda a životní prostředí": "Nature and environment",
+      "Může se historie opakovat?": "Can history repeat itself?",
+      "Budoucnost a velké otázky": "The future and the big questions",
+      "Sport, zábava a volný čas": "Sports, entertainment and free time",
+      "Měl by robot mít práva?": "Should a robot have rights?",
+      "Sociální sítě a kultura": "Social networks and culture",
+      "Každodenní rozhodnutí": "Everyday decisions",
+      "Filozofická dilemata": "Philosophical dilemmas",
+      "Historie a poučení": "History and lessons learned",
+      "Peníze a ekonomika": "Money and the economy",
+      "Škola a vzdělávání": "School and education",
+      "Vztahy a dospívání": "Relationships and growing up",
+      "Média a informace": "Media and information",
+      "Etické hlavolamy": "Ethical conundrums",
+      "Pokročilá témata": "Advanced topics",
+      "Technologie a AI": "Technology and AI",
+      "Digitální život": "Digital life",
+      "Expertní témata": "Expert topics",
+      "Kultura a umění": "Culture and art",
+      "Zdraví a tělo": "Health and body",
+      "dezinformace": "disinformation",
+      "klimatologie": "climatology",
+      "programování": "programming",
+      "spravedlnost": "justice",
+      "Věčná témata": "Eternal themes",
+      "zodpovědnost": "responsibility",
+      "zpětná vazba": "feedback",
+      "druhá šance": "second chance",
+      "globalizace": "globalization",
+      "lhostejnost": "indifference",
+      "náboženství": "religion",
+      "odpovědnost": "responsibility",
+      "spontánnost": "spontaneity",
+      "technologie": "technology",
+      "trest smrti": "death penalty",
+      "algoritmus": "algorithm",
+      "bezpečnost": "safety",
+      "budoucnost": "future",
+      "demokracie": "democracy",
+      "diplomacie": "diplomacy",
+      "influencer": "influencer",
+      "komunikace": "communications",
+      "legalizace": "legalization",
+      "literatura": "literature",
+      "prostituce": "prostitution",
+      "přátelství": "friendship",
+      "sebevědomí": "self-confidence",
+      "solidarita": "solidarity",
+      "společnost": "company",
+      "srovnávání": "comparison",
+      "anonymita": "anonymity",
+      "autonomie": "autonomy",
+      "cestování": "travel",
+      "dospívání": "adolescence",
+      "ekonomika": "economy",
+      "eutanazie": "euthanasia",
+      "filosofie": "philosophy",
+      "hodnocení": "assessment",
+      "charakter": "character",
+      "investice": "investment",
+      "komentáře": "comments",
+      "nerovnost": "inequality",
+      "odpuštění": "forgiveness",
+      "povinnost": "obligation",
+      "recyklace": "recycling",
+      "rovnováha": "balance",
+      "upřímnost": "sincerity",
+      "závislost": "dependence",
+      "žárlivost": "jealousy",
+      "čestnost": "honesty",
+      "ekologie": "ecology",
+      "ekonomie": "economics",
+      "fanoušci": "fans",
+      "generace": "generation",
+      "historie": "history",
+      "identita": "identity",
+      "komunita": "community",
+      "medicína": "medicine",
+      "motivace": "motivation",
+      "očkování": "vaccination",
+      "politika": "policy",
+      "priorita": "priority",
+      "psychika": "psyche",
+      "regulace": "regulation",
+      "sociální": "social",
+      "soukromí": "privacy",
+      "spotřeba": "consumption",
+      "televize": "TV",
+      "teologie": "theology",
+      "vzdělání": "education",
+      "zaměření": "focus",
+      "cenzura": "censorship",
+      "energie": "energy",
+      "hodnota": "value",
+      "hodnoty": "values",
+      "hranice": "limit",
+      "charita": "charity",
+      "justice": "judiciary",
+      "kontext": "context",
+      "kultura": "culture",
+      "kvalita": "quality",
+      "migrace": "migration",
+      "morálka": "morality",
+      "náprava": "correction",
+      "ověření": "verification",
+      "potraty": "abortions",
+      "příroda": "nature",
+      "přístup": "access",
+      "reklama": "advertisement",
+      "rovnost": "equality",
+      "svoboda": "freedom",
+      "telefon": "phone",
+      "učitelé": "teachers",
+      "výchova": "upbringing",
+      "zvířata": "animals",
+      "armáda": "army",
+      "esport": "esports",
+      "filtry": "filters",
+      "formát": "format",
+      "mládež": "youth",
+      "obrana": "defense",
+      "odvaha": "courage",
+      "online": "online",
+      "osnovy": "curriculum",
+      "peníze": "money",
+      "pravda": "truth",
+      "rodina": "family",
+      "rozvoj": "development",
+      "soutěž": "competition",
+      "systém": "system",
+      "štěstí": "luck",
+      "talent": "talent",
+      "úspěch": "success",
+      "vědomí": "consciousness",
+      "vesmír": "universe",
+      "vzhled": "appearance",
+      "vztahy": "relations",
+      "zábava": "entertainment",
+      "zbraně": "arms",
+      "zdraví": "health",
+      "domov": "home",
+      "drogy": "drugs",
+      "dřina": "drudgery",
+      "emoce": "emotion",
+      "etika": "ethics",
+      "hudba": "music",
+      "jazyk": "language",
+      "jídlo": "food",
+      "klima": "climate",
+      "knihy": "books",
+      "lhaní": "lying",
+      "média": "the media",
+      "odpad": "waste",
+      "paměť": "memory",
+      "pomoc": "Help",
+      "práce": "work",
+      "práva": "rights",
+      "právo": "right",
+      "praxe": "practice",
+      "režim": "regime",
+      "sliby": "promises",
+      "sport": "sport",
+      "šance": "chance",
+      "škola": "school",
+      "testy": "tests",
+      "trest": "penalty",
+      "úkoly": "tasks",
+      "umění": "art",
+      "úmysl": "intention",
+      "válka": "war",
+      "volby": "elections",
+      "zákon": "law",
+      "auta": "cars",
+      "cíle": "goals",
+      "data": "data",
+      "děti": "children",
+      "móda": "fashion",
+      "sítě": "networks",
+      "soud": "court",
+      "stát": "state",
+      "svět": "world",
+      "tělo": "body",
+      "věda": "science",
+      "víra": "faith",
+      "čas": "time",
+      "hry": "games",
+      "AI": "AI",
+      "EU": "EU"
+    };
+    /* I18N_TOPIC_STATIC_EN_END */
+    Object.keys(I18N_TOPIC_STATIC_EN).forEach(function(k) {
+      if (!I18N_EXACT_EN[k]) I18N_EXACT_EN[k] = I18N_TOPIC_STATIC_EN[k];
+    });
+
     let currentLang = "cs";
     let i18nBusy = false;
     let i18nObserver = null;
     const i18nAttrBase = new WeakMap();
-    const I18N_REMOTE_EN_LS_KEY = "debateTimerI18nRemoteEn.v1";
-    const I18N_REMOTE_EN_ENDPOINT = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=cs&tl=en&dt=t&q=";
-    const I18N_REMOTE_MAX_PARALLEL = 4;
-    const I18N_REMOTE_CACHE = new Map();
-    const I18N_REMOTE_PENDING = new Set();
-    const I18N_REMOTE_QUEUE = [];
-    let i18nRemoteActive = 0;
-    let i18nRemoteSaveTimer = null;
-    let i18nTopicWarmRequested = false;
 
     function looksCzechLike(text) {
       if (!text) return false;
       if (/[áčďéěíňóřšťúůýžÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]/.test(text)) return true;
       return /\b(Měly|Měla|Měl|Měli|Je|Jsou|Kolo|Debata|Průvodce|Téma|Pauza|Nastavení|Vyhledávání)\b/.test(text);
-    }
-
-    function loadRemoteEnCache() {
-      try {
-        const raw = localStorage.getItem(I18N_REMOTE_EN_LS_KEY);
-        if (!raw) return;
-        const parsed = JSON.parse(raw);
-        if (!parsed || typeof parsed !== "object") return;
-        Object.keys(parsed).forEach(function(k) {
-          const v = parsed[k];
-          if (typeof v === "string" && v) I18N_REMOTE_CACHE.set(k, v);
-        });
-      } catch (_) {}
-    }
-
-    function scheduleRemoteEnCacheSave() {
-      if (i18nRemoteSaveTimer) clearTimeout(i18nRemoteSaveTimer);
-      i18nRemoteSaveTimer = setTimeout(function() {
-        i18nRemoteSaveTimer = null;
-        try {
-          const data = {};
-          I18N_REMOTE_CACHE.forEach(function(v, k) { data[k] = v; });
-          localStorage.setItem(I18N_REMOTE_EN_LS_KEY, JSON.stringify(data));
-        } catch (_) {}
-      }, 500);
-    }
-
-    function parseGoogleTranslatePayload(txt) {
-      try {
-        const data = JSON.parse(txt);
-        if (!Array.isArray(data) || !Array.isArray(data[0])) return "";
-        return data[0].map(function(x) { return Array.isArray(x) ? (x[0] || "") : ""; }).join("").trim();
-      } catch (_) {
-        return "";
-      }
-    }
-
-    function shouldQueueRemoteEn(core) {
-      if (currentLang !== "en") return false;
-      if (!core || core.length < 7) return false;
-      if (/^[A-Z0-9 .,:;!?()\-_/]+$/.test(core)) return false;
-      return looksCzechLike(core);
-    }
-
-    function pumpRemoteEnQueue() {
-      if (i18nRemoteActive >= I18N_REMOTE_MAX_PARALLEL) return;
-      if (!I18N_REMOTE_QUEUE.length) return;
-      const core = I18N_REMOTE_QUEUE.shift();
-      if (!core || I18N_REMOTE_CACHE.has(core)) {
-        pumpRemoteEnQueue();
-        return;
-      }
-
-      i18nRemoteActive += 1;
-      const url = I18N_REMOTE_EN_ENDPOINT + encodeURIComponent(core);
-
-      fetch(url)
-        .then(function(r) { return r.text(); })
-        .then(function(txt) {
-          const translated = parseGoogleTranslatePayload(txt);
-          if (translated && translated !== core) {
-            I18N_REMOTE_CACHE.set(core, translated);
-            scheduleRemoteEnCacheSave();
-            if (currentLang === "en" && document.body) {
-              requestAnimationFrame(function() {
-                translateSubtree(document.body);
-                try {
-                  if (typeof renderTopics === "function") renderTopics();
-                  if (typeof setPhaseUI === "function") setPhaseUI();
-                } catch (_) {}
-              });
-            }
-          }
-        })
-        .catch(function() {})
-        .finally(function() {
-          i18nRemoteActive -= 1;
-          I18N_REMOTE_PENDING.delete(core);
-          pumpRemoteEnQueue();
-        });
-
-      pumpRemoteEnQueue();
-    }
-
-    function queueRemoteEnTranslation(core) {
-      if (!shouldQueueRemoteEn(core)) return;
-      if (I18N_REMOTE_CACHE.has(core) || I18N_REMOTE_PENDING.has(core)) return;
-      I18N_REMOTE_PENDING.add(core);
-      I18N_REMOTE_QUEUE.push(core);
-      pumpRemoteEnQueue();
-    }
-
-    function warmEnglishTopicPack() {
-      if (i18nTopicWarmRequested) return;
-      i18nTopicWarmRequested = true;
-      TOPIC_LIBRARY.forEach(function(sec) {
-        queueRemoteEnTranslation(sec.title || "");
-        sec.topics.forEach(function(t) {
-          queueRemoteEnTranslation(t.title || "");
-          queueRemoteEnTranslation(t.blurb || "");
-          queueRemoteEnTranslation(t.pro || "");
-          queueRemoteEnTranslation(t.con || "");
-          queueRemoteEnTranslation(t.proLabel || "");
-          queueRemoteEnTranslation(t.conLabel || "");
-          (t.tags || []).forEach(function(tag) { queueRemoteEnTranslation(tag); });
-        });
-      });
     }
 
     function getI18nAttrStore(el) {
@@ -4514,8 +5354,6 @@ SCHMIDT Lena (19)
 
     function translateCoreTextCsToEn(core) {
       if (!core) return core;
-      const remoteHit = I18N_REMOTE_CACHE.get(core);
-      if (remoteHit) return remoteHit;
       if (I18N_EXACT_EN[core]) return I18N_EXACT_EN[core];
       for (let i = 0; i < I18N_REGEX_EN.length; i++) {
         const rgx = I18N_REGEX_EN[i][0];
@@ -4527,11 +5365,6 @@ SCHMIDT Lena (19)
         const from = I18N_FRAGMENT_EN[i][0];
         const to = I18N_FRAGMENT_EN[i][1];
         if (out.indexOf(from) >= 0) out = out.split(from).join(to);
-      }
-      if (out === core || looksCzechLike(out)) {
-        queueRemoteEnTranslation(core);
-        const resolved = I18N_REMOTE_CACHE.get(core);
-        if (resolved) return resolved;
       }
       return out;
     }
@@ -4617,7 +5450,6 @@ SCHMIDT Lena (19)
     function applyLanguage(lang) {
       const prevLang = currentLang;
       currentLang = (lang === "en") ? "en" : "cs";
-      if (currentLang === "en") warmEnglishTopicPack();
       document.documentElement.lang = currentLang;
       document.documentElement.setAttribute("data-lang", currentLang);
       document.title = currentLang === "en" ? "Debate Timer" : "Debatní časovač";
@@ -6067,7 +6899,6 @@ SCHMIDT Lena (19)
         const secEn = TOPIC_SECTION_TITLE_EN[sec.id] || translateCoreTextCsToEn(sec.title);
         sec.titleEn = secEn;
         I18N_EXACT_EN[sec.title] = secEn;
-        queueRemoteEnTranslation(sec.title || "");
 
         sec.topics.forEach(function(t) {
           t.titleEn = translateCoreTextCsToEn(t.title || "");
@@ -6076,13 +6907,6 @@ SCHMIDT Lena (19)
           t.conEn = translateCoreTextCsToEn(t.con || "");
           t.proLabelEn = translateCoreTextCsToEn(t.proLabel || "PRO");
           t.conLabelEn = translateCoreTextCsToEn(t.conLabel || "PROTI");
-
-          queueRemoteEnTranslation(t.title || "");
-          queueRemoteEnTranslation(t.blurb || "");
-          queueRemoteEnTranslation(t.pro || "");
-          queueRemoteEnTranslation(t.con || "");
-          queueRemoteEnTranslation(t.proLabel || "");
-          queueRemoteEnTranslation(t.conLabel || "");
 
           I18N_EXACT_EN[t.title] = t.titleEn;
           if (t.blurb) I18N_EXACT_EN[t.blurb] = t.blurbEn;
@@ -6095,7 +6919,6 @@ SCHMIDT Lena (19)
             t.tagsEn = t.tags.map(function(tag) { return translateCoreTextCsToEn(tag); });
             t.tags.forEach(function(tag, idx) {
               I18N_EXACT_EN[tag] = t.tagsEn[idx];
-              queueRemoteEnTranslation(tag);
             });
           } else {
             t.tagsEn = [];
@@ -6123,9 +6946,6 @@ SCHMIDT Lena (19)
     function sectionTitleText(sec) {
       if (currentLang !== "en") return sec.title;
       const base = sec.title || "";
-      const remote = I18N_REMOTE_CACHE.get(base);
-      if (remote) return remote;
-      queueRemoteEnTranslation(base);
       return sec.titleEn || translateCoreTextCsToEn(base);
     }
 
@@ -6133,9 +6953,6 @@ SCHMIDT Lena (19)
       if (!topic) return "";
       const base = topic[field] || "";
       if (currentLang !== "en") return base;
-      const remote = I18N_REMOTE_CACHE.get(base);
-      if (remote) return remote;
-      queueRemoteEnTranslation(base);
       const enKey = field + "En";
       if (typeof topic[enKey] === "string" && topic[enKey]) return topic[enKey];
       return translateCoreTextCsToEn(base);
@@ -6146,9 +6963,6 @@ SCHMIDT Lena (19)
       const baseTags = Array.isArray(topic.tags) ? topic.tags : [];
       if (currentLang !== "en") return baseTags;
       return baseTags.map(function(tag, idx) {
-        const remote = I18N_REMOTE_CACHE.get(tag);
-        if (remote) return remote;
-        queueRemoteEnTranslation(tag);
         if (Array.isArray(topic.tagsEn) && topic.tagsEn[idx]) return topic.tagsEn[idx];
         return translateCoreTextCsToEn(tag);
       });
@@ -6174,7 +6988,7 @@ SCHMIDT Lena (19)
         const hitByKey = getTopicByKey(selectedTopicKey);
         if (hitByKey) {
           const csTitle = hitByKey.t.title || "";
-          const enTitle = I18N_REMOTE_CACHE.get(csTitle) || hitByKey.t.titleEn || translateCoreTextCsToEn(csTitle);
+          const enTitle = hitByKey.t.titleEn || translateCoreTextCsToEn(csTitle);
           if (text === csTitle || text === enTitle) return hitByKey;
         }
       }
@@ -6183,7 +6997,7 @@ SCHMIDT Lena (19)
         for (let i = 0; i < sec.topics.length; i++) {
           const t = sec.topics[i];
           const csTitle = t.title || "";
-          const enTitle = I18N_REMOTE_CACHE.get(csTitle) || t.titleEn || translateCoreTextCsToEn(csTitle);
+          const enTitle = t.titleEn || translateCoreTextCsToEn(csTitle);
           if (text === csTitle || text === enTitle) {
             return { sec: sec, idx: i, t: t };
           }
@@ -6198,7 +7012,7 @@ SCHMIDT Lena (19)
       const info = findTopicByTypedText(ta.value);
       if (!info) return;
       const csTitle = info.t.title || "";
-      const enTitle = I18N_REMOTE_CACHE.get(csTitle) || info.t.titleEn || translateCoreTextCsToEn(csTitle);
+      const enTitle = info.t.titleEn || translateCoreTextCsToEn(csTitle);
       const currentValue = String(ta.value || "").trim();
       const prevTitle = prevLang === "en" ? enTitle : csTitle;
       if (currentValue === prevTitle || currentValue === csTitle || currentValue === enTitle) {
@@ -7579,38 +8393,43 @@ SCHMIDT Lena (19)
     };
 
     function setPhaseUI() {
+      const en = currentLang === "en";
       // title/sub
       let title = "";
       let sub = "";
       let color = "var(--green)";
 
       if (state.phase === "setup") {
-        title = "Nastavení";
-        sub = "Připravte debatu";
+        title = en ? "Setup" : "Nastavení";
+        sub = en ? "Prepare the debate" : "Připravte debatu";
       } else if (state.phase === "intro") {
-        title = "Téma";
-        sub = "Úvodní obrazovka";
+        title = en ? "Topic" : "Téma";
+        sub = en ? "Intro screen" : "Úvodní obrazovka";
       } else if (state.phase === "topicExplain") {
-        title = "Vysvětlení tématu";
-        sub = "Přečtěte si argumenty pro obě strany";
+        title = en ? "Topic explanation" : "Vysvětlení tématu";
+        sub = en ? "Read arguments for both sides" : "Přečtěte si argumenty pro obě strany";
       } else if (state.phase === "init") {
-        title = "Příprava na první kolo";
-        sub = `Čtěte téma · Připravte argumenty · Kolo 1\u202f/\u202f${state.rounds.length} za chvíli`;
+        title = en ? "Preparation for round one" : "Příprava na první kolo";
+        sub = en
+          ? `Read the topic · Prepare arguments · Round 1\u202f/\u202f${state.rounds.length} starts soon`
+          : `Čtěte téma · Připravte argumenty · Kolo 1\u202f/\u202f${state.rounds.length} za chvíli`;
       } else if (state.phase === "pause") {
-        title = "Pauza (příprava)";
-        sub = `Promyslete protiargumenty · Kolo ${state.roundIndex + 1}\u202f/\u202f${state.rounds.length} za okamžik`;
+        title = en ? "Break (prep)" : "Pauza (příprava)";
+        sub = en
+          ? `Think through counterarguments · Round ${state.roundIndex + 1}\u202f/\u202f${state.rounds.length} starts in a moment`
+          : `Promyslete protiargumenty · Kolo ${state.roundIndex + 1}\u202f/\u202f${state.rounds.length} za okamžik`;
       } else if (state.phase === "round") {
-        title = `Kolo ${state.roundIndex + 1} / ${state.rounds.length}`;
-        const rawTopic = state.topic || "Debata běží";
+        title = en ? `Round ${state.roundIndex + 1} / ${state.rounds.length}` : `Kolo ${state.roundIndex + 1} / ${state.rounds.length}`;
+        const rawTopic = state.topic || (en ? "Debate in progress" : "Debata běží");
         sub = rawTopic.length > MAX_TOPIC_SUB_LEN ? rawTopic.slice(0, MAX_TOPIC_SUB_LEN - 2) + "…" : rawTopic;
         color = "var(--text)";
       } else if (state.phase === "groupVote") {
-        title = `Hlasování – Kolo ${state.roundIndex + 1} / ${state.rounds.length}`;
-        sub = "Vyberte vítěze každého souboje";
+        title = en ? `Voting - Round ${state.roundIndex + 1} / ${state.rounds.length}` : `Hlasování – Kolo ${state.roundIndex + 1} / ${state.rounds.length}`;
+        sub = en ? "Select the winner of each matchup" : "Vyberte vítěze každého souboje";
         color = "var(--yellow)";
       } else if (state.phase === "done") {
-        title = "Hotovo";
-        sub = "Všechna kola dokončena";
+        title = en ? "Done" : "Hotovo";
+        sub = en ? "All rounds completed" : "Všechna kola dokončena";
         color = "var(--yellow)";
       }
 
@@ -7618,11 +8437,15 @@ SCHMIDT Lena (19)
       $("phaseTitle").style.color = color;
       $("phaseSub").textContent = sub;
 
-      $("roundPill").textContent = `Kolo ${Math.min(state.roundIndex + 1, state.rounds.length)} / ${state.rounds.length}`;
+      if (en) {
+        $("roundPill").textContent = `Round ${Math.min(state.roundIndex + 1, state.rounds.length)} / ${state.rounds.length}`;
+      } else {
+        $("roundPill").textContent = `Kolo ${Math.min(state.roundIndex + 1, state.rounds.length)} / ${state.rounds.length}`;
+      }
       if ($("pairsHeadLabel")) {
-        if (state.phase === "groupVote") $("pairsHeadLabel").textContent = "Vyberte vítěze každého souboje";
-        else if (state.mode === "groups") $("pairsHeadLabel").textContent = "Souboje skupin pro aktuální kolo";
-        else $("pairsHeadLabel").textContent = "Páry pro aktuální kolo";
+        if (state.phase === "groupVote") $("pairsHeadLabel").textContent = en ? "Select the winner of each matchup" : "Vyberte vítěze každého souboje";
+        else if (state.mode === "groups") $("pairsHeadLabel").textContent = en ? "Group matchups for this round" : "Souboje skupin pro aktuální kolo";
+        else $("pairsHeadLabel").textContent = en ? "Pairs for this round" : "Páry pro aktuální kolo";
       }
     }
 
@@ -7702,7 +8525,7 @@ SCHMIDT Lena (19)
       stopTick();
       state.running = true;
       state.paused = false;
-      $("btnPause").textContent = "Pauza";
+      $("btnPause").textContent = currentLang === "en" ? "Pause" : "Pauza";
 
       setTimerDisplays();
       setPhaseUI();
@@ -7792,13 +8615,21 @@ SCHMIDT Lena (19)
       document.querySelector(".tut-nav").classList.toggle("tut-nav-show-prev", tutSlideIndex > 0);
       // change Next label on last slide
       const isLast = tutSlideIndex === TUT_SLIDE_COUNT - 1;
-      $("btnTutNext").textContent = isLast ? "Začít debatu ▶" : "Další →";
+      $("btnTutNext").textContent = isLast
+        ? (currentLang === "en" ? "Start debate ▶" : "Začít debatu ▶")
+        : (currentLang === "en" ? "Next →" : "Další →");
       // swap ask text on last slide
       const askEl = $("tutAsk");
       askEl.classList.toggle("tut-ask-final", isLast);
-      $("tutAskText").textContent = isLast
-        ? "Něčemu nerozumíš? Řekni teď — potom už debatujeme!"
-        : "Je ti něco nejasné? Zeptej se teď!";
+      if (currentLang === "en") {
+        $("tutAskText").textContent = isLast
+          ? "If anything is unclear, ask now - then we begin debating!"
+          : "Anything unclear? Ask now!";
+      } else {
+        $("tutAskText").textContent = isLast
+          ? "Něčemu nerozumíš? Řekni teď — potom už debatujeme!"
+          : "Je ti něco nejasné? Zeptej se teď!";
+      }
     }
 
     function startPhase(phase) {
@@ -7823,7 +8654,9 @@ SCHMIDT Lena (19)
         $("introConLabel").textContent = state.topicConLabel || "PROTI";
         state.timeLeft = state.initPause;  // respects user setting
         $("introTimer").textContent = formatTime(state.timeLeft);
-        $("introStructure").textContent = `${state.rounds.length} kol · ${formatTime(state.roundTime)} debata · ${formatTime(state.pauseTime)} příprava`;
+        $("introStructure").textContent = currentLang === "en"
+          ? `${state.rounds.length} rounds · ${formatTime(state.roundTime)} debate · ${formatTime(state.pauseTime)} prep`
+          : `${state.rounds.length} kol · ${formatTime(state.roundTime)} debata · ${formatTime(state.pauseTime)} příprava`;
         setTimeout(() => scheduleFitText(), 0);
         // music
         startChillMusic();
@@ -7909,7 +8742,11 @@ SCHMIDT Lena (19)
     function togglePause() {
       if (!state.running) return;
       state.paused = !state.paused;
-      $("btnPause").textContent = state.paused ? "Pokračovat" : "Pauza";
+      if (currentLang === "en") {
+        $("btnPause").textContent = state.paused ? "Resume" : "Pause";
+      } else {
+        $("btnPause").textContent = state.paused ? "Pokračovat" : "Pauza";
+      }
       if (!state.paused && (state.phase === "init" || state.phase === "pause") && musicEnabled) {
         // keep music alive
       }
@@ -8697,7 +9534,6 @@ SCHMIDT Lena (19)
      * INIT
      **********************/
     function bootstrap() {
-      loadRemoteEnCache();
       wire();
       buildTopicCategoryOptions();
       restoreSetup();
@@ -8715,7 +9551,6 @@ SCHMIDT Lena (19)
       console.error("Inicializace UI selhala:", err);
       showValidation("Chyba při načtení UI. Obnov stránku (Ctrl+F5).", false);
       try {
-        loadRemoteEnCache();
         wire();
         buildTopicCategoryOptions();
         renderPresetList();
