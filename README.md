@@ -24,11 +24,13 @@ Projekt je navržený tak, aby fungoval:
 6. [Témata, filtry a náhodné losování](#témata-filtry-a-náhodné-losování)
 7. [Import debatérů ze souboru](#import-debatérů-ze-souboru)
 8. [Jazyková lokalizace CZ/EN](#jazyková-lokalizace-czen)
-9. [Časování, zvuky, hudba](#časování-zvuky-hudba)
-10. [Ukládání dat](#ukládání-dat)
-11. [Interaktivní prvky (ID map)](#interaktivní-prvky-id-map)
-12. [Struktura repozitáře](#struktura-repozitáře)
-13. [Autorství a licence](#autorství-a-licence)
+9. [Verifikace lokalizace](#verifikace-lokalizace)
+10. [Časování, zvuky, hudba](#časování-zvuky-hudba)
+11. [Ukládání dat](#ukládání-dat)
+12. [Interní architektura (one-file)](#interní-architektura-one-file)
+13. [Interaktivní prvky (ID map)](#interaktivní-prvky-id-map)
+14. [Struktura repozitáře](#struktura-repozitáře)
+15. [Autorství a licence](#autorství-a-licence)
 
 ## Co aplikace obsahuje
 
@@ -153,6 +155,20 @@ Výsledkový panel umí přidělovat tematická ocenění podle průběhu turnaj
   - export textových výsledků.
 - Jazyk lze změnit i během běžící debaty bez reloadu stránky.
 
+## Verifikace lokalizace
+
+Lokalizace je kontrolovaná dvěma auditními průchody nad zdrojovým kódem:
+
+- **Static text audit**: textové uzly v HTML (bez `script/style`) se porovnají proti překladové vrstvě.
+- **Runtime text audit**: řetězce používané v `textContent`, `innerHTML`, `alert`, `toast` a import workflow se porovnají proti překladové vrstvě.
+
+Aktuální stav:
+
+- Statické texty: pokryto kompletně (jediná výjimka je vlastní jméno autora, které se záměrně nepřekládá).
+- Runtime texty: pokryto kompletně (ignorovaná interní class-name položka není uživatelský text).
+
+Poznámka: témata mají vlastní CZ/EN datový pack přímo v aplikaci (`title/titleEn`, `blurb/blurbEn`, `pro/proEn`, `con/conEn`, `tags/tagsEn`, side labels), takže nejsou závislá jen na slovníkovém fallbacku.
+
 ## Časování, zvuky, hudba
 
 - Odpočty a fáze: příprava, kolo, pauza mezi koly.
@@ -169,32 +185,101 @@ Výsledkový panel umí přidělovat tematická ocenění podle průběhu turnaj
 | `debateTimerLang` | aktivní jazyk (`cs` / `en`) |
 | `wt_completed_tours` | dokončené walkthrough průchody |
 
+## Interní architektura (one-file)
+
+Vše je v jednom souboru `debatni-casovac-v3.1.html`, ale kód je modulárně rozdělený komentářovými bloky.
+
+| Modul | Role |
+|---|---|
+| `DATA: PRESETS` | výchozí seznamy debatérů (9.A/9.B) |
+| `DATA: TOPIC_LIBRARY` | knihovna témat včetně metadata sekcí, obtížnosti, tagů a argumentačních nápověd |
+| `I18N (CZ / EN)` | jazykový engine, exact/regex/fragment/word mapy, observer pro dynamický obsah |
+| `FILE IMPORT ENGINE` | import z XLSX/XLS/CSV/TSV/TXT/PDF + normalizace + kontrolní modal |
+| `UTIL` | parse/normalizace času, sanitizace vstupů, pomocné funkce |
+| `AUDIO` | signalizační zvuky, preview, hudba v pauzách, fade-in/fade-out |
+| `TOPIC UI` | sekce témat, filtry, fulltext, random režim po kolech |
+| `MATCHING / SCORING` | párování kol, skupinové souboje, winners, tiebreak (Buchholz/progressive) |
+| `RENDER` | vykreslení Intro/Explain/Run/Done, hlasování, export výsledků |
+| `WALKTHROUGH` | 4 průvodce aplikací, progress, reset dokončených kroků |
+
+### Algoritmy a logika turnaje
+
+- **Pairs mode**: round-robin + automatický `bye` při lichém počtu debatérů.
+- **Groups mode**: validace vyvážené velikosti skupiny, možnost custom size, přepočet pro každé kolo.
+- **Ranking**: výhry → Buchholz (síla soupeřů) → progressive score.
+- **Awards**: tematická ocenění podle průběhu turnaje (streak, comeback, unbeaten, atd.).
+
 ## Interaktivní prvky (ID map)
 
 <details>
-<summary><strong>Rozbalit kompletní seznam</strong></summary>
+<summary><strong>Rozbalit kompletní inventory (150/150 ID)</strong></summary>
 
-### Setup
+### SVG tutorial icon sprite
 
-- `btnWalkthrough`
-- `themeTrack`
+- `ico-target`
+- `ico-rules`
+- `ico-blocks`
+- `ico-shield`
+- `ico-alert`
+- `ico-rocket`
+- `ico-silence`
+- `ico-pause`
+- `ico-proof`
+- `ico-bulb`
+- `ico-clock`
+- `ico-key`
+- `ico-search`
+- `ico-ban`
+- `ico-question`
+- `ico-trophy`
+- `ico-zap`
+- `ico-x`
+- `ico-check`
+
+### Screen roots a setup shell
+
+- `screen-setup`
+- `screen-tutorial`
+- `screen-intro`
+- `screen-topicExplain`
+- `screen-run`
+- `appTitleText`
+- `badgePlayers`
 - `langToggle`
 - `langCs`
 - `langEn`
+- `themeTrack`
+- `btnWalkthrough`
+
+### Téma, knihovna, debatéři, režim, časy
+
 - `btnRandomTopic`
 - `btnClearTopic`
 - `swRandomTopic`
+- `randomTopicSettings`
+- `rndTopicMode`
+- `rndCatPicker`
+- `rndDiffPicker`
 - `topicTextarea`
-- `playersTextarea`
 - `topicCategory`
 - `topicSearch`
+- `diffFilter`
+- `topicList`
+- `playerCountPill`
+- `playersTextarea`
 - `btnDedupe`
 - `btnClearPlayers`
 - `modePairs`
 - `modeGroups`
+- `groupSettings`
+- `groupSizeAutoWrap`
+- `groupSizeButtons`
+- `groupSizeManualWrap`
 - `groupSizeInput`
+- `groupSizeManualHint`
 - `groupSafeOff`
 - `groupRoundsInput`
+- `totalTimePill`
 - `initTime`
 - `roundTimeInput`
 - `pauseTimeInput`
@@ -208,45 +293,96 @@ Výsledkový panel umí přidělovat tematická ocenění podle průběhu turnaj
 - `btnStart`
 - `btnPravidla`
 - `btnFullscreenHint`
+
+### Presety, import panel a validace
+
+- `presetBadge`
 - `presetSelect`
 - `btnPresetAll`
 - `btnPresetNone`
+- `presetList`
 - `btnPresetReplace`
 - `btnPresetAppend`
 - `importDropZone`
 - `importFileInput`
+- `validationHint`
 
-### Tutorial / Intro / Explain / Run
+### Tutorial / intro / explain / run
 
+- `tutProgressBar`
+- `tutSlideCounter`
 - `btnTutPrev`
+- `tutAsk`
+- `tutAskText`
 - `btnTutNext`
+- `introTopic`
+- `introProLabel`
+- `introConLabel`
+- `introTimer`
+- `introStructure`
 - `btnSkipIntro`
 - `btnBackToSetup1`
+- `explainBlurb`
+- `explainProLabel`
+- `explainProHint`
+- `explainConLabel`
+- `explainConHint`
+- `explainTimer`
 - `btnSkipExplain`
+- `phaseTitle`
+- `phaseSub`
+- `runTimerTop`
 - `btnPause`
 - `btnNext`
 - `btnFullscreen`
 - `btnRestart`
+- `countdownPanel`
+- `mainTimer`
+- `pairsHeadLabel`
+- `roundPill`
+- `pairsGrid`
+- `doneWrap`
+
+### Hlasování, overlaye a modaly
+
+- `voteBar`
 - `voteConfirmBtn`
+- `beepFlash`
+- `overlay`
+- `overlayTimer`
+- `modal`
 - `btnConfirmRestart`
 - `btnCancelRestart`
+- `pravidlaModal`
 - `btnPravidlaClose`
-
-### Import modal
-
+- `importModal`
+- `importModalTitle`
+- `importSummary`
+- `importTabs`
 - `importChkAll`
+- `importTbody`
 - `importBtnApply`
 - `importBtnAppend`
 - `importBtnDelInvalid`
 - `importBtnCancel`
 
-### Walkthrough
+### Walkthrough overlay + picker
 
+- `wtOverlay`
+- `wtSpotlight`
+- `wtTooltip`
+- `wtArrow`
 - `wtClose`
+- `wtStep`
+- `wtTitle`
+- `wtBody`
 - `wtBack`
 - `wtNext`
 - `wtSkip`
+- `wtProgress`
+- `wtPickerOverlay`
 - `wtPickerClose`
+- `wtPickerGrid`
 - `wtPickerReset`
 
 </details>
