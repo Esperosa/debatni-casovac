@@ -4129,6 +4129,11 @@ SCHMIDT Lena (19)
       "Naučný režim": "Learning mode",
       "Průvodce aplikací": "App guide",
       "Resetovat průchody": "Reset tours",
+      "Např.: Měly by být sociální sítě zakázány pro děti do 15 let?": "Example: Should social media be banned for children under 15?",
+      "Napr.: Měly by být sociální sítě zakázány pro děti do 15 let?": "Example: Should social media be banned for children under 15?",
+      "Soustředění, komunikace, bezpečnost. Kdy telefon pomáhá, a kdy škodí?": "Focus, communication, and safety. When do phones help, and when do they hurt?",
+      "Bez telefonu se studenti soustředí výrazně lépe — výzkumy ukazují zlepšení výsledků i kvality sociální interakce o přestávkách.": "Without phones, students focus significantly better - research shows improved learning outcomes and better social interaction during breaks.",
+      "Naučit žáky telefon v hodině zodpovědně používat je lepší příprava na reálný svět než zákaz, který problém jen přesouvá.": "Teaching students to use phones responsibly in class is better preparation for the real world than a ban that only shifts the problem elsewhere.",
       "Doporučeno": "Recommended",
       "Hotovo": "Done",
       "Ukončit": "Exit",
@@ -4375,100 +4380,132 @@ SCHMIDT Lena (19)
       ["Chyba při načtení UI. Obnov stránku (Ctrl+F5).", "UI failed to load. Refresh the page (Ctrl+F5)."]
     ].sort(function(a, b) { return b[0].length - a[0].length; });
 
-    const I18N_WORD_EN = [
-      [/\bMěly by\b/g, "Should"],
-      [/\bMěla by\b/g, "Should"],
-      [/\bMěl by\b/g, "Should"],
-      [/\bMěli by\b/g, "Should"],
-      [/\bMají\b/g, "Should"],
-      [/\bMá\b/g, "Should"],
-      [/\bJe\b/g, "Is"],
-      [/\bJsou\b/g, "Are"],
-      [/\bMůže\b/g, "Can"],
-      [/\bMěli bychom\b/g, "Should we"],
-      [/\bMěl bys\b/g, "Should you"],
-      [/\bpro\b/gi, "for"],
-      [/\bPROTI\b/g, "CON"],
-      [/\bProti\b/g, "Against"],
-      [/\bproti\b/g, "against"],
-      [/\bnebo\b/g, "or"],
-      [/\ba\b/g, "and"],
-      [/\bve\b/g, "in"],
-      [/\bv\b/g, "in"],
-      [/\bna\b/g, "on"],
-      [/\bdo\b/g, "to"],
-      [/\bze\b/g, "from"],
-      [/\bs\b/g, "with"],
-      [/\bkdyž\b/g, "when"],
-      [/\bpokud\b/g, "if"],
-      [/\bprotože\b/g, "because"],
-      [/\bnež\b/g, "than"],
-      [/\bkdo\b/g, "who"],
-      [/\bco\b/g, "what"],
-      [/\bjak\b/g, "how"],
-      [/\bproč\b/g, "why"],
-      [/\bsvoboda\b/gi, "freedom"],
-      [/\bspravedlnost\b/gi, "justice"],
-      [/\betika\b/gi, "ethics"],
-      [/\bmorálně\b/gi, "morally"],
-      [/\bprávo\b/gi, "right"],
-      [/\bpráva\b/gi, "rights"],
-      [/\bzákon\b/gi, "law"],
-      [/\bstát\b/gi, "state"],
-      [/\bspolečnost\b/gi, "society"],
-      [/\bškola\b/gi, "school"],
-      [/\bškoly\b/gi, "schools"],
-      [/\bžáci\b/gi, "students"],
-      [/\bžák\b/gi, "student"],
-      [/\bdebata\b/gi, "debate"],
-      [/\bdebaty\b/gi, "debates"],
-      [/\bdebatě\b/gi, "debate"],
-      [/\btéma\b/gi, "topic"],
-      [/\btémat\b/gi, "topics"],
-      [/\btechnologie\b/gi, "technology"],
-      [/\bAI\b/g, "AI"],
-      [/\binternet\b/gi, "internet"],
-      [/\bsociální sítě\b/gi, "social media"],
-      [/\bekonomie\b/gi, "economy"],
-      [/\bpráce\b/gi, "work"],
-      [/\bpeníze\b/gi, "money"],
-      [/\bzdraví\b/gi, "health"],
-      [/\bživot\b/gi, "life"],
-      [/\bbudoucnost\b/gi, "future"],
-      [/\bpolitika\b/gi, "politics"],
-      [/\bhistorie\b/gi, "history"],
-      [/\bglobalizace\b/gi, "globalization"],
-      [/\bklima\b/gi, "climate"],
-      [/\benergie\b/gi, "energy"],
-      [/\bzbraně\b/gi, "weapons"],
-      [/\barmáda\b/gi, "military"],
-      [/\bválka\b/gi, "war"],
-      [/\bsvět\b/gi, "world"],
-      [/\blidé\b/gi, "people"],
-      [/\bděti\b/gi, "children"],
-      [/\brodiče\b/gi, "parents"],
-      [/\bpřátelé\b/gi, "friends"],
-      [/\brodina\b/gi, "family"],
-      [/\bidentita\b/gi, "identity"],
-      [/\bkultura\b/gi, "culture"],
-      [/\bumění\b/gi, "art"],
-      [/\bškolních\b/gi, "school"],
-      [/\bčas\b/gi, "time"],
-      [/\bpauza\b/gi, "break"],
-      [/\bkolo\b/gi, "round"],
-      [/\bvýsledky\b/gi, "results"],
-      [/\bobtížnost\b/gi, "difficulty"],
-      [/\bvyhledávání\b/gi, "search"],
-      [/\bnáhodné\b/gi, "random"],
-      [/\bvymazat\b/gi, "clear"],
-      [/\bano\b/gi, "yes"],
-      [/\bne\b/gi, "no"]
-    ];
-
     let currentLang = "cs";
     let i18nBusy = false;
     let i18nObserver = null;
     const i18nAttrBase = new WeakMap();
+    const I18N_REMOTE_EN_LS_KEY = "debateTimerI18nRemoteEn.v1";
+    const I18N_REMOTE_EN_ENDPOINT = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=cs&tl=en&dt=t&q=";
+    const I18N_REMOTE_MAX_PARALLEL = 4;
+    const I18N_REMOTE_CACHE = new Map();
+    const I18N_REMOTE_PENDING = new Set();
+    const I18N_REMOTE_QUEUE = [];
+    let i18nRemoteActive = 0;
+    let i18nRemoteSaveTimer = null;
+    let i18nTopicWarmRequested = false;
+
+    function looksCzechLike(text) {
+      if (!text) return false;
+      if (/[áčďéěíňóřšťúůýžÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]/.test(text)) return true;
+      return /\b(Měly|Měla|Měl|Měli|Je|Jsou|Kolo|Debata|Průvodce|Téma|Pauza|Nastavení|Vyhledávání)\b/.test(text);
+    }
+
+    function loadRemoteEnCache() {
+      try {
+        const raw = localStorage.getItem(I18N_REMOTE_EN_LS_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") return;
+        Object.keys(parsed).forEach(function(k) {
+          const v = parsed[k];
+          if (typeof v === "string" && v) I18N_REMOTE_CACHE.set(k, v);
+        });
+      } catch (_) {}
+    }
+
+    function scheduleRemoteEnCacheSave() {
+      if (i18nRemoteSaveTimer) clearTimeout(i18nRemoteSaveTimer);
+      i18nRemoteSaveTimer = setTimeout(function() {
+        i18nRemoteSaveTimer = null;
+        try {
+          const data = {};
+          I18N_REMOTE_CACHE.forEach(function(v, k) { data[k] = v; });
+          localStorage.setItem(I18N_REMOTE_EN_LS_KEY, JSON.stringify(data));
+        } catch (_) {}
+      }, 500);
+    }
+
+    function parseGoogleTranslatePayload(txt) {
+      try {
+        const data = JSON.parse(txt);
+        if (!Array.isArray(data) || !Array.isArray(data[0])) return "";
+        return data[0].map(function(x) { return Array.isArray(x) ? (x[0] || "") : ""; }).join("").trim();
+      } catch (_) {
+        return "";
+      }
+    }
+
+    function shouldQueueRemoteEn(core) {
+      if (currentLang !== "en") return false;
+      if (!core || core.length < 7) return false;
+      if (/^[A-Z0-9 .,:;!?()\-_/]+$/.test(core)) return false;
+      return looksCzechLike(core);
+    }
+
+    function pumpRemoteEnQueue() {
+      if (i18nRemoteActive >= I18N_REMOTE_MAX_PARALLEL) return;
+      if (!I18N_REMOTE_QUEUE.length) return;
+      const core = I18N_REMOTE_QUEUE.shift();
+      if (!core || I18N_REMOTE_CACHE.has(core)) {
+        pumpRemoteEnQueue();
+        return;
+      }
+
+      i18nRemoteActive += 1;
+      const url = I18N_REMOTE_EN_ENDPOINT + encodeURIComponent(core);
+
+      fetch(url)
+        .then(function(r) { return r.text(); })
+        .then(function(txt) {
+          const translated = parseGoogleTranslatePayload(txt);
+          if (translated && translated !== core) {
+            I18N_REMOTE_CACHE.set(core, translated);
+            scheduleRemoteEnCacheSave();
+            if (currentLang === "en" && document.body) {
+              requestAnimationFrame(function() {
+                translateSubtree(document.body);
+                try {
+                  if (typeof renderTopics === "function") renderTopics();
+                  if (typeof setPhaseUI === "function") setPhaseUI();
+                } catch (_) {}
+              });
+            }
+          }
+        })
+        .catch(function() {})
+        .finally(function() {
+          i18nRemoteActive -= 1;
+          I18N_REMOTE_PENDING.delete(core);
+          pumpRemoteEnQueue();
+        });
+
+      pumpRemoteEnQueue();
+    }
+
+    function queueRemoteEnTranslation(core) {
+      if (!shouldQueueRemoteEn(core)) return;
+      if (I18N_REMOTE_CACHE.has(core) || I18N_REMOTE_PENDING.has(core)) return;
+      I18N_REMOTE_PENDING.add(core);
+      I18N_REMOTE_QUEUE.push(core);
+      pumpRemoteEnQueue();
+    }
+
+    function warmEnglishTopicPack() {
+      if (i18nTopicWarmRequested) return;
+      i18nTopicWarmRequested = true;
+      TOPIC_LIBRARY.forEach(function(sec) {
+        queueRemoteEnTranslation(sec.title || "");
+        sec.topics.forEach(function(t) {
+          queueRemoteEnTranslation(t.title || "");
+          queueRemoteEnTranslation(t.blurb || "");
+          queueRemoteEnTranslation(t.pro || "");
+          queueRemoteEnTranslation(t.con || "");
+          queueRemoteEnTranslation(t.proLabel || "");
+          queueRemoteEnTranslation(t.conLabel || "");
+          (t.tags || []).forEach(function(tag) { queueRemoteEnTranslation(tag); });
+        });
+      });
+    }
 
     function getI18nAttrStore(el) {
       if (!i18nAttrBase.has(el)) i18nAttrBase.set(el, {});
@@ -4477,6 +4514,8 @@ SCHMIDT Lena (19)
 
     function translateCoreTextCsToEn(core) {
       if (!core) return core;
+      const remoteHit = I18N_REMOTE_CACHE.get(core);
+      if (remoteHit) return remoteHit;
       if (I18N_EXACT_EN[core]) return I18N_EXACT_EN[core];
       for (let i = 0; i < I18N_REGEX_EN.length; i++) {
         const rgx = I18N_REGEX_EN[i][0];
@@ -4489,8 +4528,10 @@ SCHMIDT Lena (19)
         const to = I18N_FRAGMENT_EN[i][1];
         if (out.indexOf(from) >= 0) out = out.split(from).join(to);
       }
-      for (let i = 0; i < I18N_WORD_EN.length; i++) {
-        out = out.replace(I18N_WORD_EN[i][0], I18N_WORD_EN[i][1]);
+      if (out === core || looksCzechLike(out)) {
+        queueRemoteEnTranslation(core);
+        const resolved = I18N_REMOTE_CACHE.get(core);
+        if (resolved) return resolved;
       }
       return out;
     }
@@ -4576,6 +4617,7 @@ SCHMIDT Lena (19)
     function applyLanguage(lang) {
       const prevLang = currentLang;
       currentLang = (lang === "en") ? "en" : "cs";
+      if (currentLang === "en") warmEnglishTopicPack();
       document.documentElement.lang = currentLang;
       document.documentElement.setAttribute("data-lang", currentLang);
       document.title = currentLang === "en" ? "Debate Timer" : "Debatní časovač";
@@ -6025,6 +6067,7 @@ SCHMIDT Lena (19)
         const secEn = TOPIC_SECTION_TITLE_EN[sec.id] || translateCoreTextCsToEn(sec.title);
         sec.titleEn = secEn;
         I18N_EXACT_EN[sec.title] = secEn;
+        queueRemoteEnTranslation(sec.title || "");
 
         sec.topics.forEach(function(t) {
           t.titleEn = translateCoreTextCsToEn(t.title || "");
@@ -6033,6 +6076,13 @@ SCHMIDT Lena (19)
           t.conEn = translateCoreTextCsToEn(t.con || "");
           t.proLabelEn = translateCoreTextCsToEn(t.proLabel || "PRO");
           t.conLabelEn = translateCoreTextCsToEn(t.conLabel || "PROTI");
+
+          queueRemoteEnTranslation(t.title || "");
+          queueRemoteEnTranslation(t.blurb || "");
+          queueRemoteEnTranslation(t.pro || "");
+          queueRemoteEnTranslation(t.con || "");
+          queueRemoteEnTranslation(t.proLabel || "");
+          queueRemoteEnTranslation(t.conLabel || "");
 
           I18N_EXACT_EN[t.title] = t.titleEn;
           if (t.blurb) I18N_EXACT_EN[t.blurb] = t.blurbEn;
@@ -6045,6 +6095,7 @@ SCHMIDT Lena (19)
             t.tagsEn = t.tags.map(function(tag) { return translateCoreTextCsToEn(tag); });
             t.tags.forEach(function(tag, idx) {
               I18N_EXACT_EN[tag] = t.tagsEn[idx];
+              queueRemoteEnTranslation(tag);
             });
           } else {
             t.tagsEn = [];
@@ -6070,22 +6121,37 @@ SCHMIDT Lena (19)
     }
 
     function sectionTitleText(sec) {
-      return currentLang === "en" ? (sec.titleEn || sec.title) : sec.title;
+      if (currentLang !== "en") return sec.title;
+      const base = sec.title || "";
+      const remote = I18N_REMOTE_CACHE.get(base);
+      if (remote) return remote;
+      queueRemoteEnTranslation(base);
+      return sec.titleEn || translateCoreTextCsToEn(base);
     }
 
     function topicFieldText(topic, field) {
       if (!topic) return "";
-      if (currentLang === "en") {
-        const enKey = field + "En";
-        if (typeof topic[enKey] === "string" && topic[enKey]) return topic[enKey];
-      }
-      return topic[field] || "";
+      const base = topic[field] || "";
+      if (currentLang !== "en") return base;
+      const remote = I18N_REMOTE_CACHE.get(base);
+      if (remote) return remote;
+      queueRemoteEnTranslation(base);
+      const enKey = field + "En";
+      if (typeof topic[enKey] === "string" && topic[enKey]) return topic[enKey];
+      return translateCoreTextCsToEn(base);
     }
 
     function topicTagsText(topic) {
       if (!topic) return [];
-      if (currentLang === "en" && Array.isArray(topic.tagsEn) && topic.tagsEn.length) return topic.tagsEn;
-      return Array.isArray(topic.tags) ? topic.tags : [];
+      const baseTags = Array.isArray(topic.tags) ? topic.tags : [];
+      if (currentLang !== "en") return baseTags;
+      return baseTags.map(function(tag, idx) {
+        const remote = I18N_REMOTE_CACHE.get(tag);
+        if (remote) return remote;
+        queueRemoteEnTranslation(tag);
+        if (Array.isArray(topic.tagsEn) && topic.tagsEn[idx]) return topic.tagsEn[idx];
+        return translateCoreTextCsToEn(tag);
+      });
     }
 
     function getTopicByKey(key) {
@@ -6108,7 +6174,7 @@ SCHMIDT Lena (19)
         const hitByKey = getTopicByKey(selectedTopicKey);
         if (hitByKey) {
           const csTitle = hitByKey.t.title || "";
-          const enTitle = hitByKey.t.titleEn || translateCoreTextCsToEn(csTitle);
+          const enTitle = I18N_REMOTE_CACHE.get(csTitle) || hitByKey.t.titleEn || translateCoreTextCsToEn(csTitle);
           if (text === csTitle || text === enTitle) return hitByKey;
         }
       }
@@ -6117,7 +6183,7 @@ SCHMIDT Lena (19)
         for (let i = 0; i < sec.topics.length; i++) {
           const t = sec.topics[i];
           const csTitle = t.title || "";
-          const enTitle = t.titleEn || translateCoreTextCsToEn(csTitle);
+          const enTitle = I18N_REMOTE_CACHE.get(csTitle) || t.titleEn || translateCoreTextCsToEn(csTitle);
           if (text === csTitle || text === enTitle) {
             return { sec: sec, idx: i, t: t };
           }
@@ -6132,7 +6198,7 @@ SCHMIDT Lena (19)
       const info = findTopicByTypedText(ta.value);
       if (!info) return;
       const csTitle = info.t.title || "";
-      const enTitle = info.t.titleEn || translateCoreTextCsToEn(csTitle);
+      const enTitle = I18N_REMOTE_CACHE.get(csTitle) || info.t.titleEn || translateCoreTextCsToEn(csTitle);
       const currentValue = String(ta.value || "").trim();
       const prevTitle = prevLang === "en" ? enTitle : csTitle;
       if (currentValue === prevTitle || currentValue === csTitle || currentValue === enTitle) {
@@ -8631,6 +8697,7 @@ SCHMIDT Lena (19)
      * INIT
      **********************/
     function bootstrap() {
+      loadRemoteEnCache();
       wire();
       buildTopicCategoryOptions();
       restoreSetup();
@@ -8648,6 +8715,7 @@ SCHMIDT Lena (19)
       console.error("Inicializace UI selhala:", err);
       showValidation("Chyba při načtení UI. Obnov stránku (Ctrl+F5).", false);
       try {
+        loadRemoteEnCache();
         wire();
         buildTopicCategoryOptions();
         renderPresetList();

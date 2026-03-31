@@ -14,6 +14,8 @@ Projekt je navržený tak, aby fungoval:
 - bez instalace,
 - bez závislosti na serveru.
 
+Poznámka k EN lokalizaci: základní překladová vrstva funguje plně offline; při online připojení se může text navíc kontextově dohladit a uložit do lokální cache pro další spuštění.
+
 ## Obsah
 
 1. [Co aplikace obsahuje](#co-aplikace-obsahuje)
@@ -153,6 +155,8 @@ Výsledkový panel umí přidělovat tematická ocenění podle průběhu turnaj
   - dynamické texty generované během běhu,
   - výsledkový panel,
   - export textových výsledků.
+- Překlad je navržený primárně jako **sentence-level** (celé věty a celé bloky významu), ne jako word-by-word převod.
+- Pro složitější runtime texty funguje cacheovaný překladový fallback (`debateTimerI18nRemoteEn.v1`), který se ukládá lokálně.
 - Jazyk lze změnit i během běžící debaty bez reloadu stránky.
 
 ## Verifikace lokalizace
@@ -164,10 +168,10 @@ Lokalizace je kontrolovaná dvěma auditními průchody nad zdrojovým kódem:
 
 Aktuální stav:
 
-- Statické texty: pokryto kompletně (jediná výjimka je vlastní jméno autora, které se záměrně nepřekládá).
-- Runtime texty: pokryto kompletně (ignorovaná interní class-name položka není uživatelský text).
+- Statické texty: pokryté přes exact/regex/fragment překladovou vrstvu.
+- Runtime texty: pokryté přes observer + sentence-level fallback.
 
-Poznámka: témata mají vlastní CZ/EN datový pack přímo v aplikaci (`title/titleEn`, `blurb/blurbEn`, `pro/proEn`, `con/conEn`, `tags/tagsEn`, side labels), takže nejsou závislá jen na slovníkovém fallbacku.
+Poznámka: témata i průvodce se překládají kontextově po větách. Pro opakované texty se používá lokální cache, takže kvalita je konzistentní i při dalším spuštění.
 
 ## Časování, zvuky, hudba
 
@@ -193,7 +197,7 @@ Vše je v jednom souboru `debatni-casovac-v3.1.html`, ale kód je modulárně ro
 |---|---|
 | `DATA: PRESETS` | výchozí seznamy debatérů (9.A/9.B) |
 | `DATA: TOPIC_LIBRARY` | knihovna témat včetně metadata sekcí, obtížnosti, tagů a argumentačních nápověd |
-| `I18N (CZ / EN)` | jazykový engine, exact/regex/fragment/word mapy, observer pro dynamický obsah |
+| `I18N (CZ / EN)` | jazykový engine (exact/regex/fragment + sentence-level fallback), observer pro dynamický obsah, lokální cache překladů |
 | `FILE IMPORT ENGINE` | import z XLSX/XLS/CSV/TSV/TXT/PDF + normalizace + kontrolní modal |
 | `UTIL` | parse/normalizace času, sanitizace vstupů, pomocné funkce |
 | `AUDIO` | signalizační zvuky, preview, hudba v pauzách, fade-in/fade-out |
